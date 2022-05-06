@@ -3,6 +3,9 @@ import { toast } from "react-toastify";
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 // Alter defaults after instance has been created
 //Browser auto set withCredentials=false for security=> withCredentials=true to exchange cookie

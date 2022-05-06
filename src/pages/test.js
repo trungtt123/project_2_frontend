@@ -1,24 +1,29 @@
-import { useEffect, useState } from "react";
-import axios from "../setups/custom_axios";
-import moment from "moment";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllUsers } from "../Redux/userSlice";
+
 const Layout = () => {
-  const [covidList, setCovidList] = useState();
-  const today = moment().startOf("day").toISOString(true);
-  // const priorDate = today.subtract(1, "months"); nếu lấy ntn thì today=priotDate=(today-1)=> 2 ngày là 1
-  const priorDate = moment()
-    .startOf("day")
-    .subtract(1, "months")
-    .toISOString(true);
-  const getCovidList = async () => {
-    const list = await axios.get(`/vietnam?from=${priorDate}&to=${today}`);
-    setCovidList(JSON.stringify(list));
-  };
+  const dispatch = useDispatch();
+  const { userList, isLoading } = useSelector((state) => state.user);
   useEffect(() => {
-    getCovidList();
+    dispatch(fetchAllUsers());
   }, []);
+  console.log("update", userList, isLoading);
+  if (isLoading === true) {
+    return <div>is loading...</div>;
+  }
   return (
     <>
-      <div className="main">{covidList} </div>
+      <div className="container">
+        {userList?.length &&
+          userList.map((user) => {
+            return (
+              <div key={user.id}>
+                {user.id}-{user.username}-{user.password}-{user.role}
+              </div>
+            );
+          })}
+      </div>
     </>
   );
 };
