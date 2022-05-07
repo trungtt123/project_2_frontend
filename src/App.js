@@ -1,33 +1,32 @@
-import logo from "./logo.svg";
-import "./App.css";
-import Layout from "./pages/test";
+import "./App.scss";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Layout from "./pages/Layout";
+import DashBoard from "./pages/DashBoard";
+import LoginPage from "./pages/LoginPages";
+import ProtectedRoute from "./Routes/ProtectedRoute";
+import About from "./pages/About";
 function App() {
   return (
     <>
-      <div className="App">
-        <header className="App-header">
-          <div>
-            Node_ENV={process.env.NODE_ENV}
-            BASE
-            {process.env.BASE_URL}
-          </div>
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          <Layout />
-        </header>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<DashBoard />} />
+            {/* <Route
+            path='product'
+            element={
+              <ProtectedRoute user={user}>
+                <Product user={user} />
+              </ProtectedRoute>
+            }
+          /> */}
+            <Route path="about" element={<About />} />
+          </Route>
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </BrowserRouter>
       <ToastContainer
         position="bottom-right"
         autoClose={3000}

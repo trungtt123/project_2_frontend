@@ -10,8 +10,8 @@ const userList = [
   {
     id: 2,
     username: "nguyen thi thuy trang",
-    password: "Stockkeeper",
-    role: "admin",
+    password: "trang",
+    role: "stockkeeper",
   },
   {
     id: 3,

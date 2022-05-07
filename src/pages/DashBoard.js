@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers } from "../Redux/userSlice";
-
-const Layout = () => {
+const LoginPage = () => {
   const dispatch = useDispatch();
   const { userList, isLoading } = useSelector((state) => state.user);
   useEffect(() => {
@@ -27,5 +26,4 @@ const Layout = () => {
     </>
   );
 };
-
-export default Layout;
+export default LoginPage;
