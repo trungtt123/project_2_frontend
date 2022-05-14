@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers } from "../Redux/userSlice";
 import "./DashBoard.css";
 
-const LoginPage = () => {
+const DashBoard = () => {
   const dispatch = useDispatch();
   const { userList, isLoading } = useSelector((state) => state.user);
   useEffect(() => {
@@ -102,83 +102,7 @@ const LoginPage = () => {
             );
           })}
       </div>
-      //{" "}
     </>
-    // <div className="body_user_ui">
-    //   <div className="main-header_user">
-
-    //         <div className = "navbar-logo home-page"> T&K </div>
-    //         <div className = "navbar-icon home-page">Trang chủ </div>
-    //         <div className="navbar-icon home-page"> Quản lí khách hàng </div>
-
-    //   </div>
-
-    //   <div className="content-chinh-user">
-    //     <div className="main-content1-user" id="main_content_play">
-    //       <div className="content-header-user">
-    //         <div className="title">
-    //           <h2> Danh sách người dùng </h2>
-    //         </div>
-
-    //         <hr className="red-line" />
-    //       </div>
-
-    //       <div className="content-user">
-    //         <div className="box-user">
-    //           <div className="box-body-user">
-    //             <table>
-    //               <tr>
-    //                 <th>ID</th>
-    //                 <th>Họ và tên</th>
-    //                 <th>Số điện thoại</th>
-    //                 <th> Quyền </th>
-    //                 <th> Thông tin khác </th>
-    //                 <th> Thao tác </th>
-    //               </tr>
-    //               <tr>
-    //                 <td> 1 </td>
-    //                 <td>Trần Quang Trung</td>
-    //                 <td>123</td>
-    //                 <td> Mua</td>
-    //                 <td> Xem chi tiết</td>
-    //                 <td>
-    //                   {' '}
-    //                   <a href="#"> Xóa</a> <a href="#"> Chỉnh sửa</a>{' '}
-    //                 </td>
-    //               </tr>
-    //               <tr>
-    //                 <td> 2 </td>
-    //                 <td>Quách Thế Trường</td>
-    //                 <td> 456</td>
-    //                 <td> Mua</td>
-    //                 <td> Xem chi tiết</td>
-    //                 <td>
-    //                   {' '}
-    //                   <a href="#"> Xóa</a> <a href="#"> Chỉnh sửa</a>{' '}
-    //                 </td>
-    //               </tr>
-    //               <tr>
-    //                 <td> 3 </td>
-    //                 <td>Bùi Đức Kiên</td>
-    //                 <td>789</td>
-    //                 <td> Mua</td>
-    //                 <td>Xem chi tiết </td>
-    //                 <td>
-    //                   {' '}
-    //                   <a href="#"> Xóa</a> <a href="#"> Chỉnh sửa</a>{' '}
-    //                 </td>
-    //               </tr>
-    //             </table>
-    //           </div>
-    //           <button className="button-add">Thêm người dùng</button>
-    //           <button className="button-update" type="submit">
-    //             CẬP NHẬT THÔNG TIN
-    //           </button>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
-export default LoginPage;
+export default DashBoard;

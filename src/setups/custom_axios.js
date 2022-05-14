@@ -59,6 +59,8 @@ instance.interceptors.response.use(
 
       // not found
       case 404: {
+        toast.error("Not found... ");
+
         return Promise.reject(error);
       }
 
@@ -74,6 +76,7 @@ instance.interceptors.response.use(
 
       // generic api error (server related) unexpected
       default: {
+        toast.error("Something wrong... ");
         return Promise.reject(error);
       }
     }

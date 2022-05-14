@@ -14,7 +14,6 @@ export const fetchAllUsers = createAsyncThunk(
 );
 
 const initialState = {
-  user: {},
   userList: [],
   isLoading: true,
 };

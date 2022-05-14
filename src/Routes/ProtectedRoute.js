@@ -1,8 +1,8 @@
-import { Navigate } from "react-router-dom";
+import { Redirect } from "react-router";
 
 const ProtectedRoute = ({ children, user }) => {
   if (!user) {
-    return <Navigate to="/" />;
+    return <Redirect to="/" />;
   }
   return children;
 };

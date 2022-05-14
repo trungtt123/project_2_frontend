@@ -1,34 +1,47 @@
 import "./App.scss";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Layout from "./pages/Layout";
 import DashBoard from "./pages/DashBoard";
+import StyledNavbar from "./components/StyledNavbar";
 import NotfoundPage from "./pages/NotfoundPage";
 import LoginPage from "./pages/LoginPages";
-import ProtectedRoute from "./Routes/ProtectedRoute";
+
 import About from "./pages/About";
+import { useDispatch, useSelector } from "react-redux";
+import { loadUser } from "./Redux/authSlice";
+import { useEffect, useState } from "react";
+import UnAuth from "./Routes/unAuthRoute";
+import { Switch } from "react-router-dom";
 function App() {
+  const dispatch = useDispatch();
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const [component, setComponent] = useState();
+  const getCurrentView = () => {
+    if (isAuthenticated === false) {
+      return <UnAuth />;
+    }
+    return (
+      <>
+        <StyledNavbar />
+        <Switch>
+          <Route path="/" component={DashBoard} />
+          <Route path="about" component={About} />
+          <Route path="/login" exact component={LoginPage} />
+          <Route path="*" component={NotfoundPage} />
+        </Switch>
+      </>
+    );
+  };
+  useEffect(() => {
+    dispatch(loadUser());
+  }, []);
+  useEffect(() => {
+    setComponent(getCurrentView());
+  }, [isAuthenticated]);
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<DashBoard />} />
-            {/* <Route
-            path='product'
-            element={
-              <ProtectedRoute user={user}>
-                <Product user={user} />
-              </ProtectedRoute>
-            }
-          /> */}
-            <Route path="about" element={<About />} />
-          </Route>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="*" element={<NotfoundPage />} />
-        </Routes>
-      </BrowserRouter>
+      <BrowserRouter>{component}</BrowserRouter>
       <ToastContainer
         position="bottom-right"
         autoClose={3000}
