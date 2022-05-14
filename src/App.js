@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Layout from "./pages/Layout";
 import DashBoard from "./pages/DashBoard";
+import NotfoundPage from "./pages/NotfoundPage";
 import LoginPage from "./pages/LoginPages";
 import ProtectedRoute from "./Routes/ProtectedRoute";
 import About from "./pages/About";
@@ -25,6 +26,7 @@ function App() {
             <Route path="about" element={<About />} />
           </Route>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<NotfoundPage />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer
