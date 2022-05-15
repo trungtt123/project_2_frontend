@@ -7,7 +7,7 @@ const UnAuth = () => {
       <Switch>
         <>
           <Route path="/login" exact component={LoginPage} />
-          <Route component={RedirectLogin} />
+          <Route path="*" component={RedirectLogin} />
         </>
       </Switch>
     </>

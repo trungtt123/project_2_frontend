@@ -6,7 +6,7 @@ import DashBoard from "./pages/DashBoard";
 import StyledNavbar from "./components/StyledNavbar";
 import NotfoundPage from "./pages/NotfoundPage";
 import LoginPage from "./pages/LoginPages";
-
+import { Triangle } from "react-loader-spinner";
 import About from "./pages/About";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./Redux/authSlice";
@@ -15,33 +15,52 @@ import UnAuth from "./Routes/unAuthRoute";
 import { Switch } from "react-router-dom";
 function App() {
   const dispatch = useDispatch();
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { user, isAuthenticated, isLoading } = useSelector(
+    (state) => state.auth
+  );
   const [component, setComponent] = useState();
   const getCurrentView = () => {
-    if (isAuthenticated === false) {
+    if (isAuthenticated === true) {
       return <UnAuth />;
-    }
-    return (
-      <>
-        <StyledNavbar />
-        <Switch>
-          <Route path="/" component={DashBoard} />
-          <Route path="about" component={About} />
-          <Route path="/login" exact component={LoginPage} />
-          <Route path="*" component={NotfoundPage} />
-        </Switch>
-      </>
-    );
+    } else
+      return (
+        <>
+          <div className="app-header">
+            <StyledNavbar />
+          </div>
+          <Switch>
+            <Route path="/" exact component={DashBoard} />
+            <Route path="/about" exact component={About} />
+            <Route path="/login" exact component={LoginPage} />
+            <Route path="*" component={NotfoundPage} />
+          </Switch>
+        </>
+      );
   };
   useEffect(() => {
     dispatch(loadUser());
+    setComponent(getCurrentView());
   }, []);
   useEffect(() => {
     setComponent(getCurrentView());
   }, [isAuthenticated]);
   return (
     <>
-      <BrowserRouter>{component}</BrowserRouter>
+      <BrowserRouter>
+        {!isLoading ? (
+          <>{component}</>
+        ) : (
+          <div className="loading-container d-flex flex-column align-items-center justify-content-center min-vh-100">
+            <Triangle
+              height="100"
+              width="100"
+              color="#1877f2"
+              ariaLabel="loading"
+            />
+            <div>Loading data...</div>
+          </div>
+        )}
+      </BrowserRouter>
       <ToastContainer
         position="bottom-right"
         autoClose={3000}
