@@ -1,22 +1,26 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers } from "../Redux/userSlice";
+import { fetchRoleList } from "../Redux/privilegeSlice";
 import "./DashBoard.css";
 import _ from "lodash";
 import ModalDelete from "../components/ModalDelete";
 import ModalUser from "../components/ModalUser";
+import userService from "../Services/API/userService";
 const DashBoard = () => {
   const dispatch = useDispatch();
   const { userList, isLoading } = useSelector((state) => state.user);
+  const { roleList } = useSelector((state) => state.privilege);
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
   const [isShowModalUser, setIsShowModalUser] = useState(false);
   const [action, setAction] = useState("");
   const userData = useRef({});
   useEffect(() => {
     dispatch(fetchAllUsers());
+    dispatch(fetchRoleList());
   }, []);
-  const handleDeleteUser = async ({ id, email, username }) => {
-    userData.current = { id, email, username };
+  const handleDeleteUser = async ({ userId, email, userName }) => {
+    userData.current = { userId, email, userName };
     setIsShowModalDelete(true);
   };
   const handleEditUser = (item) => {
@@ -34,10 +38,7 @@ const DashBoard = () => {
     dispatch(fetchAllUsers());
   };
   const confirmDeleteUser = async () => {
-    // let response = await deleteUser(userData.current.id);
-    // if (response && response.EC === 0) {
-    //     toast.success(response.EM);
-    //     await fetchListUsers();
+    await userService.deleteUser(userData.current.userId);
     setIsShowModalDelete(false);
     // } else {
     //     toast.error(response.EM);
@@ -73,19 +74,29 @@ const DashBoard = () => {
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Username</th>
+                <th scope="col">First name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Email</th>
                 <th scope="col">Role</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
-              {userList && userList.length > 0 ? (
+              {userList?.length > 0 ? (
                 <>
                   {userList.map((item, index) => {
                     return (
                       <tr key={`row-${index}`}>
-                        <td>{item.id}</td>
-                        <td>{item.username}</td>
-                        <td>{item.role ? item.role : ""}</td>
+                        <td>{item?.userId}</td>
+                        <td>{item?.userName}</td>
+                        <td>{item?.givenName}</td>
+                        <td>{item?.surName}</td>
+                        <td>{item?.email}</td>
+                        <td>
+                          {item?.roleId
+                            ? roleList[item.roleId - 1]?.roleName
+                            : "unknown"}
+                        </td>
                         <td className="">
                           <button
                             className="btn btn-warning mx-2"

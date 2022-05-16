@@ -20,7 +20,7 @@ function App() {
   );
   const [component, setComponent] = useState();
   const getCurrentView = () => {
-    if (isAuthenticated === true) {
+    if (isAuthenticated === false) {
       return <UnAuth />;
     } else
       return (

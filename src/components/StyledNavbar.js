@@ -52,7 +52,7 @@ const NavHeader = () => {
               {user && isAuthenticated === true ? (
                 <>
                   <Nav.Item className="nav-link" href="#">
-                    Welcome {user.account.username}
+                    Welcome {user?.userName}
                   </Nav.Item>
                   <NavDropdown title="Settings" id="basic-nav-dropdown">
                     <NavDropdown.Item href="#action/3.1">

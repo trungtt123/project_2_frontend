@@ -30,7 +30,8 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   authService.logout();
 });
 const storeToke = (token) => {
-  localStorage.setItem("accessToken", JSON.stringify(token.accessToken));
+  console.log(token);
+  localStorage.setItem("accessToken", token);
 };
 const storeUserId = (userId) => {
   localStorage.setItem("userId", userId);
@@ -44,6 +45,7 @@ const getUserId = () => {
 };
 const getAccessToken = () => {
   const accessToken = localStorage.getItem("accessToken");
+  console.log(`Bearer ${localStorage.getItem("accessToken")}`);
   if (accessToken !== "undefined" && accessToken) {
     return JSON.parse(accessToken);
   }
@@ -65,12 +67,12 @@ const authSlice = createSlice({
       state.isLoading = true;
     },
     [login.fulfilled]: (state, action) => {
-      console.log("actiion ful", action);
+      console.log("actiion ful", action.payload.data);
       state.isLoading = false;
-      state.user = action.payload;
+      state.user = action?.payload?.data;
       state.isAuthenticated = true;
-      storeToke();
-      storeUserId();
+      storeToke(action?.payload?.data?.token);
+      storeUserId(action?.payload?.data?.userId);
     },
     [login.rejected]: (state, action) => {
       console.log("action reject", action);

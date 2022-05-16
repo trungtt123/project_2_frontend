@@ -2,10 +2,11 @@ import { useState } from "react";
 import { login } from "../Redux/authSlice";
 import "./LoginPages.scss";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const [userName, setUserName] = useState("");
   const [passWord, setPassWord] = useState("");
   const [focus, setFocus] = useState([false, false]);
@@ -35,7 +36,9 @@ const LoginPage = () => {
   };
   const handleLogin = async () => {
     console.log("asdf", userName, passWord);
-    dispatch(login({ userName, passWord }));
+    dispatch(login({ userName, passWord })).then(() => {
+      history.push("/");
+    });
     //await fetch('https://localhost:7092/api/getlistpermissions')
   };
   return (
