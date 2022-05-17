@@ -13,6 +13,7 @@ const DashBoard = () => {
   const { roleList } = useSelector((state) => state.privilege);
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
   const [isShowModalUser, setIsShowModalUser] = useState(false);
+  const [checkList, setCheckList] = useState([]);
   const [action, setAction] = useState("");
   const userData = useRef({});
   useEffect(() => {
@@ -40,10 +41,8 @@ const DashBoard = () => {
   const confirmDeleteUser = async () => {
     await userService.deleteUser(userData.current.userId);
     setIsShowModalDelete(false);
-    // } else {
-    //     toast.error(response.EM);
-    // }
   };
+  const handleChecked = async (isChecked, userId) => {};
   console.log("update", userList, isLoading);
   return (
     <>
@@ -72,6 +71,7 @@ const DashBoard = () => {
           <table className="table table-bordered table-hover">
             <thead>
               <tr>
+                <th scope="col">Select</th>
                 <th scope="col">ID</th>
                 <th scope="col">Username</th>
                 <th scope="col">First name</th>
@@ -87,6 +87,19 @@ const DashBoard = () => {
                   {userList.map((item, index) => {
                     return (
                       <tr key={`row-${index}`}>
+                        <td>
+                          <div class="custom-control custom-checkbox">
+                            <input
+                              type="checkbox"
+                              class="custom-control-input"
+                              id="customCheck1"
+                              defaultChecked="false"
+                              onChange={(e) =>
+                                handleChecked(e.target.value, item?.userId)
+                              }
+                            />
+                          </div>
+                        </td>
                         <td>{item?.userId}</td>
                         <td>{item?.userName}</td>
                         <td>{item?.givenName}</td>
