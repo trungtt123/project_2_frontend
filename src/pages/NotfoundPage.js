@@ -1,9 +1,10 @@
-const NotfoundPage = () => {
-  return (
-    <>
-      <div>404 not found</div>
-    </>
-  );
-};
 
+import "./LoginPages.scss";
+
+
+const NotfoundPage = () => {
+  
+  return <>Notfound Page</>
+    
+};
 export default NotfoundPage;

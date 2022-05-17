@@ -8,21 +8,21 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [userName, setUserName] = useState("");
-  const [passWord, setPassWord] = useState("");
+  const [password, setPassword] = useState("");
   const [focus, setFocus] = useState([false, false]);
   const handleChangeUserName = (value) => {
     console.log(value);
     setUserName(value);
   };
 
-  const handleChangePassWord = (value) => {
+  const handleChangePassword = (value) => {
     console.log(value);
-    setPassWord(value);
+    setPassword(value);
   };
   const checkEmty = () => {
     const tmp = [false, false];
     if (userName !== "") tmp[0] = true;
-    if (passWord !== "") tmp[1] = true;
+    if (password !== "") tmp[1] = true;
     return tmp;
   };
   const handleFocus = (type) => {
@@ -35,8 +35,8 @@ const LoginPage = () => {
     setFocus(checkEmty());
   };
   const handleLogin = async () => {
-    console.log("asdf", userName, passWord);
-    dispatch(login({ userName, passWord })).then(() => {
+    console.log("asdf", userName, password);
+    dispatch(login({ userName, password })).then(() => {
       history.push("/");
     });
     //await fetch('https://localhost:7092/api/getlistpermissions')
@@ -80,7 +80,7 @@ const LoginPage = () => {
               <h5>Password</h5>
               <input
                 type="password"
-                onChange={(e) => handleChangePassWord(e.target.value)}
+                onChange={(e) => handleChangePassword(e.target.value)}
               />
             </div>
           </div>

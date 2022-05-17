@@ -1,14 +1,14 @@
 import axios from "../../setups/custom_axios";
-const login = async (userName, passWord) => {
-  console.log("cuoi", userName, passWord);
-  return axios.post("/login", { userName, passWord });
+const login = async (userName, password) => {
+  console.log("cuoi", userName, password);
+  return axios.post("/login", { userName, password });
   //return axios.get('/api/getlistpermissions');
 };
-const checkToken = async (userId) => {
+const checkToken = async (token) => {
   return await axios.get("/verifyToken", {
-    params: {
-      userId,
-    },
+    headers: {
+      Authorization: "Bearer " + token
+    }
   });
 };
 const logout = () => {

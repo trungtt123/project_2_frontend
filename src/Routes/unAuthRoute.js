@@ -1,13 +1,14 @@
 import { Route, Switch } from "react-router-dom";
 import RedirectLogin from "./redirectLogin";
 import LoginPage from "../pages/LoginPages";
-const UnAuth = () => {
+const UnAuth = (props) => {
+
   return (
     <>
       <Switch>
         <>
-          <Route path="/login" exact component={LoginPage} />
-          <Route path="*" component={RedirectLogin} />
+          <Route path="*" exact component={LoginPage} />
+          {/* <Route path="*" component={RedirectLogin} /> */}
         </>
       </Switch>
     </>

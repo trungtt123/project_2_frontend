@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "../Services/API/authService";
 export const login = createAsyncThunk("auth/login", async (data, thunkAPI) => {
   try {
-    const { userName, passWord } = data;
-    return await authService.login(userName, passWord);
+    const { userName, password } = data;
+    return await authService.login(userName, password);
   } catch (e) {
     console.log("error", e);
     return thunkAPI.rejectWithValue("something went wrong");
@@ -14,11 +14,12 @@ export const loadUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const accessToken = getAccessToken();
+      console.log(accessToken);
       if (!accessToken) {
         authService.logout();
         // throw new Error();
       }
-      return await authService.checkToken(getUserId());
+      return await authService.checkToken(getAccessToken());
     } catch (e) {
       console.log("error", e);
       authService.logout();
@@ -47,7 +48,8 @@ const getAccessToken = () => {
   const accessToken = localStorage.getItem("accessToken");
   console.log(`Bearer ${localStorage.getItem("accessToken")}`);
   if (accessToken !== "undefined" && accessToken) {
-    return JSON.parse(accessToken);
+    //console.log('run');
+    return accessToken;
   }
   return "";
 };
