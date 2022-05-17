@@ -7,7 +7,7 @@ import _ from "lodash";
 import ModalDelete from "../components/ModalDelete";
 import ModalUser from "../components/ModalUser";
 import userService from "../Services/API/userService";
-const DashBoard = () => {
+const ProductPage = () => {
   const dispatch = useDispatch();
   const { userList, isLoading } = useSelector((state) => state.user);
   const { roleList } = useSelector((state) => state.privilege);
@@ -73,12 +73,12 @@ const DashBoard = () => {
             <thead>
               <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Username</th>
-                <th scope="col">First name</th>
-                <th scope="col">Last name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Role</th>
-                <th scope="col">Action</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Xuất xứ</th>
+                <th scope="col">Công ty sản xuất</th>
+                <th scope="col">Loại sản phẩm</th>
+                <th scope="col">Đơn vị đo</th>
+                {/* <th scope="col">Action</th> */}
               </tr>
             </thead>
             <tbody>
@@ -143,4 +143,4 @@ const DashBoard = () => {
     </>
   );
 };
-export default DashBoard;
+export default ProductPage;

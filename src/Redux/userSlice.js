@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import { getAllUsers } from "../Services/API/userService";
-import { getAllUsers } from "../Services/MOCK/userService";
+import userService from "../Services/API/userService";
+// import { getAllUsers } from "../Services/MOCK/userService";
 export const fetchAllUsers = createAsyncThunk(
   "user/fetchAllUsers",
   async (_, thunkAPI) => {
     try {
-      return await getAllUsers();
+      return await userService.getAllUsers();
     } catch (e) {
       console.log("error", e);
       return thunkAPI.rejectWithValue("something went wrong");
@@ -14,9 +14,8 @@ export const fetchAllUsers = createAsyncThunk(
 );
 
 const initialState = {
-  user: {},
   userList: [],
-  isLoading: true,
+  isLoading: false,
 };
 
 const userSlice = createSlice({
@@ -31,7 +30,7 @@ const userSlice = createSlice({
     [fetchAllUsers.fulfilled]: (state, action) => {
       console.log("actiion ful", action);
       state.isLoading = false;
-      state.userList = action.payload;
+      state.userList = action?.payload?.data;
     },
     [fetchAllUsers.rejected]: (state, action) => {
       console.log("action rej", action);
