@@ -4,9 +4,11 @@ const login = async (userName, password) => {
   return axios.post("/login", { userName, password });
   //return axios.get('/api/getlistpermissions');
 };
-const checkToken = async (userId) => {
+const checkToken = async (token) => {
   return await axios.get("/verifyToken", {
-    
+    headers: {
+      Authorization: "Bearer " + token
+    }
   });
 };
 const logout = () => {

@@ -14,11 +14,12 @@ export const loadUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const accessToken = getAccessToken();
+      console.log(accessToken);
       if (!accessToken) {
         authService.logout();
         // throw new Error();
       }
-      return await authService.checkToken(getUserId());
+      return await authService.checkToken(getAccessToken());
     } catch (e) {
       console.log("error", e);
       authService.logout();
@@ -47,7 +48,8 @@ const getAccessToken = () => {
   const accessToken = localStorage.getItem("accessToken");
   console.log(`Bearer ${localStorage.getItem("accessToken")}`);
   if (accessToken !== "undefined" && accessToken) {
-    return JSON.parse(accessToken);
+    //console.log('run');
+    return accessToken;
   }
   return "";
 };
