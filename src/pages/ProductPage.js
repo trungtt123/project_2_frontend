@@ -17,7 +17,7 @@ const ProductPage = () => {
   const productData = useRef({});
   useEffect(() => {
     dispatch(fetchAllProducts());
-    dispatch(fetchRoleList());
+    //dispatch(fetchRoleList());
   }, []);
   const handleDeleteProduct = async ({ productId}) => {
     productData.current = { productId };
@@ -92,11 +92,12 @@ const ProductPage = () => {
                         <td>{item?.productOrgin}</td>
                         <td>{item?.productSuplier}</td>
                         <td>{item?.productTypeId}</td>
-                        <td>
+                        <td>{item?.productUnit}</td>
+                        {/* <td>
                           {item?.roleId
                             ? roleList[item.roleId - 1]?.roleName
                             : "unknown"}
-                        </td>
+                        </td> */}
                         <td className="">
                           <button
                             className="btn btn-warning mx-2"

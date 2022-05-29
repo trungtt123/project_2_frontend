@@ -5,7 +5,7 @@ const login = async (userName, password) => {
   //return axios.get('/api/getlistpermissions');
 };
 const checkToken = async (token) => {
-  return await axios.get("/verifyToken");
+  return await axios.get("/verify-token");
 };
 const logout = () => {
   localStorage.removeItem("accessToken");

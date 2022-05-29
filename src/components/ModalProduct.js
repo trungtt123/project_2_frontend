@@ -6,7 +6,7 @@ import _ from "lodash";
 import { useSelector } from "react-redux";
 import productService from "../Services/API/productService";
 const ModalProduct = (props) => {
-  const { action, dataModalUser, handleClose, show } = props;
+  const { action, dataModalProduct, handleClose, show } = props;
   const { roleList } = useSelector((state) => state.privilege);
   const defaultProductData = {
     productId: "", 
@@ -46,7 +46,7 @@ const ModalProduct = (props) => {
     //do {...} là swallow clone với các object.object vẫn là tham chiếu => clonedeep= lodash hoặc JSON.parse(JSON.stringify(userData))
     let _productData = _.cloneDeep(productData);
     _productData[name] = value;
-    setProductData(_userData);
+    setProductData(_productData);
   };
   const checkValidateInput = () => {
     setValidInput(defaultValidInput);
@@ -55,7 +55,7 @@ const ModalProduct = (props) => {
         ? ["productId", "productName", "Orgin", "companySuplier", "typeId", "productUnit"]
         : ["productId", "productName", "Orgin", "companySuplier", "typeId", "productUnit"];
     for (let i = 0; i < arr.length; i++) {
-      if (!productrData[arr[i]]) {
+      if (!productData[arr[i]]) {
         let _validInput = _.cloneDeep(defaultValidInput);
         _validInput[arr[i]] = false;
         setValidInput(_validInput);
@@ -65,7 +65,7 @@ const ModalProduct = (props) => {
     }
     return true;
   };
-  const handleConfirmUser = async () => {
+  const handleConfirmProduct = async () => {
     let check = checkValidateInput();
     if (!check) return;
     console.log("productData", productData);

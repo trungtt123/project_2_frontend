@@ -1,7 +1,8 @@
 import axios from "../../setups/custom_axios";
 
 const getAllProducts = () => {
-  return axios.get("/listproducts");
+  console.log("trung da den day")
+  return axios.get("/list-products");
 };
 const createProduct = (payload) => {
   const { productName, Orgin, companySuplier, typeId, productUnit } = payload;
