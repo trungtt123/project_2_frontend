@@ -11,14 +11,16 @@ const instance = axios.create({
 //Browser auto set withCredentials=false for security=> withCredentials=true to exchange cookie
 // instance.defaults.withCredentials = true;
 // fix cors header
-instance.defaults.headers.common[
-  "Authorization"
-] = `Bearer ${localStorage.getItem("jwt")}`;
+// instance.defaults.headers.common[
+//   "Authorization"
+// ] = `Bearer ${localStorage.getItem("accessToken")}`;
 
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
+    const token = localStorage.getItem("accessToken");
+    config.headers.Authorization = token ? `Bearer ${token}` : "";
     return config;
   },
   function (error) {
@@ -32,6 +34,7 @@ instance.interceptors.response.use(
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
+    toast.success(response?.data?.message);
     return response.data;
   },
   function (error) {
@@ -59,6 +62,8 @@ instance.interceptors.response.use(
 
       // not found
       case 404: {
+        toast.error("Not found... ");
+
         return Promise.reject(error);
       }
 
@@ -74,6 +79,7 @@ instance.interceptors.response.use(
 
       // generic api error (server related) unexpected
       default: {
+        toast.error("Something wrong... ");
         return Promise.reject(error);
       }
     }
