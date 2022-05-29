@@ -115,11 +115,11 @@ const ModalUser = (props) => {
                 }
               />
             </div>
-            <div className="col-12 col-sm-6 form-group">
+            {/* <div className="col-12 col-sm-6 form-group">
               {action === "CREATE" && (
                 <>
                   <label>
-                    Password (<span className="text-danger">*</span>)
+                    Password 123(<span className="text-danger">*</span>)
                   </label>
                   <input
                     type="password"
@@ -135,7 +135,7 @@ const ModalUser = (props) => {
                   />
                 </>
               )}
-            </div>
+            </div> */}
             <div className="col-12 col-sm-6 form-group">
               <label>
                 First name (<span className="text-danger">*</span>)
@@ -185,15 +185,15 @@ const ModalUser = (props) => {
                 }
               />
             </div>
-            <div className="col-12 col-sm-6 form-group">
+            <div className="col-12 col-sm-6 form-group" >
               <label>
                 Role (<span className="text-danger">*</span>)
               </label>
-              <select
+              <select  style={{fontSize: 16, height: 48}}
                 className={
                   validInput.role
-                    ? "form-select my-2"
-                    : "form-select my-2 is-invalid "
+                    ? "form-select my-2 form-select-lg"
+                    : "form-select my-2 is-invalid form-select-lg"
                 }
                 onChange={(event) =>
                   handleOnChangeInput(event.target.value, "role")

@@ -5,11 +5,7 @@ const login = async (userName, password) => {
   //return axios.get('/api/getlistpermissions');
 };
 const checkToken = async (token) => {
-  return await axios.get("/verifyToken", {
-    headers: {
-      Authorization: "Bearer " + token
-    }
-  });
+  return await axios.get("/verifyToken");
 };
 const logout = () => {
   localStorage.removeItem("accessToken");
