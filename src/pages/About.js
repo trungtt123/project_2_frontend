@@ -1,4 +1,4 @@
 const LoginPage = () => {
-  return <div className="container">About</div>;
+  return <div className="container"> ABOUT</div>;
 };
 export default LoginPage;
