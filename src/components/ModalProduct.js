@@ -4,58 +4,76 @@ import Button from "react-bootstrap/Button";
 import { toast } from "react-toastify";
 import _ from "lodash";
 import { useSelector } from "react-redux";
-import userService from "../Services/API/userService";
-const ModalUser = (props) => {
-  const { action, dataModalUser, handleClose, show } = props;
-  const { roleList } = useSelector((state) => state.privilege);
-  const defaultUserData = {
-    username: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    role: "",
+import productService from "../Services/API/productService";
+
+const ModalProduct = (props) => {
+  const { action, dataModalProduct, handleClose, show } = props;
+  const { productTypeList } = useSelector((state) => state.product);
+
+  const defaultProductData = {
+    productName: "",
+    productOrgin: "",
+    productSuplier: "",
+    productTypeId: "",
+    productUnit: "",
   };
   const defaultValidInput = {
-    username: true,
-    password: true,
-    firstName: true,
-    lastName: true,
-    email: true,
-    role: true,
+    productName: true,
+    productOrgin: true,
+    productSuplier: true,
+    productTypeId: true,
+    productUnit: true,
   };
-  const [userData, setUserData] = useState(defaultUserData);
+  const [productData, setProductData] = useState(defaultProductData);
   const [validInput, setValidInput] = useState(defaultValidInput);
   useEffect(() => {
     if (action === "EDIT") {
-      const { userId, userName, givenName, surName, email, roleId } =
-        dataModalUser;
-      console.log("data<odal", dataModalUser);
-      setUserData({
-        userId: userId,
-        username: userName,
-        firstName: givenName,
-        lastName: surName,
-        email: email,
-        role: roleId,
+      const {
+        productId,
+        productName,
+        productOrgin,
+        productSuplier,
+        productTypeId,
+        productUnit,
+      } = dataModalProduct;
+      console.log("data<odal", dataModalProduct);
+      setProductData({
+        productId,
+        productName,
+        productOrgin,
+        productSuplier,
+        productTypeId,
+        productUnit,
       });
     }
-  }, [dataModalUser, action]);
+  }, [dataModalProduct, action]);
   const handleOnChangeInput = (value, name) => {
     console.log("handle chage", name, value);
-    //do {...} là swallow clone với các object.object vẫn là tham chiếu => clonedeep= lodash hoặc JSON.parse(JSON.stringify(userData))
-    let _userData = _.cloneDeep(userData);
-    _userData[name] = value;
-    setUserData(_userData);
+    //do {...} là swallow clone với các object.object vẫn là tham chiếu => clonedeep= lodash hoặc JSON.parse(JSON.stringify(productData))
+    let _productData = _.cloneDeep(productData);
+    _productData[name] = value;
+    setProductData(_productData);
   };
   const checkValidateInput = () => {
     setValidInput(defaultValidInput);
     let arr =
       action === "CREATE"
-        ? ["username", "firstName", "lastName", "email", "role"]
-        : ["username", "firstName", "lastName", "email", "role"];
+        ? [
+            "productName",
+            "productOrgin",
+            "productSuplier",
+            "productTypeId",
+            "productUnit",
+          ]
+        : [
+            "productName",
+            "productOrgin",
+            "productSuplier",
+            "productTypeId",
+            "productUnit",
+          ];
     for (let i = 0; i < arr.length; i++) {
-      if (!userData[arr[i]]) {
+      if (!productData[arr[i]]) {
         let _validInput = _.cloneDeep(defaultValidInput);
         _validInput[arr[i]] = false;
         setValidInput(_validInput);
@@ -65,22 +83,22 @@ const ModalUser = (props) => {
     }
     return true;
   };
-  const handleConfirmUser = async () => {
+  const handleConfirmProduct = async () => {
     let check = checkValidateInput();
     if (!check) return;
-    console.log("userData", userData);
+    console.log("productData", productData);
     console.log("action nay", action);
     if (action === "CREATE") {
-      await userService.createUser(userData);
+      await productService.createProduct(productData);
     } else if (action === "EDIT") {
-      await userService.updateUser(userData);
+      await productService.updateProduct(productData);
     }
     handleCloseModal();
     // :// update action
   };
   const handleCloseModal = () => {
     setValidInput(defaultValidInput);
-    setUserData(defaultUserData);
+    setProductData(defaultProductData);
     handleClose();
   };
   return (
@@ -100,114 +118,96 @@ const ModalUser = (props) => {
           <div className="content-body row">
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Username (<span className="text-danger">*</span>)
+                Product name (<span className="text-danger">*</span>)
               </label>
               <input
                 type="text"
                 className={
-                  validInput.username
+                  validInput.productName
                     ? "form-control"
                     : "form-control is-invalid"
                 }
-                value={userData.username}
+                value={productData.productName}
                 onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "username")
+                  handleOnChangeInput(event.target.value, "productName")
                 }
               />
             </div>
-            {/* <div className="col-12 col-sm-6 form-group">
-              {action === "CREATE" && (
-                <>
-                  <label>
-                    Password 123(<span className="text-danger">*</span>)
-                  </label>
-                  <input
-                    type="password"
-                    className={
-                      validInput.password
-                        ? "form-control"
-                        : "form-control is-invalid"
-                    }
-                    value={userData.password}
-                    onChange={(event) =>
-                      handleOnChangeInput(event.target.value, "password")
-                    }
-                  />
-                </>
-              )}
-            </div> */}
+
             <div className="col-12 col-sm-6 form-group">
               <label>
-                First name (<span className="text-danger">*</span>)
+                Product Origin (<span className="text-danger">*</span>)
               </label>
               <input
                 type="text"
                 className={
-                  validInput.firstName
+                  validInput.productOrgin
                     ? "form-control"
                     : "form-control is-invalid"
                 }
-                value={userData.firstName}
+                value={productData.productOrgin}
                 onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "firstName")
+                  handleOnChangeInput(event.target.value, "productOrgin")
                 }
               />
             </div>
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Last name (<span className="text-danger">*</span>)
+                Product supplier (<span className="text-danger">*</span>)
               </label>
               <input
                 type="text"
                 className={
-                  validInput.lastName
+                  validInput.productSuplier
                     ? "form-control"
                     : "form-control is-invalid"
                 }
-                value={userData.lastName}
+                value={productData.productSuplier}
                 onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "lastName")
+                  handleOnChangeInput(event.target.value, "productSuplier")
                 }
               />
             </div>
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Email (<span className="text-danger">*</span>)
+                Product Unit (<span className="text-danger">*</span>)
               </label>
               <input
                 type="text"
                 className={
-                  validInput.email ? "form-control" : "form-control is-invalid"
+                  validInput.productUnit
+                    ? "form-control"
+                    : "form-control is-invalid"
                 }
-                value={userData.email}
+                value={productData.productUnit}
                 onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "email")
+                  handleOnChangeInput(event.target.value, "productUnit")
                 }
               />
             </div>
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Role (<span className="text-danger">*</span>)
+                Product Type (<span className="text-danger">*</span>)
               </label>
               <select
                 style={{ fontSize: 16, height: 48 }}
                 className={
-                  validInput.role
+                  validInput.productTypeId
                     ? "form-select my-2 form-select-lg"
                     : "form-select my-2 is-invalid form-select-lg"
                 }
                 onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "role")
+                  handleOnChangeInput(event.target.value, "productTypeId")
                 }
-                value={userData.role}
+                value={productData.productTypeId}
               >
                 <option defaultValue>Choose Role</option>
-                {roleList?.length > 0 &&
-                  roleList.map((item, index) => {
-                    console.log("roleId", item?.roleId);
+                {productTypeList?.length > 0 &&
+                  productTypeList.map((item, index) => {
+                    console.log("productTypeList", item?.productTypeId);
                     return (
-                      <option value={+item?.roleId} key={index}>
-                        {item?.roleName}
+                      <option value={+item?.productTypeId} key={index}>
+                        {item?.productTypeName}
                       </option>
                     );
                   })}
@@ -219,7 +219,7 @@ const ModalUser = (props) => {
           <Button variant="secondary" onClick={() => handleCloseModal()}>
             Close
           </Button>
-          <Button variant="warning" onClick={() => handleConfirmUser()}>
+          <Button variant="warning" onClick={() => handleConfirmProduct()}>
             {action === "CREATE" ? "Create user" : "Save"}
           </Button>
         </Modal.Footer>
@@ -228,4 +228,4 @@ const ModalUser = (props) => {
   );
 };
 
-export default ModalUser;
+export default ModalProduct;

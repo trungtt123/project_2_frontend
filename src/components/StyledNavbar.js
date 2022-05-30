@@ -34,6 +34,9 @@ const NavHeader = () => {
               <NavLink to="/role" className="nav-link">
                 Role
               </NavLink>
+              <NavLink to="/productBatch" className="nav-link">
+                Product Batch
+              </NavLink>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">

@@ -1,70 +1,70 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllUsers } from "../Redux/userSlice";
-import { fetchRoleList } from "../Redux/privilegeSlice";
+import { fetchAllProducts, fetchAllProductType } from "../Redux/productSlice";
 import "./DashBoard.css";
 import _ from "lodash";
 import ModalDelete from "../components/ModalDelete";
-import ModalUser from "../components/ModalUser";
-import userService from "../Services/API/userService";
+import ModalProduct from "../components/ModalProduct";
+import productService from "../Services/API/productService";
 const ProductPage = () => {
   const dispatch = useDispatch();
-  const { userList, isLoading } = useSelector((state) => state.user);
-  const { roleList } = useSelector((state) => state.privilege);
+  const { productList, productTypeList } = useSelector(
+    (state) => state.product
+  );
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
-  const [isShowModalUser, setIsShowModalUser] = useState(false);
+  const [isShowModalProduct, setIsShowModalProduct] = useState(false);
   const [action, setAction] = useState("");
-  const userData = useRef({});
+  const productData = useRef({});
   useEffect(() => {
-    dispatch(fetchAllUsers());
-    dispatch(fetchRoleList());
+    dispatch(fetchAllProducts());
+    dispatch(fetchAllProductType());
   }, []);
-  const handleDeleteUser = async ({ userId, email, userName }) => {
-    userData.current = { userId, email, userName };
+  const handleDeleteProduct = async ({ productId, productName }) => {
+    productData.current = { productId, productName };
     setIsShowModalDelete(true);
   };
-  const handleEditUser = (item) => {
-    userData.current = _.cloneDeep(item);
-    setIsShowModalUser(true);
+  const handleEditProduct = (item) => {
+    productData.current = _.cloneDeep(item);
+    setIsShowModalProduct(true);
     setAction("EDIT");
   };
-  const handleCreateUser = () => {
-    setIsShowModalUser(true);
+  const handleCreateProduct = () => {
+    setIsShowModalProduct(true);
     setAction("CREATE");
   };
   const handleClose = async () => {
-    setIsShowModalUser(false);
+    setIsShowModalProduct(false);
     setIsShowModalDelete(false);
-    dispatch(fetchAllUsers());
+    dispatch(fetchAllProducts());
   };
-  const confirmDeleteUser = async () => {
-    await userService.deleteUser(userData.current.userId);
+  const confirmDeleteProduct = async () => {
+    await productService.deleteProduct(productData.current.productId);
     setIsShowModalDelete(false);
     // } else {
     //     toast.error(response.EM);
     // }
   };
-  console.log("update", userList, isLoading);
+  console.log("update", productList);
   return (
     <>
       <div className="container manage-user-container">
         <div className="user-header d-flex justify-content-between mt-4 mb-5">
           <div className="title d-flex align-items-center ">
-            <h1>Manage user</h1>
+            <h1>Manage Product</h1>
           </div>
           <div className="actions d-flex gap-3 p-2">
             <button
               className="btn btn-success d-flex align-content-center"
-              onClick={() => dispatch(fetchAllUsers())}
+              onClick={() => dispatch(fetchAllProducts())}
             >
               <i className="fa fa-refresh pe-2 fs-4" />
               Refresh
             </button>
             <button
               className="btn btn-primary d-flex align-content-center"
-              onClick={() => handleCreateUser()}
+              onClick={() => handleCreateProduct()}
             >
-              <i className="fa fa-plus-circle pe-2 fs-4" /> Add new user
+              <i className="fa fa-plus-circle pe-2 fs-4" /> Add new product
             </button>
           </div>
         </div>
@@ -73,41 +73,62 @@ const ProductPage = () => {
             <thead>
               <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Tên sản phẩm</th>
-                <th scope="col">Xuất xứ</th>
-                <th scope="col">Công ty sản xuất</th>
-                <th scope="col">Loại sản phẩm</th>
-                <th scope="col">Đơn vị đo</th>
-                {/* <th scope="col">Action</th> */}
+                <th scope="col">Product name</th>
+                <th scope="col">Product Origin</th>
+                <th scope="col">Product Supplier</th>
+                <th scope="col">Product Type</th>
+                <th scope="col">Product Unit</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
-              {userList?.length > 0 ? (
+              {productList?.length > 0 ? (
                 <>
-                  {userList.map((item, index) => {
+                  {productList.map((item, index) => {
                     return (
                       <tr key={`row-${index}`}>
-                        <td>{item?.userId}</td>
-                        <td>{item?.userName}</td>
-                        <td>{item?.givenName}</td>
-                        <td>{item?.surName}</td>
-                        <td>{item?.email}</td>
-                        <td>
-                          {item?.roleId
-                            ? roleList[item.roleId - 1]?.roleName
-                            : "unknown"}
-                        </td>
+                        <td>{item?.productId}</td>
+                        <td>{item?.productName}</td>
+                        <td>{item?.productOrgin}</td>
+                        <td>{item?.productSuplier}</td>
+                        {item?.productTypeId
+                          ? productTypeList.map((productTypeItem, index) => {
+                              console.log("item", item.productTypeId);
+                              console.log("productItem", productTypeItem);
+                              if (
+                                +productTypeItem?.productTypeId ===
+                                item.productTypeId
+                              ) {
+                                console.log("true");
+                                return (
+                                  <tr
+                                    key={`${item.productTypeId}`}
+                                    style={{
+                                      padding: "8px",
+                                      justifyContent: "center",
+                                      borderTop: "1px solid #dddddd",
+                                      display: "flex",
+                                      background: "transparent",
+                                    }}
+                                  >
+                                    {productTypeItem.productTypeName}
+                                  </tr>
+                                );
+                              }
+                            })
+                          : "unknown"}
+                        <td>{item?.productUnit}</td>
                         <td className="">
                           <button
                             className="btn btn-warning mx-2"
-                            onClick={() => handleEditUser(item)}
+                            onClick={() => handleEditProduct(item)}
                           >
                             <i className="fa fa-pencil pe-2 fs-6" />
                             Edit
                           </button>
                           <button
                             className="btn btn-danger"
-                            onClick={() => handleDeleteUser(item)}
+                            onClick={() => handleDeleteProduct(item)}
                           >
                             <i className="fa fa-trash-o pe-2 fs-6" />
                             Delete
@@ -120,7 +141,7 @@ const ProductPage = () => {
               ) : (
                 <>
                   <tr>
-                    <td>Not found users</td>
+                    <td>Not found products</td>
                   </tr>
                 </>
               )}
@@ -130,14 +151,14 @@ const ProductPage = () => {
       </div>
       <ModalDelete
         show={isShowModalDelete}
-        userData={userData.current}
+        deleteName={productData.current.productName}
         handleClose={handleClose}
-        confirmDeleteUser={confirmDeleteUser}
+        confirmDelete={confirmDeleteProduct}
       />
-      <ModalUser
-        show={isShowModalUser}
+      <ModalProduct
+        show={isShowModalProduct}
         handleClose={handleClose}
-        dataModalUser={userData.current}
+        dataModalProduct={productData.current}
         action={action}
       />
     </>

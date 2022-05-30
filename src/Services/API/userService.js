@@ -1,7 +1,7 @@
 import axios from "../../setups/custom_axios";
 
 const getAllUsers = () => {
-  return axios.get("/getallusers");
+  return axios.get("/get-all-users");
 };
 const createUser = (payload) => {
   const { username, firstName, lastName, email, password, role } = payload;

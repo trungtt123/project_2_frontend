@@ -1,10 +1,6 @@
-
 import "./LoginPages.scss";
 
-
 const NotfoundPage = () => {
-  
-  return <>Notfound Page</>
-    
+  return <>Notfound Page</>;
 };
 export default NotfoundPage;

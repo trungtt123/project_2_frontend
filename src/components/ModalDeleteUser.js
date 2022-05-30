@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-const ModalDelete = (props) => {
+const ModalDeleteUser = (props) => {
   return (
     <>
       <Modal show={props.show} onHide={props.handleClose} centered>
@@ -9,8 +9,8 @@ const ModalDelete = (props) => {
           <Modal.Title>Confirm Delete User</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Woohoo, are you sure to delete this product:
-          {props.deleteName} ?
+          Woohoo, are you sure to delete this username:
+          {props.userData.username} with email {props.userData.email} ?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={props.handleClose}>
@@ -25,4 +25,4 @@ const ModalDelete = (props) => {
   );
 };
 
-export default ModalDelete;
+export default ModalDeleteUser;

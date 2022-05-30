@@ -1,69 +1,77 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllUsers } from "../Redux/userSlice";
-import { fetchRoleList } from "../Redux/privilegeSlice";
+import { getListProductBatches } from "../Redux/productBatchSlice";
+import { fetchAllProducts } from "../Redux/productSlice";
 import "./DashBoard.css";
 import _ from "lodash";
-import ModalDeleteUser from "../components/ModalDeleteUser";
-import ModalUser from "../components/ModalUser";
-import userService from "../Services/API/userService";
-const DashBoard = () => {
+import ModalDelete from "../components/ModalDelete";
+import ModalProductBatch from "../components/ModalProductBatch";
+import productBatchService from "../Services/API/productBatchService";
+import ModalNewBatch from "../components/ModalNewBatch";
+const ProductBatchPage = () => {
   const dispatch = useDispatch();
-  const { userList, isLoading } = useSelector((state) => state.user);
-  const { roleList } = useSelector((state) => state.privilege);
+  const { productBatchList } = useSelector((state) => state.productBatch);
+  const { productList } = useSelector((state) => state.product);
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
-  const [isShowModalUser, setIsShowModalUser] = useState(false);
-  const [checkList, setCheckList] = useState([]);
-  const [action, setAction] = useState("");
-  const userData = useRef({});
+  const [isShowModalNewBatch, setIsShowModalNewBatch] = useState(false);
+  const [isShowModalProductBatch, setIsShowModalProductBatch] = useState(false);
+  // const [checkList, setCheckList] = useState([]);
+  const productBatchData = useRef({});
   useEffect(() => {
-    dispatch(fetchAllUsers());
-    dispatch(fetchRoleList());
+    dispatch(getListProductBatches());
+    dispatch(fetchAllProducts());
   }, []);
-  const handleDeleteUser = async ({ userId, email, userName }) => {
-    userData.current = { userId, email, userName };
+  const handleDeleteProductBatch = async ({
+    productBatchId,
+    productBatchName,
+  }) => {
+    productBatchData.current = { productBatchId, productBatchName };
     setIsShowModalDelete(true);
   };
-  const handleEditUser = (item) => {
-    userData.current = _.cloneDeep(item);
-    setIsShowModalUser(true);
-    setAction("EDIT");
+  const handleDetailProductBatch = (item) => {
+    productBatchData.current = _.cloneDeep(item);
+    setIsShowModalProductBatch(true);
+    dispatch(getListProductBatches());
   };
-  const handleCreateUser = () => {
-    setIsShowModalUser(true);
-    setAction("CREATE");
+  const handleCreateProductBatch = () => {
+    setIsShowModalProductBatch(true);
   };
   const handleClose = async () => {
-    setIsShowModalUser(false);
+    setIsShowModalProductBatch(false);
     setIsShowModalDelete(false);
-    dispatch(fetchAllUsers());
+    setIsShowModalNewBatch(false);
+    dispatch(getListProductBatches());
   };
-  const confirmDeleteUser = async () => {
-    await userService.deleteUser(userData.current.userId);
+  const confirmDeleteProductBatch = async () => {
+    console.log("Delete", productBatchData.current.productBatchId);
+    await productBatchService.deleteProductBatch(
+      productBatchData.current.productBatchId
+    );
     setIsShowModalDelete(false);
   };
   const handleChecked = async (isChecked, userId) => {};
-  console.log("update", userList, isLoading);
+  console.log("update", productBatchList);
   return (
     <>
       <div className="container manage-user-container">
         <div className="user-header d-flex justify-content-between mt-4 mb-5">
           <div className="title d-flex align-items-center ">
-            <h1>Manage user</h1>
+            <h1>Manage Product Batch</h1>
           </div>
           <div className="actions d-flex gap-3 p-2">
             <button
               className="btn btn-success d-flex align-content-center"
-              onClick={() => dispatch(fetchAllUsers())}
+              onClick={() => dispatch(getListProductBatches())}
             >
               <i className="fa fa-refresh pe-2 fs-4" />
               Refresh
             </button>
             <button
               className="btn btn-primary d-flex align-content-center"
-              onClick={() => handleCreateUser()}
+              onClick={() => setIsShowModalNewBatch(true)}
             >
-              <i className="fa fa-plus-circle pe-2 fs-4" /> Add new user
+              <i className="fa fa-plus-circle pe-2 fs-4" /> Add new
+              product-batch
             </button>
           </div>
         </div>
@@ -73,18 +81,15 @@ const DashBoard = () => {
               <tr>
                 <th scope="col">Select</th>
                 <th scope="col">ID</th>
-                <th scope="col">Username</th>
-                <th scope="col">First name</th>
-                <th scope="col">Last name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Role</th>
+                <th scope="col">ProductBatchName</th>
+                <th scope="col">input Info Id</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
-              {userList?.length > 0 ? (
+              {productBatchList?.length > 0 ? (
                 <>
-                  {userList.map((item, index) => {
+                  {productBatchList.map((item, index) => {
                     return (
                       <tr key={`row-${index}`}>
                         <td>
@@ -100,27 +105,25 @@ const DashBoard = () => {
                             />
                           </div>
                         </td>
-                        <td>{item?.userId}</td>
-                        <td>{item?.userName}</td>
-                        <td>{item?.givenName}</td>
-                        <td>{item?.surName}</td>
-                        <td>{item?.email}</td>
-                        <td>
-                          {item?.roleId
-                            ? roleList[item.roleId - 1]?.roleName
-                            : "unknown"}
+                        <td>{item?.productBatchId}</td>
+                        <td>{item?.productBatchName}</td>
+                        <td
+                          style={{ padding: "0" }}
+                          className="flex align-items-center"
+                        >
+                          {item?.inputInfoId}
                         </td>
                         <td className="">
                           <button
                             className="btn btn-warning mx-2"
-                            onClick={() => handleEditUser(item)}
+                            onClick={() => handleDetailProductBatch(item)}
                           >
                             <i className="fa fa-pencil pe-2 fs-6" />
-                            Edit
+                            Detail
                           </button>
                           <button
                             className="btn btn-danger"
-                            onClick={() => handleDeleteUser(item)}
+                            onClick={() => handleDeleteProductBatch(item)}
                           >
                             <i className="fa fa-trash-o pe-2 fs-6" />
                             Delete
@@ -141,19 +144,19 @@ const DashBoard = () => {
           </table>
         </div>
       </div>
-      <ModalDeleteUser
+      <ModalDelete
         show={isShowModalDelete}
-        userData={userData.current}
+        deleteName={productBatchData.current.productBatchName}
         handleClose={handleClose}
-        confirmDelete={confirmDeleteUser}
+        confirmDelete={confirmDeleteProductBatch}
       />
-      <ModalUser
-        show={isShowModalUser}
+      <ModalProductBatch
+        show={isShowModalProductBatch}
         handleClose={handleClose}
-        dataModalUser={userData.current}
-        action={action}
+        productBatchId={productBatchData.current.productBatchId}
       />
+      <ModalNewBatch show={isShowModalNewBatch} handleClose={handleClose} />
     </>
   );
 };
-export default DashBoard;
+export default ProductBatchPage;

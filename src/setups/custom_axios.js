@@ -57,6 +57,8 @@ instance.interceptors.response.use(
 
       // bad request
       case 400: {
+        toast.error("Something wrong from server");
+
         return Promise.reject(error);
       }
 
