@@ -185,11 +185,12 @@ const ModalUser = (props) => {
                 }
               />
             </div>
-            <div className="col-12 col-sm-6 form-group" >
+            <div className="col-12 col-sm-6 form-group">
               <label>
                 Role (<span className="text-danger">*</span>)
               </label>
-              <select  style={{fontSize: 16, height: 48}}
+              <select
+                style={{ fontSize: 16, height: 48 }}
                 className={
                   validInput.role
                     ? "form-select my-2 form-select-lg"

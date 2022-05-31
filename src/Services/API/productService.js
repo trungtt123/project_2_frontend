@@ -1,7 +1,7 @@
 import axios from "../../setups/custom_axios";
 
 const getAllProducts = () => {
-  console.log("trung da den day")
+  console.log("trung da den day");
   return axios.get("/list-products");
 };
 const createProduct = (payload) => {
@@ -16,7 +16,8 @@ const createProduct = (payload) => {
   });
 };
 const updateProduct = (payload) => {
-  const { productId, productName, Orgin, companySuplier, typeId, productUnit} = payload;
+  const { productId, productName, Orgin, companySuplier, typeId, productUnit } =
+    payload;
 
   return axios.put("/product", {
     productId: productId,
@@ -24,11 +25,16 @@ const updateProduct = (payload) => {
     ProductOrgin: Orgin,
     productSuplier: companySuplier,
     productTypeId: typeId,
-    productUnit: + productUnit,
+    productUnit: +productUnit,
   });
 };
 const deleteProduct = (productId) => {
   return axios.delete(`/product?productId=${productId}`);
 };
-const productService = { getAllProducts, createProduct, updateProduct, deleteProduct };
+const productService = {
+  getAllProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+};
 export default productService;

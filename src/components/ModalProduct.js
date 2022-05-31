@@ -9,34 +9,39 @@ const ModalProduct = (props) => {
   const { action, dataModalProduct, handleClose, show } = props;
   const { roleList } = useSelector((state) => state.privilege);
   const defaultProductData = {
-    productId: "", 
-    productName: "", 
-    Orgin: "", 
-    companySuplier: "", 
-    typeId: "", 
+    productId: "",
+    productName: "",
+    Orgin: "",
+    companySuplier: "",
+    typeId: "",
     productUnit: "",
   };
   const defaultValidInput = {
-    
-    productName: true, 
-    Orgin: true, 
-    companySuplier: true, 
-    typeId: true, 
+    productName: true,
+    Orgin: true,
+    companySuplier: true,
+    typeId: true,
     productUnit: true,
   };
   const [productData, setProductData] = useState(defaultProductData);
   const [validInput, setValidInput] = useState(defaultValidInput);
   useEffect(() => {
     if (action === "EDIT") {
-      const { productId, productName, productOrgin, productSuplier, productTypeId, productUnit } =
-        dataModalProduct;
+      const {
+        productId,
+        productName,
+        productOrgin,
+        productSuplier,
+        productTypeId,
+        productUnit,
+      } = dataModalProduct;
       console.log("data<odal", dataModalProduct);
       setProductData({
-        productId: productId, 
-        productName: productName, 
-        Orgin: productOrgin, 
-        companySuplier: productSuplier, 
-        typeId: productTypeId, 
+        productId: productId,
+        productName: productName,
+        Orgin: productOrgin,
+        companySuplier: productSuplier,
+        typeId: productTypeId,
         productUnit: productUnit,
       });
     }
@@ -52,8 +57,22 @@ const ModalProduct = (props) => {
     setValidInput(defaultValidInput);
     let arr =
       action === "CREATE"
-        ? ["productId", "productName", "Orgin", "companySuplier", "typeId", "productUnit"]
-        : ["productId", "productName", "Orgin", "companySuplier", "typeId", "productUnit"];
+        ? [
+            "productId",
+            "productName",
+            "Orgin",
+            "companySuplier",
+            "typeId",
+            "productUnit",
+          ]
+        : [
+            "productId",
+            "productName",
+            "Orgin",
+            "companySuplier",
+            "typeId",
+            "productUnit",
+          ];
     for (let i = 0; i < arr.length; i++) {
       if (!productData[arr[i]]) {
         let _validInput = _.cloneDeep(defaultValidInput);
@@ -200,11 +219,12 @@ const ModalProduct = (props) => {
                 }
               />
             </div>
-            <div className="col-12 col-sm-6 form-group" >
+            <div className="col-12 col-sm-6 form-group">
               <label>
                 Product Unit (<span className="text-danger">*</span>)
               </label>
-              <select  style={{fontSize: 16, height: 48}}
+              <select
+                style={{ fontSize: 16, height: 48 }}
                 className={
                   validInput.role
                     ? "form-select my-2 form-select-lg"

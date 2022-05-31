@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 const ModalDelete = (props) => {
   //console.log(props.userData);
-  
+
   return (
     <>
       <Modal show={props.show} onHide={props.handleClose} centered>

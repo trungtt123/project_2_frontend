@@ -14,20 +14,19 @@ import { useEffect, useState } from "react";
 import UnAuth from "./Routes/unAuthRoute";
 import { Switch } from "react-router-dom";
 import NotfoundPage from "./pages/NotfoundPage";
+import InputInfoPage from "./pages/InputInfoPage";
 function App() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { user, isAuthenticated, isLoading } = useSelector(
-    
     (state) => state.auth
   );
-  
+
   const [component, setComponent] = useState();
   const getCurrentView = () => {
     if (isAuthenticated === false) {
       return <UnAuth />;
     } else
-    
       return (
         <>
           <div className="app-header">
@@ -38,11 +37,11 @@ function App() {
             <Route path="/about" exact component={About} />
             <Route path="/login" exact component={LoginPage} />
             <Route path="/products" exact component={ProductPage} />
+            <Route path="/input-info-page" exact component={InputInfoPage} />
             <Route path="*" component={NotfoundPage} />
           </Switch>
         </>
       );
-    
   };
   useEffect(() => {
     dispatch(loadUser());

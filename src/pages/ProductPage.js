@@ -19,7 +19,7 @@ const ProductPage = () => {
     dispatch(fetchAllProducts());
     //dispatch(fetchRoleList());
   }, []);
-  const handleDeleteProduct = async ({ productId}) => {
+  const handleDeleteProduct = async ({ productId }) => {
     productData.current = { productId };
     setIsShowModalDelete(true);
   };
