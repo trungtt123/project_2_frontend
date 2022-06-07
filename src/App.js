@@ -15,6 +15,8 @@ import UnAuth from "./Routes/unAuthRoute";
 import { Switch } from "react-router-dom";
 import NotfoundPage from "./pages/NotfoundPage";
 import InputInfoPage from "./pages/InputInfoPage";
+import { fetchAllUsers } from "../src/Redux/userSlice";
+import { fetchAllProducts } from "../src/Redux/productSlice";
 function App() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -45,6 +47,8 @@ function App() {
   };
   useEffect(() => {
     dispatch(loadUser());
+    dispatch(fetchAllUsers());
+    dispatch(fetchAllProducts());
     setComponent(getCurrentView());
   }, []);
   useEffect(() => {
