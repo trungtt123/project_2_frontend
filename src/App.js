@@ -7,7 +7,7 @@ import StyledNavbar from "./components/StyledNavbar";
 import ProductPage from "./pages/ProductPage";
 import LoginPage from "./pages/LoginPages";
 import { Triangle } from "react-loader-spinner";
-import About from "./pages/About";
+// import About from "./pages/About";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./Redux/authSlice";
 import { useEffect, useState } from "react";
@@ -15,6 +15,8 @@ import UnAuth from "./Routes/unAuthRoute";
 import { Switch } from "react-router-dom";
 import NotfoundPage from "./pages/NotfoundPage";
 import ProductBatchPage from "./pages/ProductBatch";
+
+import ProductTypePage from "./pages/ProductTypePage";
 function App() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -34,10 +36,11 @@ function App() {
           </div>
           <Switch>
             <Route path="/" exact component={DashBoard} />
-            <Route path="/about" exact component={About} />
+            {/* <Route path="/about" exact component={About} /> */}
             <Route path="/login" exact component={LoginPage} />
             <Route path="/products" exact component={ProductPage} />
             <Route path="/productBatch" exact component={ProductBatchPage} />
+            <Route path="/productType" exact component={ProductTypePage} />
             <Route path="*" component={NotfoundPage} />
           </Switch>
         </>

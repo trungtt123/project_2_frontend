@@ -1,69 +1,81 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllUsers } from "../Redux/userSlice";
-import { fetchRoleList } from "../Redux/privilegeSlice";
+import { getListProductTypes } from "../Redux/productTypeSlice";
+import { fetchAllProducts } from "../Redux/productSlice";
 import "./DashBoard.css";
 import _ from "lodash";
-import ModalDeleteUser from "../components/ModalDeleteUser";
-import ModalUser from "../components/ModalUser";
-import userService from "../Services/API/userService";
-const DashBoard = () => {
+import ModalDelete from "../components/ModalDelete";
+import ModalProductType from "../components/ModalProductType";
+import productTypeService from "../Services/API/productTypeService";
+import ModalNewType from "../components/ModalNewType";
+const ProductTypePage = () => {
   const dispatch = useDispatch();
-  const { userList, isLoading } = useSelector((state) => state.user);
-  const { roleList } = useSelector((state) => state.privilege);
+  const { productTypeList } = useSelector((state) => state.productTypes);
+  const { productList } = useSelector((state) => state.product);
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
-  const [isShowModalUser, setIsShowModalUser] = useState(false);
-  const [checkList, setCheckList] = useState([]);
-  const [action, setAction] = useState("");
-  const userData = useRef({});
+  const [isShowModalNewType, setIsShowModalNewType] = useState(false);
+  const [isShowModalProductType, setIsShowModalProductType] = useState(false);
+  // const [checkList, setCheckList] = useState([]);
+  const productTypeData = useRef({});
   useEffect(() => {
-    dispatch(fetchAllUsers());
-    dispatch(fetchRoleList());
+    dispatch(getListProductTypes());
+    //dispatch(fetchAllProducts());
   }, []);
-  const handleDeleteUser = async ({ userId, email, userName }) => {
-    userData.current = { userId, email, userName };
+  const handleDeleteProductType = async ({
+    productTypeId,
+    productTypeName,
+  }) => {
+    productTypeData.current = { productTypeId, productTypeName };
     setIsShowModalDelete(true);
   };
-  const handleEditUser = (item) => {
-    userData.current = _.cloneDeep(item);
-    setIsShowModalUser(true);
-    setAction("EDIT");
+  const handleDetailProductType = (item) => {
+    productTypeData.current = _.cloneDeep(item);
+    setIsShowModalProductType(true);
+    dispatch(getListProductTypes());
   };
-  const handleCreateUser = () => {
-    setIsShowModalUser(true);
-    setAction("CREATE");
+  const handleEditProductType = (item) => {
+    productTypeData.current = _.cloneDeep(item);
+    setIsShowModalProductType(true);
+    // setAction("EDIT");
+  };
+  const handleCreateProductType = () => {
+    setIsShowModalProductType(true);
   };
   const handleClose = async () => {
-    setIsShowModalUser(false);
+    setIsShowModalProductType(false);
     setIsShowModalDelete(false);
-    dispatch(fetchAllUsers());
+    setIsShowModalNewType(false);
+    dispatch(getListProductTypes());
   };
-  const confirmDeleteUser = async () => {
-    await userService.deleteUser(userData.current.userId);
+  const confirmDeleteProductType = async () => {
+    console.log("Delete", productTypeData.current.productTypeId);
+    await productTypeService.deleteProductType(
+      productTypeData.current.productTypeId
+    );
     setIsShowModalDelete(false);
   };
   const handleChecked = async (isChecked, userId) => {};
-  console.log("update", userList, isLoading);
+  console.log("update", productTypeList);
   return (
     <>
       <div className="container manage-user-container">
         <div className="user-header d-flex justify-content-between mt-4 mb-5">
           <div className="title d-flex align-items-center ">
-            <h1>Trang quản lí người dùng</h1>
+            <h1>Trang quản lý loại sản phẩm</h1>
           </div>
           <div className="actions d-flex gap-3 p-2">
             <button
               className="btn btn-success d-flex align-content-center"
-              onClick={() => dispatch(fetchAllUsers())}
+              onClick={() => dispatch(getListProductTypes())}
             >
               <i className="fa fa-refresh pe-2 fs-4" />
               Tải lại trang
             </button>
             <button
               className="btn btn-primary d-flex align-content-center"
-              onClick={() => handleCreateUser()}
+              onClick={() => setIsShowModalNewType(true)}
             >
-              <i className="fa fa-plus-circle pe-2 fs-4" /> Thêm người dùng
+              <i className="fa fa-plus-circle pe-2 fs-4" /> Thêm loại sản phẩm
             </button>
           </div>
         </div>
@@ -71,20 +83,17 @@ const DashBoard = () => {
           <table className="table table-bordered table-hover">
             <thead>
               <tr>
-                {/* <th scope="col">Select</th> */}
+                {/* <th scope="col">Chọn</th> */}
                 <th scope="col">ID</th>
-                <th scope="col">Tên tài khoản</th>
-                <th scope="col">Họ </th>
-                <th scope="col">Tên</th>
-                <th scope="col">Email</th>
-                <th scope="col">Vai trò</th>
+                <th scope="col">Tên loại sản phẩm</th>
+
                 <th scope="col">Chức năng</th>
               </tr>
             </thead>
             <tbody>
-              {userList?.length > 0 ? (
+              {productTypeList?.length > 0 ? (
                 <>
-                  {userList.map((item, index) => {
+                  {productTypeList.map((item, index) => {
                     return (
                       <tr key={`row-${index}`}>
                         {/* <td>
@@ -100,27 +109,20 @@ const DashBoard = () => {
                             />
                           </div>
                         </td> */}
-                        <td>{item?.userId}</td>
-                        <td>{item?.userName}</td>
-                        <td>{item?.givenName}</td>
-                        <td>{item?.surName}</td>
-                        <td>{item?.email}</td>
-                        <td>
-                          {item?.roleId
-                            ? roleList[item.roleId - 1]?.roleName
-                            : "unknown"}
-                        </td>
+                        <td>{item?.productTypeId}</td>
+                        <td>{item?.productTypeName}</td>
+
                         <td className="">
                           <button
                             className="btn btn-warning mx-2"
-                            onClick={() => handleEditUser(item)}
+                            onClick={() => handleEditProductType(item)}
                           >
                             <i className="fa fa-pencil pe-2 fs-6" />
                             Chỉnh sửa
                           </button>
                           <button
                             className="btn btn-danger"
-                            onClick={() => handleDeleteUser(item)}
+                            onClick={() => handleDeleteProductType(item)}
                           >
                             <i className="fa fa-trash-o pe-2 fs-6" />
                             Xóa
@@ -133,7 +135,7 @@ const DashBoard = () => {
               ) : (
                 <>
                   <tr>
-                    <td>Không tìm thấy người dùng</td>
+                    <td>Not found users</td>
                   </tr>
                 </>
               )}
@@ -141,19 +143,19 @@ const DashBoard = () => {
           </table>
         </div>
       </div>
-      <ModalDeleteUser
+      <ModalDelete
         show={isShowModalDelete}
-        userData={userData.current}
+        deleteName={productTypeData.current.productTypeName}
         handleClose={handleClose}
-        confirmDelete={confirmDeleteUser}
+        confirmDelete={confirmDeleteProductType}
       />
-      <ModalUser
-        show={isShowModalUser}
+      <ModalProductType
+        show={isShowModalProductType}
         handleClose={handleClose}
-        dataModalUser={userData.current}
-        action={action}
+        productTypeId={productTypeData.current.productTypeId}
       />
+      <ModalNewType show={isShowModalNewType} handleClose={handleClose} />
     </>
   );
 };
-export default DashBoard;
+export default ProductTypePage;
