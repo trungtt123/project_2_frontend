@@ -6,18 +6,18 @@ const ModalDelete = (props) => {
     <>
       <Modal show={props.show} onHide={props.handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Confirm Delete User</Modal.Title>
+          <Modal.Title>Xác nhận xóa</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Woohoo, are you sure to delete this product:
+          Woohoo, bạn muốn xóa sản phẩm này: &nbsp;
           {props.deleteName} ?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={props.handleClose}>
-            Close
+            Đóng
           </Button>
           <Button variant="primary" onClick={props.confirmDelete}>
-            Confirm
+            Xác nhận
           </Button>
         </Modal.Footer>
       </Modal>

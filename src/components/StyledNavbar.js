@@ -16,27 +16,28 @@ const NavHeader = () => {
       <Navbar bg="header" expand="lg">
         <Container>
           <Navbar.Brand href="/" className="nav-branch">
-            React-Bootstrap
+            Nhóm 1
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               {/* Mấy cái thư viện thì chỉ cần import className của nó là đủ */}
               <NavLink to="/" exact className="nav-link">
-                Home
-              </NavLink>
-              <NavLink to="/about" className="nav-link">
-                About
+                Trang chủ
               </NavLink>
               <NavLink to="/products" className="nav-link">
-                Products
+                Sản phẩm
               </NavLink>
+              <NavLink to="/productType" className="nav-link">
+                Loại sản phẩm
+              </NavLink>
+
               <NavLink to="/role" className="nav-link">
                 Role
               </NavLink>
-              <NavLink to="/productBatch" className="nav-link">
+              {/* <NavLink to="/productBatch" className="nav-link">
                 Product Batch
-              </NavLink>
+              </NavLink> */}
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">

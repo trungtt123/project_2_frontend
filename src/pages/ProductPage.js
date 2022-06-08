@@ -50,7 +50,7 @@ const ProductPage = () => {
       <div className="container manage-user-container">
         <div className="user-header d-flex justify-content-between mt-4 mb-5">
           <div className="title d-flex align-items-center ">
-            <h1>Manage Product</h1>
+            <h1>Trang quản lí sản phẩm</h1>
           </div>
           <div className="actions d-flex gap-3 p-2">
             <button
@@ -58,13 +58,13 @@ const ProductPage = () => {
               onClick={() => dispatch(fetchAllProducts())}
             >
               <i className="fa fa-refresh pe-2 fs-4" />
-              Refresh
+              Tải lại trang
             </button>
             <button
               className="btn btn-primary d-flex align-content-center"
               onClick={() => handleCreateProduct()}
             >
-              <i className="fa fa-plus-circle pe-2 fs-4" /> Add new product
+              <i className="fa fa-plus-circle pe-2 fs-4" /> Thêm sản phẩm
             </button>
           </div>
         </div>
@@ -73,12 +73,12 @@ const ProductPage = () => {
             <thead>
               <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Product name</th>
-                <th scope="col">Product Origin</th>
-                <th scope="col">Product Supplier</th>
-                <th scope="col">Product Type</th>
-                <th scope="col">Product Unit</th>
-                <th scope="col">Action</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Nơi xuất xứ</th>
+                <th scope="col">Nhà cung cấp</th>
+                <th scope="col">Loại sản phẩm</th>
+                <th scope="col">Đơn vị</th>
+                <th scope="col">Chức năng</th>
               </tr>
             </thead>
             <tbody>
@@ -124,14 +124,14 @@ const ProductPage = () => {
                             onClick={() => handleEditProduct(item)}
                           >
                             <i className="fa fa-pencil pe-2 fs-6" />
-                            Edit
+                            Chỉnh sửa
                           </button>
                           <button
                             className="btn btn-danger"
                             onClick={() => handleDeleteProduct(item)}
                           >
                             <i className="fa fa-trash-o pe-2 fs-6" />
-                            Delete
+                            Xóa
                           </button>
                         </td>
                       </tr>
@@ -141,7 +141,7 @@ const ProductPage = () => {
               ) : (
                 <>
                   <tr>
-                    <td>Not found products</td>
+                    <td>Không tìm thấy sản phẩm</td>
                   </tr>
                 </>
               )}
