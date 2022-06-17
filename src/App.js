@@ -17,6 +17,9 @@ import NotfoundPage from "./pages/NotfoundPage";
 import ProductBatchPage from "./pages/ProductBatch";
 
 import ProductTypePage from "./pages/ProductTypePage";
+import InputInfoPage from "./pages/InputInfoPage";
+import { fetchAllUsers } from "../src/Redux/userSlice";
+import { fetchAllProducts } from "../src/Redux/productSlice";
 function App() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -41,6 +44,7 @@ function App() {
             <Route path="/products" exact component={ProductPage} />
             <Route path="/productBatch" exact component={ProductBatchPage} />
             <Route path="/productType" exact component={ProductTypePage} />
+            <Route path="/input-info-page" exact component={InputInfoPage} />
             <Route path="*" component={NotfoundPage} />
           </Switch>
         </>
@@ -48,6 +52,8 @@ function App() {
   };
   useEffect(() => {
     dispatch(loadUser());
+    dispatch(fetchAllUsers());
+    dispatch(fetchAllProducts());
     setComponent(getCurrentView());
   }, []);
   useEffect(() => {

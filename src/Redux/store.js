@@ -5,9 +5,12 @@ import privilegeReducer from "./privilegeSlice";
 import productBatchReducer from "./productBatchSlice";
 import productReducer from "./productSlice";
 import productTypeReducer from "./productTypeSlice";
+
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    product: productReducer,
+    productBatch: productBatchReducer,
     auth: authReducer,
     privilege: privilegeReducer,
     productBatch: productBatchReducer,
