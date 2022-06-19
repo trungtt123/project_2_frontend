@@ -5,22 +5,23 @@ import { toast } from "react-toastify";
 import _ from "lodash";
 import { useSelector } from "react-redux";
 import productService from "../Services/API/productService";
+
 const ModalProduct = (props) => {
   const { action, dataModalProduct, handleClose, show } = props;
-  const { roleList } = useSelector((state) => state.privilege);
+  const { productTypeList } = useSelector((state) => state.product);
+
   const defaultProductData = {
-    productId: "",
     productName: "",
-    Orgin: "",
-    companySuplier: "",
-    typeId: "",
+    productOrgin: "",
+    productSuplier: "",
+    productTypeId: "",
     productUnit: "",
   };
   const defaultValidInput = {
     productName: true,
-    Orgin: true,
-    companySuplier: true,
-    typeId: true,
+    productOrgin: true,
+    productSuplier: true,
+    productTypeId: true,
     productUnit: true,
   };
   const [productData, setProductData] = useState(defaultProductData);
@@ -37,18 +38,18 @@ const ModalProduct = (props) => {
       } = dataModalProduct;
       console.log("data<odal", dataModalProduct);
       setProductData({
-        productId: productId,
-        productName: productName,
-        Orgin: productOrgin,
-        companySuplier: productSuplier,
-        typeId: productTypeId,
-        productUnit: productUnit,
+        productId,
+        productName,
+        productOrgin,
+        productSuplier,
+        productTypeId,
+        productUnit,
       });
     }
   }, [dataModalProduct, action]);
   const handleOnChangeInput = (value, name) => {
     console.log("handle chage", name, value);
-    //do {...} là swallow clone với các object.object vẫn là tham chiếu => clonedeep= lodash hoặc JSON.parse(JSON.stringify(userData))
+    //do {...} là swallow clone với các object.object vẫn là tham chiếu => clonedeep= lodash hoặc JSON.parse(JSON.stringify(productData))
     let _productData = _.cloneDeep(productData);
     _productData[name] = value;
     setProductData(_productData);
@@ -58,19 +59,17 @@ const ModalProduct = (props) => {
     let arr =
       action === "CREATE"
         ? [
-            "productId",
             "productName",
-            "Orgin",
-            "companySuplier",
-            "typeId",
+            "productOrgin",
+            "productSuplier",
+            "productTypeId",
             "productUnit",
           ]
         : [
-            "productId",
             "productName",
-            "Orgin",
-            "companySuplier",
-            "typeId",
+            "productOrgin",
+            "productSuplier",
+            "productTypeId",
             "productUnit",
           ];
     for (let i = 0; i < arr.length; i++) {
@@ -107,62 +106,24 @@ const ModalProduct = (props) => {
       <Modal
         size="lg"
         show={show}
-        className="modal-product"
+        className="modal-user"
         onHide={() => handleCloseModal()}
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            {action === "CREATE" ? "Create new product" : "Edit a product"}
+            {action === "CREATE" ? "Thêm sản phẩm" : "Chỉnh sửa sản phẩm"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="content-body row">
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Product (<span className="text-danger">*</span>)
+                Tên sản phẩm (<span className="text-danger">*</span>)
               </label>
               <input
                 type="text"
                 className={
-                  validInput.productId
-                    ? "form-control"
-                    : "form-control is-invalid"
-                }
-                value={productData.productId}
-                onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "productId")
-                }
-              />
-            </div>
-            {/* <div className="col-12 col-sm-6 form-group">
-              {action === "CREATE" && (
-                <>
-                  <label>
-                    Password 123(<span className="text-danger">*</span>)
-                  </label>
-                  <input
-                    type="password"
-                    className={
-                      validInput.password
-                        ? "form-control"
-                        : "form-control is-invalid"
-                    }
-                    value={userData.password}
-                    onChange={(event) =>
-                      handleOnChangeInput(event.target.value, "password")
-                    }
-                  />
-                </>
-              )}
-            </div> */}
-            <div className="col-12 col-sm-6 form-group">
-              <label>
-                Product name (<span className="text-danger">*</span>)
-              </label>
-              <input
-                type="text"
-                className={
-                  validInput.firstName
+                  validInput.productName
                     ? "form-control"
                     : "form-control is-invalid"
                 }
@@ -172,76 +133,81 @@ const ModalProduct = (props) => {
                 }
               />
             </div>
+
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Product Orgin (<span className="text-danger">*</span>)
+                Xuất xứ (<span className="text-danger">*</span>)
               </label>
               <input
                 type="text"
                 className={
-                  validInput.lastName
+                  validInput.productOrgin
                     ? "form-control"
                     : "form-control is-invalid"
                 }
-                value={productData.Orgin}
+                value={productData.productOrgin}
                 onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "Orgin")
+                  handleOnChangeInput(event.target.value, "productOrgin")
                 }
               />
             </div>
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Product Suplier (<span className="text-danger">*</span>)
+                Công ty sản xuất (<span className="text-danger">*</span>)
               </label>
               <input
                 type="text"
                 className={
-                  validInput.email ? "form-control" : "form-control is-invalid"
+                  validInput.productSuplier
+                    ? "form-control"
+                    : "form-control is-invalid"
                 }
                 value={productData.productSuplier}
                 onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "companySuplier")
+                  handleOnChangeInput(event.target.value, "productSuplier")
                 }
               />
             </div>
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Product Type ID (<span className="text-danger">*</span>)
+                Đơn vị (<span className="text-danger">*</span>)
               </label>
               <input
                 type="text"
                 className={
-                  validInput.email ? "form-control" : "form-control is-invalid"
+                  validInput.productUnit
+                    ? "form-control"
+                    : "form-control is-invalid"
                 }
-                value={productData.productTypeId}
+                value={productData.productUnit}
                 onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "typeId")
+                  handleOnChangeInput(event.target.value, "productUnit")
                 }
               />
             </div>
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Product Unit (<span className="text-danger">*</span>)
+                Loại sản phẩm (<span className="text-danger">*</span>)
               </label>
               <select
                 style={{ fontSize: 16, height: 48 }}
                 className={
-                  validInput.role
+                  validInput.productTypeId
                     ? "form-select my-2 form-select-lg"
                     : "form-select my-2 is-invalid form-select-lg"
                 }
                 onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "productUnit")
+                  handleOnChangeInput(event.target.value, "productTypeId")
                 }
-                value={productData.role}
+                value={productData.productTypeId}
               >
-                <option defaultValue>Choose Unit</option>
-                {roleList?.length > 0 &&
-                  roleList.map((item, index) => {
-                    console.log("roleId", item?.roleID);
+                <option defaultValue>Chọn loại sản phẩm</option>
+                {productTypeList?.length > 0 &&
+                  productTypeList.map((item, index) => {
+                    console.log("productTypeList", item?.productTypeId);
                     return (
-                      <option value={+item?.roleID} key={index}>
-                        {item?.roleName}
+                      <option value={+item?.productTypeId} key={index}>
+                        {item?.productTypeName}
                       </option>
                     );
                   })}
@@ -254,7 +220,7 @@ const ModalProduct = (props) => {
             Close
           </Button>
           <Button variant="warning" onClick={() => handleConfirmProduct()}>
-            {action === "CREATE" ? "Create product" : "Save"}
+            {action === "CREATE" ? "Thêm sản phẩm" : "Save"}
           </Button>
         </Modal.Footer>
       </Modal>
