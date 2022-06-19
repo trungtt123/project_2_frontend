@@ -111,14 +111,14 @@ const ModalProduct = (props) => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            {action === "CREATE" ? "Create new user" : "Edit a user"}
+            {action === "CREATE" ? "Thêm sản phẩm" : "Chỉnh sửa sản phẩm"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="content-body row">
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Product name (<span className="text-danger">*</span>)
+                Tên sản phẩm (<span className="text-danger">*</span>)
               </label>
               <input
                 type="text"
@@ -136,7 +136,7 @@ const ModalProduct = (props) => {
 
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Product Origin (<span className="text-danger">*</span>)
+                Xuất xứ (<span className="text-danger">*</span>)
               </label>
               <input
                 type="text"
@@ -153,7 +153,7 @@ const ModalProduct = (props) => {
             </div>
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Product supplier (<span className="text-danger">*</span>)
+                Công ty sản xuất (<span className="text-danger">*</span>)
               </label>
               <input
                 type="text"
@@ -170,7 +170,24 @@ const ModalProduct = (props) => {
             </div>
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Product Unit (<span className="text-danger">*</span>)
+                Đơn vị (<span className="text-danger">*</span>)
+              </label>
+              <input
+                type="text"
+                className={
+                  validInput.productUnit
+                    ? "form-control"
+                    : "form-control is-invalid"
+                }
+                value={productData.productUnit}
+                onChange={(event) =>
+                  handleOnChangeInput(event.target.value, "productUnit")
+                }
+              />
+            </div>
+            <div className="col-12 col-sm-6 form-group">
+              <label>
+                Loại sản phẩm (<span className="text-danger">*</span>)
               </label>
               <input
                 type="text"
@@ -201,7 +218,7 @@ const ModalProduct = (props) => {
                 }
                 value={productData.productTypeId}
               >
-                <option defaultValue>Choose Role</option>
+                <option defaultValue>Chọn loại sản phẩm</option>
                 {productTypeList?.length > 0 &&
                   productTypeList.map((item, index) => {
                     console.log("productTypeList", item?.productTypeId);
@@ -220,7 +237,7 @@ const ModalProduct = (props) => {
             Close
           </Button>
           <Button variant="warning" onClick={() => handleConfirmProduct()}>
-            {action === "CREATE" ? "Create user" : "Save"}
+            {action === "CREATE" ? "Thêm sản phẩm" : "Save"}
           </Button>
         </Modal.Footer>
       </Modal>
