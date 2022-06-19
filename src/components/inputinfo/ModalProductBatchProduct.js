@@ -64,11 +64,10 @@ const ModalProductBatchProduct = (props) => {
       await productBatchService.updateProductBatchProduct({
         ...newProduct,
         productBatchId,
-        id: dataModalProduct.id
+        id: dataModalProduct.id,
       });
     }
     handleCloseModal();
-
   };
   console.log(dataModalProduct);
   return (
@@ -80,19 +79,18 @@ const ModalProductBatchProduct = (props) => {
         onHide={() => handleCloseModal()}
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter" className="w-100 text-center">
+          <Modal.Title
+            id="contained-modal-title-vcenter"
+            className="w-100 text-center"
+          >
             {action === "CREATE"
               ? `Thêm sản phẩm vào lô mã số ${productBatchId}`
-              : `Chỉnh sửa sản phẩm trong lô mã số ${productBatchId}`
-            }
+              : `Chỉnh sửa sản phẩm trong lô mã số ${productBatchId}`}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="content-body row">
-
-
             <div className="col-12 d-flex justify-content-between align-items-center">
-
               <div className="col-4 form-group">
                 <label>
                   Tên lô hàng (<span className="text-danger">*</span>)
@@ -154,15 +152,15 @@ const ModalProductBatchProduct = (props) => {
                 </span>
               </div>
             </div>
-
           </div>
         </Modal.Body>
         <Modal.Footer>
-
-          <Button variant="warning" onClick={() => {
-            handleAddNewProduct();
-
-          }}>
+          <Button
+            variant="warning"
+            onClick={() => {
+              handleAddNewProduct();
+            }}
+          >
             {action === "CREATE" ? "Create" : "Save"}
           </Button>
           <Button variant="secondary" onClick={() => handleCloseModal()}>

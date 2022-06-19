@@ -15,7 +15,7 @@ import UnAuth from "./Routes/unAuthRoute";
 import { Switch } from "react-router-dom";
 import NotfoundPage from "./pages/NotfoundPage";
 import ProductBatchPage from "./pages/ProductBatch";
-
+import Remain from "./components/Remain";
 import ProductTypePage from "./pages/ProductTypePage";
 import InputInfoPage from "./pages/InputInfoPage";
 import { fetchAllUsers } from "../src/Redux/userSlice";
@@ -45,6 +45,7 @@ function App() {
             <Route path="/productBatch" exact component={ProductBatchPage} />
             <Route path="/productType" exact component={ProductTypePage} />
             <Route path="/input-info-page" exact component={InputInfoPage} />
+            <Route path="/remain" exact component={Remain} />
             <Route path="*" component={NotfoundPage} />
           </Switch>
         </>

@@ -5,26 +5,25 @@ import { toast } from "react-toastify";
 import _ from "lodash";
 import { useSelector } from "react-redux";
 import productService from "../../Services/API/productService";
-import axios from 'axios';
+import axios from "axios";
 const ModalProductBatch = (props) => {
   const { action, dataModalProductBatch, inputInfo, handleClose, show } = props;
   const { roleList } = useSelector((state) => state.privilege);
   const defaultProductBatchData = {
     productBatchId: "",
     productBatchName: "",
-    inputInfoId: inputInfo?.inputInfoId
+    inputInfoId: inputInfo?.inputInfoId,
   };
   const defaultValidInput = {
     productBatchName: true,
   };
-  const [productBatchData, setProductBatchData] = useState(defaultProductBatchData);
+  const [productBatchData, setProductBatchData] = useState(
+    defaultProductBatchData
+  );
   const [validInput, setValidInput] = useState(defaultValidInput);
   useEffect(() => {
     if (action === "EDIT") {
-      const {
-        productBatchId,
-        productBatchName,
-      } = dataModalProductBatch;
+      const { productBatchId, productBatchName } = dataModalProductBatch;
       console.log("data<odal", dataModalProductBatch);
       setProductBatchData({
         productBatchId: productBatchId,
@@ -69,11 +68,9 @@ const ModalProductBatch = (props) => {
       };
       console.log(productBatchData);
       var url = `https://localhost:7092/api/v1/product-batch`;
-      await axios
-        .post(url, productBatchData, {
-          headers: headers,
-        });
-        
+      await axios.post(url, productBatchData, {
+        headers: headers,
+      });
     } else if (action === "EDIT") {
       const accessToken = localStorage.getItem("accessToken");
       const headers = {
@@ -82,10 +79,9 @@ const ModalProductBatch = (props) => {
       };
       console.log(productBatchData);
       var url = `https://localhost:7092/api/v1/product-batch?productBatchId=${productBatchData.productBatchId}`;
-      await axios
-        .put(url, productBatchData, {
-          headers: headers,
-        });
+      await axios.put(url, productBatchData, {
+        headers: headers,
+      });
     }
     handleCloseModal();
     // :// update action
@@ -105,8 +101,13 @@ const ModalProductBatch = (props) => {
         onHide={() => handleCloseModal()}
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter" className="w-100 text-center">
-            {action === "CREATE" ? "Thêm lô hàng" : `Chỉnh sửa lô hàng mã số ${productBatchData.productBatchId}`}
+          <Modal.Title
+            id="contained-modal-title-vcenter"
+            className="w-100 text-center"
+          >
+            {action === "CREATE"
+              ? "Thêm lô hàng"
+              : `Chỉnh sửa lô hàng mã số ${productBatchData.productBatchId}`}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -129,7 +130,6 @@ const ModalProductBatch = (props) => {
                 }
               />
             </div>
-
           </div>
         </Modal.Body>
         <Modal.Footer>

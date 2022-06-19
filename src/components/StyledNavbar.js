@@ -35,8 +35,8 @@ const NavHeader = () => {
                 Input
               </NavLink>
 
-              <NavLink to="/role" className="nav-link">
-                Role
+              <NavLink to="/remain" className="nav-link">
+                Remain
               </NavLink>
               {/* <NavLink to="/productBatch" className="nav-link">
                 Product Batch
