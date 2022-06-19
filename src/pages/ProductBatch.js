@@ -93,10 +93,10 @@ const ProductBatchPage = () => {
                     return (
                       <tr key={`row-${index}`}>
                         <td>
-                          <div class="custom-control custom-checkbox">
+                          <div className="custom-control custom-checkbox">
                             <input
                               type="checkbox"
-                              class="custom-control-input"
+                              className="custom-control-input"
                               id="customCheck1"
                               defaultChecked="false"
                               onChange={(e) =>

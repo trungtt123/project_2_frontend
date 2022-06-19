@@ -58,7 +58,7 @@ const LoginPage = () => {
             onBlur={(e) => handleBlur()}
           >
             <div className="i">
-              <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+              <i className="fa fa-user-circle-o" aria-hidden="true"></i>
             </div>
             <div className="div">
               <h5>Username</h5>
@@ -74,7 +74,7 @@ const LoginPage = () => {
             onBlur={(e) => handleBlur()}
           >
             <div className="i">
-              <i class="fa fa-lock"></i>
+              <i className="fa fa-lock"></i>
             </div>
             <div className="div">
               <h5>Password</h5>

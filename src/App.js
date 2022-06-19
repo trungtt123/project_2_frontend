@@ -42,8 +42,7 @@ function App() {
             {/* <Route path="/about" exact component={About} /> */}
             <Route path="/login" exact component={LoginPage} />
             <Route path="/products" exact component={ProductPage} />
-            <Route path="/productBatch" exact component={ProductBatchPage} />
-            <Route path="/productType" exact component={ProductTypePage} />
+            <Route path="/product-type" exact component={ProductTypePage} />
             <Route path="/input-info-page" exact component={InputInfoPage} />
             <Route path="*" component={NotfoundPage} />
           </Switch>

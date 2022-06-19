@@ -81,22 +81,34 @@ function ProductBatch(props) {
 	}, [productBatchChanged, confirmProductBatch]);
 	return (
 		<>
-			<List
-				sx={{ width: "100%", bgcolor: "background.paper" }}
-				size="small"
-				style={{ fontSize: "0.2em" }}
-				component="nav"
-				aria-labelledby="nested-list-subheader"
-			>
-				{listProductBatches?.map((productBatch, index) =>
-					<div key={index}>
-						<ProductTable productBatch={productBatch}
-							inputInfo={inputInfo}
-							confirmProductBatch={() => setConfirmProductBatch(confirmProductBatch + 1)} />
-					</div>
-				)}
+			{
+				listProductBatches?.length === 0 
+				
+				? 
+				
+				<div className="text-center" style={{padding: 10, backgroundColor: 'white'}}>
+					Không có dữ liệu về lô sản phẩm !
+				</div> 
+				
+				:
 
-			</List>
+				<List
+					sx={{ width: "100%", bgcolor: "background.paper" }}
+					size="small"
+					style={{ fontSize: "0.2em" }}
+					component="nav"
+					aria-labelledby="nested-list-subheader"
+				>
+
+					{listProductBatches?.map((productBatch, index) =>
+						<div key={index}>
+							<ProductTable productBatch={productBatch}
+								inputInfo={inputInfo}
+								confirmProductBatch={() => setConfirmProductBatch(confirmProductBatch + 1)} />
+						</div>
+					)}
+
+				</List>}
 		</>
 	);
 }
@@ -171,7 +183,7 @@ function ProductTable(props) {
 					whiteSpace: 'nowrap',
 					overflow: 'hidden',
 					bottom: 0
-				}}>Mã lô hàng: {productBatch.productBatchId}, tên lô: {productBatch.productBatchName}</span>
+				}}>Mã lô hàng: {productBatch.productBatchName} </span>
 
 				<span style={{ marginLeft: 250 }}>
 					<ButtonGroup size="small" aria-label="small button group" >
@@ -180,7 +192,7 @@ function ProductTable(props) {
 						<Button color="primary" variant="contained" key="two" onClick={() => setOpenModalProductBatchProductCreate(true)}
 							style={{ fontSize: 10 }}>Thêm sản phẩm</Button>
 						<Button key="three" onClick={() => handleDeleteProductBatch()}
-							color="secondary" variant="contained"  style={{ fontSize: 10, backgroundColor: '#DC143C' }} >Xóa</Button>
+							color="secondary" variant="contained" style={{ fontSize: 10, backgroundColor: '#DC143C' }} >Xóa</Button>
 					</ButtonGroup>
 					{open ? <ExpandLess onClick={() => setOpen(false)} /> : <ExpandMore onClick={() => setOpen(true)} />}
 				</span>
@@ -228,13 +240,13 @@ function ProductTable(props) {
 										<TableCell align="right" component="th">
 											<ButtonGroup size="small" aria-label="small button group">
 												<Button key="one" color="primary" variant="contained"
-												 onClick={() => {
-													setOpenModalProductBatchProductEdit(true);
-													productData.current = _.cloneDeep(product);
-												}}
+													onClick={() => {
+														setOpenModalProductBatchProductEdit(true);
+														productData.current = _.cloneDeep(product);
+													}}
 													style={{ fontSize: 10, backgroundColor: '#F4A460' }} >Chỉnh sửa</Button>
 												<Button key="three" color="primary" variant="contained"
-												 style={{ fontSize: 10, backgroundColor: '#DC143C' }} onClick={() => handleDeleteProductInBatch(product.id, productInfo)}>Xóa</Button>
+													style={{ fontSize: 10, backgroundColor: '#DC143C' }} onClick={() => handleDeleteProductInBatch(product.id, productInfo)}>Xóa</Button>
 											</ButtonGroup>
 										</TableCell>
 									</TableRow>
@@ -279,7 +291,7 @@ function ProductTable(props) {
 }
 
 function InputInfo(props) {
-	const { inputInfo } = props;
+	const { inputInfo, index } = props;
 	const [productBatchChanged, setProductBatchChanged] = useState(0);
 	const [open, setOpen] = useState(false);
 	const [openModalInputInfoEdit, setOpenModalInputInfoEdit] = useState(false);
@@ -327,7 +339,7 @@ function InputInfo(props) {
 					</IconButton>
 				</TableCell>
 				<TableCell width="10%" scope="row">
-					{inputInfo?.inputInfoId}
+					{index + 1}
 				</TableCell>
 				<TableCell width="15%" align="right">
 					{inputInfo?.inputInfoName}
@@ -344,12 +356,12 @@ function InputInfo(props) {
 				</TableCell>
 				<TableCell width="15%" align="right">
 					<ButtonGroup size="small" aria-label="small button group">
-						<Button key="one" color="primary" variant="contained"  style={{ fontSize: 10, backgroundColor: '#F4A460' }}
-						 onClick={() => setOpenModalInputInfoEdit(true)}>Chỉnh sửa</Button>
-						<Button key="two" color="primary" variant="contained"  style={{ fontSize: 10 }}
-						 onClick={() => setOpenModalProductBatchCreate(true)}>Thêm lô</Button>
-						<Button key="three" color="primary" variant="contained"  style={{ fontSize: 10, backgroundColor: '#DC143C' }}  
-						onClick={() => handleDeleteInputInfo(inputInfo?.inputInfoId)}>Xóa</Button>
+						<Button key="one" color="primary" variant="contained" style={{ fontSize: 10, backgroundColor: '#F4A460' }}
+							onClick={() => setOpenModalInputInfoEdit(true)}>Chỉnh sửa</Button>
+						<Button key="two" color="primary" variant="contained" style={{ fontSize: 10 }}
+							onClick={() => setOpenModalProductBatchCreate(true)}>Thêm lô</Button>
+						<Button key="three" color="primary" variant="contained" style={{ fontSize: 10, backgroundColor: '#DC143C' }}
+							onClick={() => handleDeleteInputInfo(inputInfo?.inputInfoId)}>Xóa</Button>
 					</ButtonGroup>
 				</TableCell>
 
@@ -357,6 +369,7 @@ function InputInfo(props) {
 			<TableRow>
 				<TableCell style={{ padding: 0 }} colSpan={8}>
 					<Collapse in={open} timeout="auto" unmountOnExit>
+
 						<ProductBatch inputInfo={inputInfo} productBatchChanged={() => setProductBatchChanged(productBatchChanged + 1)} />
 					</Collapse>
 				</TableCell>
@@ -433,7 +446,7 @@ export default function InputInfoPage() {
 						<TableHead>
 							<TableRow>
 								<TableCell width={20} />
-								<TableCell width={200}>Mã số</TableCell>
+								<TableCell width={200}>STT</TableCell>
 								<TableCell align="right">Tên bản nhập hàng</TableCell>
 								<TableCell align="right">Người giao hàng</TableCell>
 								<TableCell align="right">Người nhận hàng</TableCell>
@@ -444,7 +457,7 @@ export default function InputInfoPage() {
 						</TableHead>
 						<TableBody>
 							{listInputInfo.map((inputInfo, index) => (
-								<InputInfo key={index} inputInfo={inputInfo} confirmInputInfo={() => setComfirmInputInfo(confirmInputInfo + 1)} />
+								<InputInfo key={index} index={index} inputInfo={inputInfo} confirmInputInfo={() => setComfirmInputInfo(confirmInputInfo + 1)} />
 							))}
 						</TableBody>
 					</Table>
@@ -470,7 +483,7 @@ export default function InputInfoPage() {
 
 				action={"CREATE"}
 			/>
-			
+
 
 		</div>
 	);

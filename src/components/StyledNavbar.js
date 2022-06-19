@@ -28,20 +28,20 @@ const NavHeader = () => {
               <NavLink to="/products" className="nav-link">
                 Sản phẩm
               </NavLink>
-              <NavLink to="/productType" className="nav-link">
+              <NavLink to="/product-type" className="nav-link">
                 Loại sản phẩm
               </NavLink>
               <NavLink to="/input-info-page" className="nav-link">
-                Input
+                Trang nhập hàng
               </NavLink>
 
-              <NavLink to="/role" className="nav-link">
+              {/* <NavLink to="/role" className="nav-link">
                 Role
-              </NavLink>
+              </NavLink> */}
               {/* <NavLink to="/productBatch" className="nav-link">
                 Product Batch
               </NavLink> */}
-              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+              {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
                   Another action
@@ -53,20 +53,20 @@ const NavHeader = () => {
                 <NavDropdown.Item href="#action/3.4">
                   Separated link
                 </NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown> */}
             </Nav>
             <Nav>
               {user && isAuthenticated === true ? (
                 <>
                   <Nav.Item className="nav-link" href="#">
-                    Welcome {user?.userName}
+                    Xin chào, {user?.surName + " " + user?.givenName}
                   </Nav.Item>
-                  <NavDropdown title="Settings" id="basic-nav-dropdown">
+                  <NavDropdown title="Cài đặt" id="basic-nav-dropdown">
                     <NavDropdown.Item href="#action/3.1">
-                      Change password
+                      Đổi mật khẩu
                     </NavDropdown.Item>
                     <NavDropdown.Item>
-                      <span onClick={() => dispatch(logout())}>Log out</span>
+                      <span onClick={() => dispatch(logout())}>Đăng xuất</span>
                     </NavDropdown.Item>
                   </NavDropdown>
                 </>

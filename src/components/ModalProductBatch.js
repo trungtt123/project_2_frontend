@@ -163,7 +163,7 @@ const ModalProductBatch = (props) => {
                   className="btn btn-primary"
                   onClick={() => setIsShowAddProduct(false)}
                 >
-                  <i class="fa fa-solid fa-rotate-left" />
+                  <i className="fa fa-solid fa-rotate-left" />
                 </button>
                 <button
                   className="btn btn-primary"
