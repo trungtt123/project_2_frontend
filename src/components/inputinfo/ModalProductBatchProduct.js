@@ -11,13 +11,12 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 const ModalProductBatchProduct = (props) => {
-  const { productBatchId, dataModalProduct, handleClose, show, action } = props;
+  const { productBatchData, dataModalProduct, handleClose, show, action } = props;
   const defaultNewProduct = {
     productId: null,
     dateExpiry: new Date(),
     productQuantity: 0,
   };
-  console.log("check", productBatchId);
   const [productBatch, setProductBatch] = useState(defaultNewProduct);
   const { productList } = useSelector((state) => state.product);
   const [productBatchEdit, setProductBatchEdit] = useState({});
@@ -58,13 +57,13 @@ const ModalProductBatchProduct = (props) => {
     if (action === "CREATE")
       await productBatchService.createProductBatchProduct({
         ...newProduct,
-        productBatchId,
+        productBatchId: productBatchData?.productBatchId,
       });
     else if (action === "EDIT") {
       await productBatchService.updateProductBatchProduct({
         ...newProduct,
-        productBatchId,
-        id: dataModalProduct.id,
+        productBatchId: productBatchData?.productBatchId,
+        id: dataModalProduct?.id,
       });
     }
     handleCloseModal();
@@ -84,8 +83,8 @@ const ModalProductBatchProduct = (props) => {
             className="w-100 text-center"
           >
             {action === "CREATE"
-              ? `Thêm sản phẩm vào lô mã số ${productBatchId}`
-              : `Chỉnh sửa sản phẩm trong lô mã số ${productBatchId}`}
+              ? `Thêm sản phẩm vào lô ${productBatchData?.productBatchName}`
+              : `Chỉnh sửa sản phẩm trong lô ${productBatchData?.productBatchName}`}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

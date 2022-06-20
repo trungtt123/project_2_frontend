@@ -80,29 +80,29 @@ function ProductBatch(props) {
   return (
     <>
       {
-      listProductBatches?.length === 0 
-        ?
-        <div style={{ backgroundColor: 'white', padding: 10 }} className="text-center">Không có dữ liệu về lô sản phẩm!</div>
-        :
-        <List
-          sx={{ width: "100%", bgcolor: "background.paper" }}
-          size="small"
-          style={{ fontSize: "0.2em" }}
-          component="nav"
-          aria-labelledby="nested-list-subheader"
-        >
-          {listProductBatches?.map((productBatch, index) => (
-            <div key={index}>
-              <ProductTable
-                productBatch={productBatch}
-                inputInfo={inputInfo}
-                confirmProductBatch={() =>
-                  setConfirmProductBatch(confirmProductBatch + 1)
-                }
-              />
-            </div>
-          ))}
-        </List>
+        listProductBatches?.length === 0
+          ?
+          <div style={{ backgroundColor: 'white', padding: 10 }} className="text-center">Không có dữ liệu về lô sản phẩm!</div>
+          :
+          <List
+            sx={{ width: "100%", bgcolor: "background.paper" }}
+            size="small"
+            style={{ fontSize: "0.2em" }}
+            component="nav"
+            aria-labelledby="nested-list-subheader"
+          >
+            {listProductBatches?.map((productBatch, index) => (
+              <div key={index}>
+                <ProductTable
+                  productBatch={productBatch}
+                  inputInfo={inputInfo}
+                  confirmProductBatch={() =>
+                    setConfirmProductBatch(confirmProductBatch + 1)
+                  }
+                />
+              </div>
+            ))}
+          </List>
       }
     </>
   );
@@ -131,7 +131,7 @@ function ProductTable(props) {
     };
     if (
       window.confirm(
-        `Bạn có chắc chắn xóa lô hàng mã ${productBatch.productBatchId}`
+        `Bạn có chắc chắn xóa lô hàng mã ${productBatch.productBatchName}`
       ) == false
     ) {
       return;
@@ -242,105 +242,117 @@ function ProductTable(props) {
         </span>
       </div>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <div
-          className="mt-3 mb-3"
-          style={{
-            boxShadow: "2px 2px 2px 2px #AAA",
+        {listProductTable?.length === 0
+          ?
+          <div style={{
+            fontSize: 14, boxShadow: "2px 2px 2px 2px #AAA",
             borderRadius: "25px",
             margin: "auto",
             width: "95%",
             padding: 10,
-          }}
-        >
-          <Table
-            style={{ margin: "auto" }}
-            size="small"
-            aria-label="a dense table"
+          }} className="text-center mt-3 mb-3">Không có dữ liệu về sản phẩm!</div>
+          :
+          <div
+            className="mt-3 mb-3"
+            style={{
+              boxShadow: "2px 2px 2px 2px #AAA",
+              borderRadius: "25px",
+              margin: "auto",
+              width: "95%",
+              padding: 10,
+            }}
           >
-            <TableHead>
-              <TableRow>
-                <TableCell align="left">STT</TableCell>
-                <TableCell align="right">Mã sản phẩm</TableCell>
-                <TableCell align="right">Tên sản phẩm</TableCell>
-                <TableCell align="right">Số lượng</TableCell>
-                <TableCell align="right">Ngày hết hạn</TableCell>
-                <TableCell align="right">Thao tác</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {listProductTable.map((product, index) => {
-                var productInfo = productList?.find(
-                  (o) => o.productId === product.productId
-                );
-                var productDetail = {
-                  ...product,
-                  productName: productInfo?.productName,
-                };
-                console.log(product);
-                return (
-                  <>
-                    <TableRow
-                      style={{
-                        background: `${index % 2 ? "#fdffe0" : "white"}`,
-                      }}
-                      key={index}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell width="10%" align="left">
-                        {index + 1}
-                      </TableCell>
-                      <TableCell align="right">
-                        {productDetail?.productId}
-                      </TableCell>
-                      <TableCell align="right">
-                        {productDetail?.productName}
-                      </TableCell>
-                      <TableCell align="right">
-                        {product?.productQuantity}
-                      </TableCell>
-                      <TableCell align="right" component="th">
-                        {formatDateTime(product?.dateExpiry, 1)}
-                      </TableCell>
-                      <TableCell align="right" component="th">
-                        <ButtonGroup
-                          size="small"
-                          aria-label="small button group"
-                        >
-                          <Button
-                            key="one"
-                            color="primary"
-                            variant="contained"
-                            onClick={() => {
-                              setOpenModalProductBatchProductEdit(true);
-                              productData.current = _.cloneDeep(product);
-                            }}
-                            style={{ fontSize: 10, backgroundColor: "#F4A460" }}
+            <Table
+              style={{ margin: "auto" }}
+              size="small"
+              aria-label="a dense table"
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell align="left">STT</TableCell>
+                  <TableCell align="right">Mã sản phẩm</TableCell>
+                  <TableCell align="right">Tên sản phẩm</TableCell>
+                  <TableCell align="right">Số lượng</TableCell>
+                  <TableCell align="right">Ngày hết hạn</TableCell>
+                  <TableCell align="right">Thao tác</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+
+
+                {listProductTable.map((product, index) => {
+                  var productInfo = productList?.find(
+                    (o) => o.productId === product.productId
+                  );
+                  var productDetail = {
+                    ...product,
+                    productName: productInfo?.productName,
+                  };
+                  console.log(product);
+                  return (
+                    <>
+                      <TableRow
+                        style={{
+                          background: `${index % 2 ? "#fdffe0" : "white"}`,
+                        }}
+                        key={index}
+                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                      >
+                        <TableCell width="10%" align="left">
+                          {index + 1}
+                        </TableCell>
+                        <TableCell align="right">
+                          {productDetail?.productId}
+                        </TableCell>
+                        <TableCell align="right">
+                          {productDetail?.productName}
+                        </TableCell>
+                        <TableCell align="right">
+                          {product?.productQuantity}
+                        </TableCell>
+                        <TableCell align="right" component="th">
+                          {formatDateTime(product?.dateExpiry, 1)}
+                        </TableCell>
+                        <TableCell align="right" component="th">
+                          <ButtonGroup
+                            size="small"
+                            aria-label="small button group"
                           >
-                            Chỉnh sửa
-                          </Button>
-                          <Button
-                            key="three"
-                            color="primary"
-                            variant="contained"
-                            style={{ fontSize: 10, backgroundColor: "#DC143C" }}
-                            onClick={() =>
-                              handleDeleteProductInBatch(
-                                product.id,
-                                productInfo
-                              )
-                            }
-                          >
-                            Xóa
-                          </Button>
-                        </ButtonGroup>
-                      </TableCell>
-                    </TableRow>
-                  </>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </div>
+                            <Button
+                              key="one"
+                              color="primary"
+                              variant="contained"
+                              onClick={() => {
+                                setOpenModalProductBatchProductEdit(true);
+                                productData.current = _.cloneDeep(product);
+                              }}
+                              style={{ fontSize: 10, backgroundColor: "#F4A460" }}
+                            >
+                              Chỉnh sửa
+                            </Button>
+                            <Button
+                              key="three"
+                              color="primary"
+                              variant="contained"
+                              style={{ fontSize: 10, backgroundColor: "#DC143C" }}
+                              onClick={() =>
+                                handleDeleteProductInBatch(
+                                  product.id,
+                                  productInfo
+                                )
+                              }
+                            >
+                              Xóa
+                            </Button>
+                          </ButtonGroup>
+                        </TableCell>
+                      </TableRow>
+                    </>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </div>}
       </Collapse>
       <ModalProductBatch
         show={openModalProductBatchEdit}
@@ -357,7 +369,7 @@ function ProductTable(props) {
           setOpenModalProductBatchProductCreate(false);
           getListProducts();
         }}
-        productBatchId={productBatch?.productBatchId}
+        productBatchData={productBatch}
         action={"CREATE"}
       />
       <ModalProductBatchProduct
@@ -393,7 +405,7 @@ function InputInfo(props) {
       Authorization: "Bearer " + accessToken,
     };
     if (
-      window.confirm(`Bạn có chắc chắn xóa bản nhập hàng ${inputInfoId}`) ==
+      window.confirm(`Bạn có chắc chắn xóa bản nhập hàng này?`) ==
       false
     ) {
       return;

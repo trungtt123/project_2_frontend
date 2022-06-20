@@ -107,7 +107,7 @@ const ModalProductBatch = (props) => {
           >
             {action === "CREATE"
               ? "Thêm lô hàng"
-              : `Chỉnh sửa lô hàng mã số ${productBatchData.productBatchId}`}
+              : `Chỉnh sửa lô hàng mã ${productBatchData.productBatchName}`}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

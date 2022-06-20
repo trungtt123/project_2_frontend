@@ -64,13 +64,13 @@ const ProductTypePage = () => {
             <h1>Trang quản lý loại sản phẩm</h1>
           </div>
           <div className="actions d-flex gap-3 p-2">
-            <button
+            {/* <button
               className="btn btn-success d-flex align-content-center"
               onClick={() => dispatch(getListProductTypes())}
             >
               <i className="fa fa-refresh pe-2 fs-4" />
               Tải lại trang
-            </button>
+            </button> */}
             <button
               className="btn btn-primary d-flex align-content-center"
               onClick={() => setIsShowModalNewType(true)}
