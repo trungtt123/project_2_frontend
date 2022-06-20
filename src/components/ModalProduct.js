@@ -189,6 +189,23 @@ const ModalProduct = (props) => {
               <label>
                 Loại sản phẩm (<span className="text-danger">*</span>)
               </label>
+              <input
+                type="text"
+                className={
+                  validInput.productUnit
+                    ? "form-control"
+                    : "form-control is-invalid"
+                }
+                value={productData.productUnit}
+                onChange={(event) =>
+                  handleOnChangeInput(event.target.value, "productUnit")
+                }
+              />
+            </div>
+            <div className="col-12 col-sm-6 form-group">
+              <label>
+                Product Type (<span className="text-danger">*</span>)
+              </label>
               <select
                 style={{ fontSize: 16, height: 48 }}
                 className={

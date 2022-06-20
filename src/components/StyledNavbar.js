@@ -38,6 +38,9 @@ const NavHeader = () => {
               {/* <NavLink to="/role" className="nav-link">
                 Role
               </NavLink> */}
+              <NavLink to="/remain" className="nav-link">
+                Quản lý tồn kho
+              </NavLink>
               {/* <NavLink to="/productBatch" className="nav-link">
                 Product Batch
               </NavLink> */}
