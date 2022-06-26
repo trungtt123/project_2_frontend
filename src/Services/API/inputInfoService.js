@@ -5,24 +5,24 @@ const getAllProducts = () => {
   return axios.get("/list-products");
 };
 const createProduct = (payload) => {
-  const { productName, Orgin, companySuplier, typeId, productUnit } = payload;
+  const { productName, Origin, companySuplier, typeId, productUnit } = payload;
 
   return axios.post("/product", {
     ProductName: productName,
-    ProductOrgin: Orgin,
+    ProductOrigin: Origin,
     productSuplier: companySuplier,
     productTypeId: typeId,
     productUnit: +productUnit,
   });
 };
 const updateProduct = (payload) => {
-  const { productId, productName, Orgin, companySuplier, typeId, productUnit } =
+  const { productId, productName, Origin, companySuplier, typeId, productUnit } =
     payload;
 
   return axios.put("/product", {
     productId: productId,
     ProductName: productName,
-    ProductOrgin: Orgin,
+    ProductOrigin: Origin,
     productSuplier: companySuplier,
     productTypeId: typeId,
     productUnit: +productUnit,

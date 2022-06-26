@@ -34,6 +34,9 @@ const NavHeader = () => {
               <NavLink to="/input-info-page" className="nav-link">
                 Trang nhập hàng
               </NavLink>
+              <NavLink to="/output-info-page" className="nav-link">
+                Trang xuất hàng
+              </NavLink>
 
               {/* <NavLink to="/role" className="nav-link">
                 Role

@@ -89,7 +89,7 @@ const ProductPage = () => {
                       <tr key={`row-${index}`}>
                         <td>{item?.productId}</td>
                         <td>{item?.productName}</td>
-                        <td>{item?.productOrgin}</td>
+                        <td>{item?.productOrigin}</td>
                         <td>{item?.productSuplier}</td>
                         {item?.productTypeId
                           ? productTypeList.map((productTypeItem, index) => {

@@ -12,14 +12,14 @@ const ModalProduct = (props) => {
 
   const defaultProductData = {
     productName: "",
-    productOrgin: "",
+    productOrigin: "",
     productSuplier: "",
     productTypeId: "",
     productUnit: "",
   };
   const defaultValidInput = {
     productName: true,
-    productOrgin: true,
+    productOrigin: true,
     productSuplier: true,
     productTypeId: true,
     productUnit: true,
@@ -31,7 +31,7 @@ const ModalProduct = (props) => {
       const {
         productId,
         productName,
-        productOrgin,
+        productOrigin,
         productSuplier,
         productTypeId,
         productUnit,
@@ -40,7 +40,7 @@ const ModalProduct = (props) => {
       setProductData({
         productId,
         productName,
-        productOrgin,
+        productOrigin,
         productSuplier,
         productTypeId,
         productUnit,
@@ -60,14 +60,14 @@ const ModalProduct = (props) => {
       action === "CREATE"
         ? [
             "productName",
-            "productOrgin",
+            "productOrigin",
             "productSuplier",
             "productTypeId",
             "productUnit",
           ]
         : [
             "productName",
-            "productOrgin",
+            "productOrigin",
             "productSuplier",
             "productTypeId",
             "productUnit",
@@ -141,13 +141,13 @@ const ModalProduct = (props) => {
               <input
                 type="text"
                 className={
-                  validInput.productOrgin
+                  validInput.productOrigin
                     ? "form-control"
                     : "form-control is-invalid"
                 }
-                value={productData.productOrgin}
+                value={productData.productOrigin}
                 onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "productOrgin")
+                  handleOnChangeInput(event.target.value, "productOrigin")
                 }
               />
             </div>

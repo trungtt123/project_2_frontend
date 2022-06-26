@@ -114,7 +114,7 @@ const ModalProductBatch = (props) => {
           <div className="content-body row">
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Mã lô hàng (<span className="text-danger">*</span>)
+                Tên lô hàng (<span className="text-danger">*</span>)
               </label>
               
               <input
@@ -124,7 +124,7 @@ const ModalProductBatch = (props) => {
                     ? "form-control"
                     : "form-control is-invalid"
                 }
-                placeholder="Nhập mã lô hàng . . ."
+                placeholder="Nhập tên lô hàng . . ."
                 value={productBatchData.productBatchName}
                 onChange={(event) =>
                   handleOnChangeInput(event.target.value, "productBatchName")

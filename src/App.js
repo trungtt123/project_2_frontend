@@ -20,13 +20,15 @@ import ProductTypePage from "./pages/ProductTypePage";
 import InputInfoPage from "./pages/InputInfoPage";
 import { fetchAllUsers } from "../src/Redux/userSlice";
 import { fetchAllProducts } from "../src/Redux/productSlice";
+import { getListProductBatches } from "../src/Redux/productBatchSlice";
+import OutputInfoPage from "./pages/OutputInfoPage";
 function App() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
   );
-
+  
   const [component, setComponent] = useState();
   const getCurrentView = () => {
     if (isAuthenticated === false) {
@@ -44,6 +46,7 @@ function App() {
             <Route path="/products" exact component={ProductPage} />
             <Route path="/product-type" exact component={ProductTypePage} />
             <Route path="/input-info-page" exact component={InputInfoPage} />
+            <Route path="/output-info-page" exact component={OutputInfoPage} />
             <Route path="/remain" exact component={Remain} />
             <Route path="*" component={NotfoundPage} />
           </Switch>
@@ -54,6 +57,7 @@ function App() {
     dispatch(loadUser());
     dispatch(fetchAllUsers());
     dispatch(fetchAllProducts());
+    dispatch(getListProductBatches());
     setComponent(getCurrentView());
   }, []);
   useEffect(() => {

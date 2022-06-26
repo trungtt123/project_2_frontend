@@ -200,7 +200,7 @@ function ProductTable(props) {
             bottom: 0,
           }}
         >
-          Mã lô hàng:
+          Tên lô hàng:
           {" " + productBatch.productBatchName}
         </span>
 
@@ -270,6 +270,7 @@ function ProductTable(props) {
               <TableHead>
                 <TableRow>
                   <TableCell align="left">STT</TableCell>
+                  <TableCell align="right">Mã trong lô</TableCell>
                   <TableCell align="right">Mã sản phẩm</TableCell>
                   <TableCell align="right">Tên sản phẩm</TableCell>
                   <TableCell align="right">Số lượng</TableCell>
@@ -290,8 +291,7 @@ function ProductTable(props) {
                   };
                   console.log(product);
                   return (
-                    <>
-                      <TableRow
+                    <TableRow
                         style={{
                           background: `${index % 2 ? "#fdffe0" : "white"}`,
                         }}
@@ -300,6 +300,9 @@ function ProductTable(props) {
                       >
                         <TableCell width="10%" align="left">
                           {index + 1}
+                        </TableCell>
+                        <TableCell align="right">
+                          {productDetail?.id}
                         </TableCell>
                         <TableCell align="right">
                           {productDetail?.productId}
@@ -347,7 +350,7 @@ function ProductTable(props) {
                           </ButtonGroup>
                         </TableCell>
                       </TableRow>
-                    </>
+                   
                   );
                 })}
               </TableBody>

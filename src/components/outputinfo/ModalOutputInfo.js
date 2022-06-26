@@ -6,48 +6,47 @@ import _ from "lodash";
 import { useSelector } from "react-redux";
 import userService from "../../Services/API/userService";
 import axios from "axios";
-const ModalInputInfo = (props) => {
-  const { action, dataModalInputInfo, handleClose, show } = props;
-  const { roleList } = useSelector((state) => state.privilege);
-  // const
-  const defaultInputInfoData = {
-    inputInfoId: "",
-    inputInfoName: "",
-    shipper: "",
-    receiverUserId: 1, // la nguoi tao trang nhung hien tai dang bug verify token
+const ModalOutputInfo = (props) => {
+  const { action, dataModalOutputInfo, handleClose, show } = props;
+  const { userList } = useSelector((state) => state.user);
+  console.log(dataModalOutputInfo);
+  const defaultOutputInfoData = {
+    outputInfoId: "",
+    outputInfoName: "",
+    pickerId: 0, 
+    signatorId: 1, // la nguoi tao trang nhung hien tai dang bug verify token
   };
   const defaultValidInput = {
-    inputInfoName: true,
-    shipper: true,
-    receiverUserId: true,
+    outputInfoName: true,
+    pickerId: true
   };
-  const [inputInfoData, setInputInfoData] = useState(defaultInputInfoData);
+  const [outputInfoData, setOutputInfoData] = useState(defaultOutputInfoData);
   const [validInput, setValidInput] = useState(defaultValidInput);
   useEffect(() => {
     if (action === "EDIT") {
-      const { inputInfoId, inputInfoName, shipper } = dataModalInputInfo;
-      console.log("data<odal", dataModalInputInfo);
-      setInputInfoData({
-        inputInfoId: inputInfoId,
-        inputInfoName: inputInfoName,
-        shipper: shipper,
-        receiverUserId: 1,
+      const { outputInfoId, outputInfoName, pickerId, signatorId } = dataModalOutputInfo;
+      console.log("data<odal", dataModalOutputInfo);
+      setOutputInfoData({
+        outputInfoId: outputInfoId,
+        outputInfoName: outputInfoName,
+        pickerId: pickerId,
+        signatorId: signatorId,
       });
     }
-  }, [dataModalInputInfo, action]);
+  }, [dataModalOutputInfo, action]);
   const handleOnChangeInput = (value, name) => {
     console.log("handle chage", name, value);
     //do {...} là swallow clone với các object.object vẫn là tham chiếu => clonedeep= lodash hoặc JSON.parse(JSON.stringify(userData))
-    let _inputInfoData = _.cloneDeep(inputInfoData);
-    _inputInfoData[name] = value;
-    setInputInfoData(_inputInfoData);
+    let _outputInfoData = _.cloneDeep(outputInfoData);
+    _outputInfoData[name] = value;
+    setOutputInfoData(_outputInfoData);
   };
   const checkValidateInput = () => {
     setValidInput(defaultValidInput);
-    let arr = ["inputInfoName", "shipper"];
+    let arr = ["outputInfoName", "pickerId"];
 
     for (let i = 0; i < arr.length; i++) {
-      if (!inputInfoData[arr[i]]) {
+      if (!outputInfoData[arr[i]]) {
         let _validInput = _.cloneDeep(defaultValidInput);
         _validInput[arr[i]] = false;
         setValidInput(_validInput);
@@ -68,8 +67,8 @@ const ModalInputInfo = (props) => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
       };
-      var url = "https://localhost:7092/api/v1/input-info";
-      await axios.post(url, inputInfoData, {
+      var url = "https://localhost:7092/api/v1/output-info";
+      await axios.post(url, outputInfoData, {
         headers: headers,
       });
     } else if (action === "EDIT") {
@@ -79,8 +78,8 @@ const ModalInputInfo = (props) => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
       };
-      var url = `https://localhost:7092/api/v1/input-info?inputInfoId=${dataModalInputInfo.inputInfoId}`;
-      await axios.put(url, inputInfoData, {
+      var url = `https://localhost:7092/api/v1/output-info?outputInfoId=${dataModalOutputInfo.outputInfoId}`;
+      await axios.put(url, outputInfoData, {
         headers: headers,
       });
       // .then((res) => {
@@ -93,7 +92,7 @@ const ModalInputInfo = (props) => {
   };
   const handleCloseModal = () => {
     setValidInput(defaultValidInput);
-    setInputInfoData(defaultInputInfoData);
+    setOutputInfoData(defaultOutputInfoData);
     handleClose();
   };
   return (
@@ -110,8 +109,8 @@ const ModalInputInfo = (props) => {
             className="w-100 text-center"
           >
             {action === "CREATE"
-              ? "Tạo bản ghi nhập hàng"
-              : `Chỉnh sửa bản ghi nhập hàng`}
+              ? "Tạo bản ghi xuất hàng"
+              : `Chỉnh sửa bản ghi xuất hàng`}
           </Modal.Title>
         </Modal.Header>
 
@@ -124,33 +123,44 @@ const ModalInputInfo = (props) => {
               <input
                 type="text"
                 className={
-                  validInput.inputInfoName
+                  validInput.outputInfoName
                     ? "form-control"
                     : "form-control is-invalid"
                 }
-                value={inputInfoData.inputInfoName}
+                value={outputInfoData.outputInfoName}
                 onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "inputInfoName")
+                  handleOnChangeInput(event.target.value, "outputInfoName")
                 }
               />
             </div>
 
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Người giao hàng (<span className="text-danger">*</span>)
+                Người lấy hàng (<span className="text-danger">*</span>)
               </label>
-              <input
-                type="text"
+              <select
+                style={{ fontSize: 16, height: 48 }}
                 className={
-                  validInput.shipper
-                    ? "form-control"
-                    : "form-control is-invalid"
+                  validInput.pickerId
+                    ? "form-select my-2 form-select-lg"
+                    : "form-select my-2 is-invalid form-select-lg"
                 }
-                value={inputInfoData.shipper}
+                value={outputInfoData?.pickerId}
                 onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "shipper")
+                  handleOnChangeInput(event.target.value, "pickerId")
                 }
-              />
+              >
+                <option defaultValue>Chọn người lấy hàng</option>
+                {userList?.length > 0 &&
+                  userList.map((item, index) => {
+                    console.log(item);
+                    return (
+                      <option value={+item?.userId} key={index}>
+                        {item?.surName + " " + item?.givenName + ` (ID: ${item?.userId}) `}
+                      </option>
+                    );
+                  })}
+              </select>
             </div>
           </div>
         </Modal.Body>
@@ -167,4 +177,4 @@ const ModalInputInfo = (props) => {
   );
 };
 
-export default ModalInputInfo;
+export default ModalOutputInfo;

@@ -9,7 +9,7 @@ const getAllProductType = () => {
 const createProduct = (payload) => {
   const {
     productName,
-    productOrgin,
+    productOrigin,
     productSuplier,
     productTypeId,
     productUnit,
@@ -17,7 +17,7 @@ const createProduct = (payload) => {
 
   return axios.post("/product", {
     productName,
-    productOrgin,
+    productOrigin,
     productSuplier,
     productTypeId: +productTypeId,
     productUnit,
@@ -27,7 +27,7 @@ const updateProduct = (payload) => {
   const {
     productId,
     productName,
-    productOrgin,
+    productOrigin,
     productSuplier,
     productTypeId,
     productUnit,
@@ -35,7 +35,7 @@ const updateProduct = (payload) => {
 
   return axios.put(`/product?productId=${productId}`, {
     productName,
-    productOrgin,
+    productOrigin,
     productSuplier,
     productTypeId: +productTypeId,
     productUnit,
