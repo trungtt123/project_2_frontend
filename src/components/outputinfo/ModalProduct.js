@@ -33,12 +33,11 @@ const ModalProduct = (props) => {
   const dispatch = useDispatch();
 
   const getListProductInventories = async () => {
-
     const response = await productBatchService.getStatistic();
     const data = response?.data;
     console.log(data);
     setProductInventories(data);
-  }
+  };
 
   useEffect(() => {
     getListProductInventories();
@@ -48,9 +47,13 @@ const ModalProduct = (props) => {
     setIsShowAddProduct(false);
     if (action === "EDIT") {
       var _dataModalProduct = _.cloneDeep(dataModalProduct);
-      var data = productInventories.find(o => o.productId == dataModalProduct.productId);
+      var data = productInventories.find(
+        (o) => o.productId == dataModalProduct.productId
+      );
       setListProductBatches(data?.listInventories);
-      var p = data?.listInventories.find(o => o.productBatchProductId == dataModalProduct.productBatchProductId);
+      var p = data?.listInventories.find(
+        (o) => o.productBatchProductId == dataModalProduct.productBatchProductId
+      );
       setProductBatchProduct(p);
       setNewProduct(_dataModalProduct);
     }
@@ -62,32 +65,28 @@ const ModalProduct = (props) => {
     setNewProduct(defaultNewProduct);
   }, [isShowAddProduct]);
 
-
   const handleOnChangeNewProduct = (value, name) => {
-
     //do {...} là swallow clone với các object.object vẫn là tham chiếu => clonedeep= lodash hoặc JSON.parse(JSON.stringify(productData))
     let _newProduct = _.cloneDeep(newProduct);
-    if (name === 'productId') {
-      var data = productInventories.find(o => o.productId == value);
+    if (name === "productId") {
+      var data = productInventories.find((o) => o.productId == value);
       setListProductBatches(data?.listInventories);
     }
-    if (name === 'productBatchProductId'){
-      var p = listProductBatches.find(o => o.productBatchProductId == value);
+    if (name === "productBatchProductId") {
+      var p = listProductBatches.find((o) => o.productBatchProductId == value);
       setProductBatchProduct(p);
     }
-    if (name === 'productQuantity'){
-      if (value > productBatchProduct.productQuantity) 
-      {
+    if (name === "productQuantity") {
+      if (value > productBatchProduct.productQuantity) {
         value = productBatchProduct.productQuantity;
       }
     }
     _newProduct[name] = value;
     setNewProduct(_newProduct);
-    
   };
   const handleAddNewProduct = async () => {
     const accessToken = localStorage.getItem("accessToken");
-    if (action === "CREATE"){
+    if (action === "CREATE") {
       const headers = {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
@@ -96,8 +95,7 @@ const ModalProduct = (props) => {
       await axios.post(url, newProduct, {
         headers: headers,
       });
-    }
-    else if (action === "EDIT") {
+    } else if (action === "EDIT") {
       const headers = {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
@@ -109,7 +107,7 @@ const ModalProduct = (props) => {
     }
     handleCloseModal();
   };
-  
+
   return (
     <>
       <Modal
@@ -123,9 +121,7 @@ const ModalProduct = (props) => {
             id="contained-modal-title-vcenter"
             className="w-100 text-center"
           >
-            {action === "CREATE"
-              ? `Thêm sản phẩm`
-              : `Chỉnh sửa sản phẩm`}
+            {action === "CREATE" ? `Thêm sản phẩm` : `Chỉnh sửa sản phẩm`}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -163,7 +159,10 @@ const ModalProduct = (props) => {
                   className="form-control"
                   style={{ fontSize: 16, height: 48 }}
                   onChange={(event) =>
-                    handleOnChangeNewProduct(event.target.value, "productBatchProductId")
+                    handleOnChangeNewProduct(
+                      event.target.value,
+                      "productBatchProductId"
+                    )
                   }
                   value={newProduct.productBatchProductId}
                 >
@@ -171,7 +170,10 @@ const ModalProduct = (props) => {
                   {listProductBatches?.length > 0 &&
                     listProductBatches.map((product, index) => {
                       return (
-                        <option value={product?.productBatchProductId} key={index}>
+                        <option
+                          value={product?.productBatchProductId}
+                          key={index}
+                        >
                           {`Lô ${product?.productBatchId} - Mã ${product?.productBatchProductId} - Còn ${product?.productQuantity} sản phẩm`}
                         </option>
                       );
@@ -196,7 +198,6 @@ const ModalProduct = (props) => {
               </div>
             </div>
           </div>
-
         </Modal.Body>
         <Modal.Footer>
           <Button

@@ -17,7 +17,6 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import Container from "@material-ui/core/Container";
 import _ from "lodash";
 
-
 import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -62,7 +61,7 @@ const handleProductInOutput = (listProducts) => {
     }
   }
   for (const productId of listId) {
-    var arr = listProducts.filter(o => o.productId === productId);
+    var arr = listProducts.filter((o) => o.productId === productId);
     var quantity = 0;
     for (const item of arr) {
       quantity += item.productQuantity;
@@ -70,30 +69,25 @@ const handleProductInOutput = (listProducts) => {
     products.push({
       productId: productId,
       listProducts: arr,
-      productQuantity: quantity
+      productQuantity: quantity,
     });
   }
   return products;
-
-}
+};
 function ProductInBatch(props) {
   const { productDetail, outputInfo } = props;
   const [openModalProductEdit, setOpenModalProductEdit] = useState(false);
   const productModalData = useRef({});
-  console.log('chay tiep product in batch', productDetail);
+  console.log("chay tiep product in batch", productDetail);
   const { productBatchList } = useSelector((state) => state.productBatch);
-  
+
   const handleDeleteProductOutputInfo = async () => {
     const accessToken = localStorage.getItem("accessToken");
     const headers = {
       "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     };
-    if (
-      window.confirm(
-        `Bạn có chắc chắn xóa sản phẩm này?`
-      ) == false
-    ) {
+    if (window.confirm(`Bạn có chắc chắn xóa sản phẩm này?`) == false) {
       return;
     }
     var url = `https://localhost:7092/api/v1/output-info/products?id=${productModalData?.current?.outputProductId}`;
@@ -101,133 +95,142 @@ function ProductInBatch(props) {
       headers: headers,
     });
     props.confirmProductTable();
-    
-  }
-  return <div className="mt-4 mb-4"
-    style={{
-      fontSize: 14, boxShadow: "2px 2px 2px 2px #AAA",
-      borderRadius: "25px",
-      margin: "auto",
-      width: "60%",
-      padding: 10,
-    }}>
-    <Table
-
-      size="small"
-      aria-label="collapsible table"
-    >
-      <TableHead>
-        <TableRow>
-          <TableCell align="left">Lô</TableCell>
-          <TableCell align="right">Mã trong lô</TableCell>
-          <TableCell align="right">Số lượng</TableCell>
-          <TableCell align="right">Hạn sử dụng</TableCell>
-          <TableCell align="right">Thao tác</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {productDetail?.listProducts?.map((item, index) => {
-          var productBatchDetail = productBatchList.find(o => o.productBatchId === item.productBatchId);
-          return <TableRow key={index} style={{ background: `${index % 2 ? "#fdffe0" : "white"}`, }}>
-            <TableCell align="left">{productBatchDetail?.productBatchName}</TableCell>
-            <TableCell align="right">{item.productBatchProductId}</TableCell>
-            <TableCell align="right">{item.productQuantity}</TableCell>
-            <TableCell align="right">{formatDateTime(item.dateExpiry, 1)}</TableCell>
-            <TableCell align="right">
-              <ButtonGroup size="small" aria-label="small button group">
-                <Button
-                  key="one"
-                  color="primary"
-                  variant="contained"
-                  style={{ fontSize: 10, backgroundColor: "#F4A460" }}
-                  onClick={() => {
-                    setOpenModalProductEdit(true)
-                    productModalData.current = item;
-                  }}
-                >
-                  Chỉnh sửa
-                </Button>
-                <Button
-                  key="three"
-                  color="primary"
-                  variant="contained"
-                  style={{ fontSize: 10, backgroundColor: "#DC143C" }}
-                  onClick={() => {
-                    productModalData.current = item;
-                    handleDeleteProductOutputInfo()
-                  }
-                }
-                >
-                  Xóa
-                </Button>
-              </ButtonGroup>
-            </TableCell>
-
-          </TableRow>
-        })}
-      </TableBody>
-    </Table>
-    <ModalProduct
-      show={openModalProductEdit}
-      handleClose={() => {
-        setOpenModalProductEdit(false);
-        props.confirmProductTable();
-
+  };
+  return (
+    <div
+      className="mt-4 mb-4"
+      style={{
+        fontSize: 14,
+        boxShadow: "2px 2px 2px 2px #AAA",
+        borderRadius: "25px",
+        margin: "auto",
+        width: "60%",
+        padding: 10,
       }}
-      outputInfo={outputInfo}
-      dataModalProduct={productModalData.current}
-      action={"EDIT"}
-    />
-  </div>
+    >
+      <Table size="small" aria-label="collapsible table">
+        <TableHead>
+          <TableRow>
+            <TableCell align="left">Lô</TableCell>
+            <TableCell align="right">Mã trong lô</TableCell>
+            <TableCell align="right">Số lượng</TableCell>
+            <TableCell align="right">Hạn sử dụng</TableCell>
+            <TableCell align="right">Thao tác</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {productDetail?.listProducts?.map((item, index) => {
+            var productBatchDetail = productBatchList.find(
+              (o) => o.productBatchId === item.productBatchId
+            );
+            return (
+              <TableRow
+                key={index}
+                style={{ background: `${index % 2 ? "#fdffe0" : "white"}` }}
+              >
+                <TableCell align="left">
+                  {productBatchDetail?.productBatchName}
+                </TableCell>
+                <TableCell align="right">
+                  {item.productBatchProductId}
+                </TableCell>
+                <TableCell align="right">{item.productQuantity}</TableCell>
+                <TableCell align="right">
+                  {formatDateTime(item.dateExpiry, 1)}
+                </TableCell>
+                <TableCell align="right">
+                  <ButtonGroup size="small" aria-label="small button group">
+                    <Button
+                      key="one"
+                      color="primary"
+                      variant="contained"
+                      style={{ fontSize: 10, backgroundColor: "#F4A460" }}
+                      onClick={() => {
+                        setOpenModalProductEdit(true);
+                        productModalData.current = item;
+                      }}
+                    >
+                      Chỉnh sửa
+                    </Button>
+                    <Button
+                      key="three"
+                      color="primary"
+                      variant="contained"
+                      style={{ fontSize: 10, backgroundColor: "#DC143C" }}
+                      onClick={() => {
+                        productModalData.current = item;
+                        handleDeleteProductOutputInfo();
+                      }}
+                    >
+                      Xóa
+                    </Button>
+                  </ButtonGroup>
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+      <ModalProduct
+        show={openModalProductEdit}
+        handleClose={() => {
+          setOpenModalProductEdit(false);
+          props.confirmProductTable();
+        }}
+        outputInfo={outputInfo}
+        dataModalProduct={productModalData.current}
+        action={"EDIT"}
+      />
+    </div>
+  );
 }
 
 function ProductTableDetail(props) {
   const { productDetail, outputInfo } = props;
-  console.log('chay tiep product table detail', productDetail);
+  console.log("chay tiep product table detail", productDetail);
   const [open, setOpen] = useState(false);
-  return <>
-    <TableRow
-      style={{
-        background: "white",
-      }}
-      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-    >
-      <TableCell width={20} align="left">
-        <IconButton
-          aria-label="expand row"
-          size="small"
-          onClick={() => setOpen(!open)}
-        >
-          {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-        </IconButton>
-      </TableCell>
-      <TableCell align="left">
-        {productDetail?.productId}
-      </TableCell>
-      <TableCell align="right">
-        {productDetail?.productName}
-      </TableCell>
-      <TableCell align="right">
-        {productDetail?.productOrigin}
-      </TableCell>
-      <TableCell align="right">
-        {productDetail?.productSuplier}
-      </TableCell>
-      <TableCell align="right">
-        {productDetail?.productUnit}
-      </TableCell>
-      <TableCell align="right">
-        {productDetail?.productQuantity}
-      </TableCell>
-    </TableRow>
-    <TableRow>
-      <TableCell style={{ padding: 0 }} colSpan={8}>
-        <Collapse in={open} timeout="auto" unmountOnExit style={{ backgroundColor: 'white' }}>
-          <ProductInBatch productDetail={productDetail} outputInfo={outputInfo} confirmProductTable={() => props.confirmProductTable()} />
-        </Collapse>
-      </TableCell>
-    </TableRow>
-  </>
+  return (
+    <>
+      <TableRow
+        style={{
+          background: "white",
+        }}
+        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+      >
+        <TableCell width={20} align="left">
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell align="left">{productDetail?.productId}</TableCell>
+        <TableCell align="right">{productDetail?.productName}</TableCell>
+        <TableCell align="right">{productDetail?.productOrigin}</TableCell>
+        <TableCell align="right">{productDetail?.productSuplier}</TableCell>
+        <TableCell align="right">{productDetail?.productUnit}</TableCell>
+        <TableCell align="right">{productDetail?.productQuantity}</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ padding: 0 }} colSpan={8}>
+          <Collapse
+            in={open}
+            timeout="auto"
+            unmountOnExit
+            style={{ backgroundColor: "white" }}
+          >
+            <ProductInBatch
+              productDetail={productDetail}
+              outputInfo={outputInfo}
+              confirmProductTable={() => props.confirmProductTable()}
+            />
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </>
+  );
 }
 
 function ProductTable(props) {
@@ -236,7 +239,6 @@ function ProductTable(props) {
   const [confirmProductTable, setConfirmProductTable] = useState(0);
   const [listProductTable, setListProductTable] = useState([]);
   const { productList } = useSelector((state) => state.product);
-
 
   const getListProducts = async () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -251,8 +253,11 @@ function ProductTable(props) {
     var data = res?.data?.data?.listProducts;
     console.log(data);
     var listProducts = handleProductInOutput(data);
-    data = _.sortBy(data,
-      [(o) => { return o.productId; }]);
+    data = _.sortBy(data, [
+      (o) => {
+        return o.productId;
+      },
+    ]);
     setListProductTable(listProducts);
   };
 
@@ -261,16 +266,21 @@ function ProductTable(props) {
   }, [changeProductTable, confirmProductTable]);
   return (
     <div>
-      {listProductTable?.length === 0
-        ?
-        <div style={{
-          fontSize: 14, boxShadow: "2px 2px 2px 2px #AAA",
-          borderRadius: "25px",
-          margin: "auto",
-          width: "95%",
-          padding: 10,
-        }} className="text-center mt-3 mb-3">Không có dữ liệu về sản phẩm!</div>
-        :
+      {listProductTable?.length === 0 ? (
+        <div
+          style={{
+            fontSize: 14,
+            boxShadow: "2px 2px 2px 2px #AAA",
+            borderRadius: "25px",
+            margin: "auto",
+            width: "95%",
+            padding: 10,
+          }}
+          className="text-center mt-3 mb-3"
+        >
+          Không có dữ liệu về sản phẩm!
+        </div>
+      ) : (
         <div
           className="mt-3 mb-3"
           style={{
@@ -289,7 +299,9 @@ function ProductTable(props) {
             <TableHead>
               <TableRow>
                 <TableCell align="left" width={20}></TableCell>
-                <TableCell align="left" width={200}>Mã sản phẩm</TableCell>
+                <TableCell align="left" width={200}>
+                  Mã sản phẩm
+                </TableCell>
                 <TableCell align="right">Tên sản phẩm</TableCell>
                 <TableCell align="right">Xuất xứ</TableCell>
                 <TableCell align="right">Công ty sản xuất</TableCell>
@@ -298,8 +310,6 @@ function ProductTable(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-
-
               {listProductTable.map((product, index) => {
                 var productInfo = productList?.find(
                   (o) => o.productId === product.productId
@@ -310,50 +320,48 @@ function ProductTable(props) {
                   productName: productInfo?.productName,
                   productOrigin: productInfo?.productOrigin,
                   productSuplier: productInfo?.productSuplier,
-                  productUnit: productInfo?.productUnit
+                  productUnit: productInfo?.productUnit,
                 };
                 console.log(product);
                 return (
                   <ProductTableDetail
-                    key={index} productDetail={productDetail} outputInfo={outputInfo}
-                    confirmProductTable={() => setConfirmProductTable(confirmProductTable + 1)}
+                    key={index}
+                    productDetail={productDetail}
+                    outputInfo={outputInfo}
+                    confirmProductTable={() =>
+                      setConfirmProductTable(confirmProductTable + 1)
+                    }
                   />
                 );
               })}
             </TableBody>
           </Table>
         </div>
-      }
+      )}
     </div>
   );
 }
 function OutputInfo(props) {
-  console.log('chay tiep');
+  console.log("chay tiep");
   const { index, outputInfo } = props;
   const [confirmOutputInfo, setConfirmOutputInfo] = useState(0);
   const [changeProductTable, setChangeProductTable] = useState(0);
   const [open, setOpen] = useState(false);
   const [openModalOutputInfoEdit, setOpenModalOutputInfoEdit] = useState(false);
-  const [openModalProductCreate, setOpenModalProductCreate] =
-    useState(false);
+  const [openModalProductCreate, setOpenModalProductCreate] = useState(false);
   const { userList, isLoading } = useSelector((state) => state.user);
   const classes = useRowStyles();
   const signatorUser = userList?.find(
     (o) => o.userId === outputInfo.signatorId
   );
-  const pickerUser = userList?.find(
-    (o) => o.userId === outputInfo.pickerId
-  );
+  const pickerUser = userList?.find((o) => o.userId === outputInfo.pickerId);
   const handleDeleteOutputInfo = (outputInfoId) => {
     const accessToken = localStorage.getItem("accessToken");
     const headers = {
       "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     };
-    if (
-      window.confirm(`Bạn có chắc chắn xóa bản xuất hàng này?`) ==
-      false
-    ) {
+    if (window.confirm(`Bạn có chắc chắn xóa bản xuất hàng này?`) == false) {
       return;
     }
     var url = `https://localhost:7092/api/v1/output-info?outputInfoId=${outputInfoId}`;
@@ -434,8 +442,16 @@ function OutputInfo(props) {
         </TableRow>
         <TableRow>
           <TableCell style={{ padding: 0 }} colSpan={8}>
-            <Collapse in={open} timeout="auto" unmountOnExit style={{ backgroundColor: 'white' }}>
-              <ProductTable outputInfo={outputInfo} changeProductTable={changeProductTable} />
+            <Collapse
+              in={open}
+              timeout="auto"
+              unmountOnExit
+              style={{ backgroundColor: "white" }}
+            >
+              <ProductTable
+                outputInfo={outputInfo}
+                changeProductTable={changeProductTable}
+              />
             </Collapse>
           </TableCell>
         </TableRow>
@@ -556,7 +572,6 @@ export default function OutputInfoPage() {
       <ModalOutputInfo
         show={openModalOutputInfo}
         handleClose={() => setOpenModalOutputInfo(false)}
-
         action={"CREATE"}
       />
     </div>

@@ -13,24 +13,25 @@ const ModalOutputInfo = (props) => {
   const defaultOutputInfoData = {
     outputInfoId: "",
     outputInfoName: "",
-    pickerId: 0, 
-    signatorId: localStorage.getItem('userId'), // la nguoi tao trang nhung hien tai dang bug verify token
+    pickerId: 0,
+    signatorId: localStorage.getItem("userId"), // la nguoi tao trang nhung hien tai dang bug verify token
   };
   const defaultValidInput = {
     outputInfoName: true,
-    pickerId: true
+    pickerId: true,
   };
   const [outputInfoData, setOutputInfoData] = useState(defaultOutputInfoData);
   const [validInput, setValidInput] = useState(defaultValidInput);
   useEffect(() => {
     if (action === "EDIT") {
-      const { outputInfoId, outputInfoName, pickerId, signatorId } = dataModalOutputInfo;
+      const { outputInfoId, outputInfoName, pickerId, signatorId } =
+        dataModalOutputInfo;
       console.log("data<odal", dataModalOutputInfo);
       setOutputInfoData({
         outputInfoId: outputInfoId,
         outputInfoName: outputInfoName,
         pickerId: pickerId,
-        signatorId: localStorage.getItem('userId'),
+        signatorId: localStorage.getItem("userId"),
       });
     }
   }, [dataModalOutputInfo, action]);
@@ -156,7 +157,10 @@ const ModalOutputInfo = (props) => {
                     console.log(item);
                     return (
                       <option value={+item?.userId} key={index}>
-                        {item?.surName + " " + item?.givenName + ` (ID: ${item?.userId}) `}
+                        {item?.surName +
+                          " " +
+                          item?.givenName +
+                          ` (ID: ${item?.userId}) `}
                       </option>
                     );
                   })}

@@ -28,7 +28,7 @@ function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
   );
-  
+
   const [component, setComponent] = useState();
   const getCurrentView = () => {
     if (isAuthenticated === false) {

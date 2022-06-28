@@ -116,7 +116,7 @@ const ModalProductBatch = (props) => {
               <label>
                 Tên lô hàng (<span className="text-danger">*</span>)
               </label>
-              
+
               <input
                 type="text"
                 className={
@@ -131,7 +131,9 @@ const ModalProductBatch = (props) => {
                 }
               />
             </div>
-            <small style={{fontSize: 12}}><i>Ví dụ: Hxxxxx</i></small>
+            <small style={{ fontSize: 12 }}>
+              <i>Ví dụ: Hxxxxx</i>
+            </small>
           </div>
         </Modal.Body>
         <Modal.Footer>

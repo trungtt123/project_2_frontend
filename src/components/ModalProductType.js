@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import productTypeService from "../Services/API/productTypeService";
 const ModalproductType = (props) => {
   const { action, dataModalproductType, handleClose, show } = props;
+  console.log("props", props);
   const { roleList } = useSelector((state) => state.privilege);
   const defaultproductTypeData = {
     productTypename: "",
@@ -54,6 +55,7 @@ const ModalproductType = (props) => {
     if (!check) return;
     console.log("productTypeData", productTypeData);
     console.log("action nay", action);
+    console.log("acction", action);
     if (action === "CREATE") {
       await productTypeService.createproductType(productTypeData);
     } else if (action === "EDIT") {

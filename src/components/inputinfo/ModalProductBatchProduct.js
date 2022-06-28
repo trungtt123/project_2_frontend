@@ -11,7 +11,8 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 const ModalProductBatchProduct = (props) => {
-  const { productBatchData, dataModalProduct, handleClose, show, action } = props;
+  const { productBatchData, dataModalProduct, handleClose, show, action } =
+    props;
   const defaultNewProduct = {
     productId: null,
     dateExpiry: new Date(),

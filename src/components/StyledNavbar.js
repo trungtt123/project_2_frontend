@@ -10,7 +10,7 @@ import "./StyledNavbar.scss";
 const NavHeader = () => {
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector((state) => state.auth);
-
+  console.log("user", user);
   return (
     <div className="nav-header">
       <Navbar bg="header" expand="lg">

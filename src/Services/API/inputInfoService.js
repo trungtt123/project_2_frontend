@@ -16,8 +16,14 @@ const createProduct = (payload) => {
   });
 };
 const updateProduct = (payload) => {
-  const { productId, productName, Origin, companySuplier, typeId, productUnit } =
-    payload;
+  const {
+    productId,
+    productName,
+    Origin,
+    companySuplier,
+    typeId,
+    productUnit,
+  } = payload;
 
   return axios.put("/product", {
     productId: productId,

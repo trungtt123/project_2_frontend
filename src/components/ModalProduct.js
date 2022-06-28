@@ -185,7 +185,7 @@ const ModalProduct = (props) => {
                 }
               />
             </div>
-            <div className="col-12 col-sm-6 form-group">
+            {/* <div className="col-12 col-sm-6 form-group">
               <label>
                 Loại sản phẩm (<span className="text-danger">*</span>)
               </label>
@@ -201,7 +201,7 @@ const ModalProduct = (props) => {
                   handleOnChangeInput(event.target.value, "productUnit")
                 }
               />
-            </div>
+            </div> */}
             <div className="col-12 col-sm-6 form-group">
               <label>
                 Product Type (<span className="text-danger">*</span>)
