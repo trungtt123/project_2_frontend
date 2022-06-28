@@ -14,7 +14,7 @@ const ModalInputInfo = (props) => {
     inputInfoId: "",
     inputInfoName: "",
     shipper: "",
-    receiverUserId: 1, // la nguoi tao trang nhung hien tai dang bug verify token
+    receiverUserId: localStorage.getItem('userId'), // la nguoi tao trang nhung hien tai dang bug verify token
   };
   const defaultValidInput = {
     inputInfoName: true,
@@ -31,7 +31,7 @@ const ModalInputInfo = (props) => {
         inputInfoId: inputInfoId,
         inputInfoName: inputInfoName,
         shipper: shipper,
-        receiverUserId: 1,
+        receiverUserId: localStorage.getItem('userId'),
       });
     }
   }, [dataModalInputInfo, action]);

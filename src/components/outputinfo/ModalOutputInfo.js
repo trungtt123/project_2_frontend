@@ -14,7 +14,7 @@ const ModalOutputInfo = (props) => {
     outputInfoId: "",
     outputInfoName: "",
     pickerId: 0, 
-    signatorId: 1, // la nguoi tao trang nhung hien tai dang bug verify token
+    signatorId: localStorage.getItem('userId'), // la nguoi tao trang nhung hien tai dang bug verify token
   };
   const defaultValidInput = {
     outputInfoName: true,
@@ -30,7 +30,7 @@ const ModalOutputInfo = (props) => {
         outputInfoId: outputInfoId,
         outputInfoName: outputInfoName,
         pickerId: pickerId,
-        signatorId: signatorId,
+        signatorId: localStorage.getItem('userId'),
       });
     }
   }, [dataModalOutputInfo, action]);
