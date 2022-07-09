@@ -34,6 +34,7 @@ instance.interceptors.response.use(
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
+    if (!(response?.data?.message.includes('GET_LIST')))
     toast.success(response?.data?.message);
     return response.data;
   },
@@ -51,7 +52,7 @@ instance.interceptors.response.use(
 
       // forbidden (permission related issues)
       case 403: {
-        toast.error("you don't have permission to access this resource...");
+        toast.error("You don't have permission to access this resource...");
         return Promise.reject(error);
       }
 

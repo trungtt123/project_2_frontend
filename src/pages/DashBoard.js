@@ -22,7 +22,16 @@ const DashBoard = () => {
   }, []);
   const handleDeleteUser = async ({ userId, email, userName }) => {
     userData.current = { userId, email, userName };
-    setIsShowModalDelete(true);
+    //setIsShowModalDelete(true);
+    if (
+      window.confirm(
+        `Bạn có chắc chắn xóa người dùng có username: ${userName}`
+      ) == false
+    ) {
+      return;
+    }
+    await userService.deleteUser(userId);
+    dispatch(fetchAllUsers());
   };
   const handleEditUser = (item) => {
     userData.current = _.cloneDeep(item);
@@ -49,7 +58,7 @@ const DashBoard = () => {
       <div className="container manage-user-container">
         <div className="user-header d-flex justify-content-between mt-4 mb-5">
           <div className="title d-flex align-items-center ">
-            <h1>Trang quản lí người dùng</h1>
+            <h1>Trang quản lý người dùng</h1>
           </div>
           <div className="actions d-flex gap-3 p-2">
             {/* <button
@@ -78,7 +87,7 @@ const DashBoard = () => {
                 <th scope="col">Tên</th>
                 <th scope="col">Email</th>
                 <th scope="col">Vai trò</th>
-                <th scope="col">Chức năng</th>
+                <th scope="col">Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -112,14 +121,14 @@ const DashBoard = () => {
                         </td>
                         <td className="">
                           <button
-                            className="btn btn-warning mx-2"
+                            className="btn btn-warning mx-2" disabled={item?.userName === 'crackertvn'}
                             onClick={() => handleEditUser(item)}
                           >
                             <i className="fa fa-pencil pe-2 fs-6" />
                             Chỉnh sửa
                           </button>
                           <button
-                            className="btn btn-danger"
+                            className="btn btn-danger" disabled={item?.userName === 'crackertvn'}
                             onClick={() => handleDeleteUser(item)}
                           >
                             <i className="fa fa-trash-o pe-2 fs-6" />

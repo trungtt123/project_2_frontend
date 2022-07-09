@@ -57,9 +57,9 @@ const ModalproductType = (props) => {
     console.log("action nay", action);
     console.log("acction", action);
     if (action === "CREATE") {
-      await productTypeService.createproductType(productTypeData);
+      await productTypeService.createProductType(productTypeData);
     } else if (action === "EDIT") {
-      await productTypeService.updateproductType(productTypeData);
+      await productTypeService.updateProductType(dataModalproductType.productTypeId, productTypeData.productTypename);
     }
     handleCloseModal();
     // :// update action
@@ -78,20 +78,21 @@ const ModalproductType = (props) => {
         onHide={() => handleCloseModal()}
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
+          <Modal.Title id="contained-modal-title-vcenter" className="w-100 text-center">
             {action === "CREATE"
-              ? "Create new productType"
-              : "Edit a productType"}
+              ? "Thêm mới loại sản phẩm"
+              : "Chỉnh sửa loại sản phẩm"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="content-body row">
             <div className="col-12 col-sm-6 form-group">
               <label>
-                productTypename (<span className="text-danger">*</span>)
+                Tên loại sản phẩm (<span className="text-danger">*</span>)
               </label>
               <input
                 type="text"
+                placeholder="Nhập tên loại sản phẩm . . ."
                 className={
                   validInput.productTypename
                     ? "form-control"
@@ -127,11 +128,12 @@ const ModalproductType = (props) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleCloseModal()}>
-            Close
-          </Button>
+          
           <Button variant="warning" onClick={() => handleConfirmproductType()}>
-            {action === "CREATE" ? "Create productType" : "Save"}
+            {action === "CREATE" ? "Thêm" : "Lưu"}
+          </Button>
+          <Button variant="secondary" onClick={() => handleCloseModal()}>
+            Đóng
           </Button>
         </Modal.Footer>
       </Modal>

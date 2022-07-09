@@ -107,7 +107,7 @@ const ModalProductBatch = (props) => {
           >
             {action === "CREATE"
               ? "Thêm lô hàng"
-              : `Chỉnh sửa lô hàng mã ${productBatchData.productBatchName}`}
+              : `Chỉnh sửa lô hàng mã số ${productBatchData.productBatchId} - lô ${productBatchData.productBatchName}`}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -137,11 +137,12 @@ const ModalProductBatch = (props) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleCloseModal()}>
-            Close
-          </Button>
+          
           <Button variant="warning" onClick={() => handleConfirmProduct()}>
-            {action === "CREATE" ? "Create" : "Save"}
+            {action === "CREATE" ? "Thêm" : "Lưu"}
+          </Button>
+          <Button variant="secondary" onClick={() => handleCloseModal()}>
+            Đóng
           </Button>
         </Modal.Footer>
       </Modal>

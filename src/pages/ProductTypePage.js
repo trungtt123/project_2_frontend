@@ -26,7 +26,16 @@ const ProductTypePage = () => {
     productTypeName,
   }) => {
     productTypeData.current = { productTypeId, productTypeName };
-    setIsShowModalDelete(true);
+    //setIsShowModalDelete(true)
+    if (
+      window.confirm(
+        `Bạn có chắc chắn xóa loại sản phẩm ${productTypeName}`
+      ) == false
+    ) {
+      return;
+    };
+    await productTypeService.deleteProductType(productTypeId);
+    dispatch(getListProductTypes());
   };
   const handleDetailProductType = (item) => {
     productTypeData.current = _.cloneDeep(item);
@@ -87,7 +96,7 @@ const ProductTypePage = () => {
                 <th scope="col">ID</th>
                 <th scope="col">Tên loại sản phẩm</th>
 
-                <th scope="col">Chức năng</th>
+                <th scope="col">Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -150,9 +159,10 @@ const ProductTypePage = () => {
         confirmDelete={confirmDeleteProductType}
       />
       <ModalProductType
+        action="EDIT"
         show={isShowModalProductType}
         handleClose={handleClose}
-        productTypeId={productTypeData.current.productTypeId}
+        dataModalproductType={productTypeData.current}
       />
       <ModalNewType show={isShowModalNewType} handleClose={handleClose} />
     </>

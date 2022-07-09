@@ -22,7 +22,7 @@ const ModalNewType = (props) => {
         onHide={() => handleClose()}
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
+          <Modal.Title id="contained-modal-title-vcenter" className="w-100 text-center">
             Thêm loại sản phẩm
           </Modal.Title>
         </Modal.Header>
@@ -34,6 +34,7 @@ const ModalNewType = (props) => {
               </label>
               <input
                 type="text"
+                placeholder="Nhập tên loại sản phẩm . . ."
                 value={typeDataName}
                 onChange={(event) => setTypeDataName(event.target.value)}
               />
@@ -41,12 +42,13 @@ const ModalNewType = (props) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
+          <Button variant="warning" onClick={() => handleConfirmType()}>
+            Thêm{" "}
+          </Button>
           <Button variant="secondary" onClick={() => handleClose()}>
             Đóng
           </Button>
-          <Button variant="warning" onClick={() => handleConfirmType()}>
-            Thêm loại sản phẩm{" "}
-          </Button>
+          
         </Modal.Footer>
       </Modal>
     </>

@@ -204,7 +204,7 @@ const ModalProduct = (props) => {
             </div> */}
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Product Type (<span className="text-danger">*</span>)
+                Loại sản phẩm (<span className="text-danger">*</span>)
               </label>
               <select
                 style={{ fontSize: 16, height: 48 }}
@@ -233,11 +233,12 @@ const ModalProduct = (props) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleCloseModal()}>
-            Close
-          </Button>
+          
           <Button variant="warning" onClick={() => handleConfirmProduct()}>
-            {action === "CREATE" ? "Thêm sản phẩm" : "Save"}
+            {action === "CREATE" ? "Thêm" : "Lưu"}
+          </Button>
+          <Button variant="secondary" onClick={() => handleCloseModal()}>
+            Đóng
           </Button>
         </Modal.Footer>
       </Modal>

@@ -69,7 +69,7 @@ const ModalProductBatchProduct = (props) => {
     }
     handleCloseModal();
   };
-  console.log(dataModalProduct);
+  console.log(productBatchData);
   return (
     <>
       <Modal
@@ -84,8 +84,8 @@ const ModalProductBatchProduct = (props) => {
             className="w-100 text-center"
           >
             {action === "CREATE"
-              ? `Thêm sản phẩm vào lô ${productBatchData?.productBatchName}`
-              : `Chỉnh sửa sản phẩm trong lô ${productBatchData?.productBatchName}`}
+              ? `Thêm sản phẩm vào mã số ${productBatchData?.productBatchId}  - lô hàng ${productBatchData?.productBatchName}`
+              : `Chỉnh sửa sản phẩm trong mã số ${productBatchData?.productBatchId} - lô hàng ${productBatchData?.productBatchName}`}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -103,7 +103,7 @@ const ModalProductBatchProduct = (props) => {
                   }
                   value={newProduct.productId}
                 >
-                  <option defaultValue>Choose Product</option>
+                  <option defaultValue>Chọn sản phẩm</option>
                   {productList?.length > 0 &&
                     productList.map((product, index1) => {
                       console.log("productList", index1);
@@ -139,6 +139,7 @@ const ModalProductBatchProduct = (props) => {
                 <span className="form-control d-flex justify-content-between align-items-center p-0">
                   <DatePicker
                     id="datepicker"
+                    dateFormat="dd/MM/yyyy"
                     className="border-0 m-0"
                     selected={newProduct.dateExpiry}
                     onChange={(date) =>
@@ -161,10 +162,10 @@ const ModalProductBatchProduct = (props) => {
               handleAddNewProduct();
             }}
           >
-            {action === "CREATE" ? "Create" : "Save"}
+            {action === "CREATE" ? "Thêm" : "Lưu"}
           </Button>
           <Button variant="secondary" onClick={() => handleCloseModal()}>
-            Close
+            Đóng
           </Button>
         </Modal.Footer>
       </Modal>

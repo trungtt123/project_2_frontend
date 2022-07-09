@@ -169,14 +169,19 @@ const ModalProduct = (props) => {
                   <option defaultValue>Chọn lô hàng</option>
                   {listProductBatches?.length > 0 &&
                     listProductBatches.map((product, index) => {
+                      var today = new Date();
+                      var dateExpiry = new Date(product?.dateExpiry);
+
                       return (
                         <option
+                          style={{color: dateExpiry > today && product.productQuantity > 0 ? 'Green' : 'LightCoral'}}
                           value={product?.productBatchProductId}
-                          key={index}
+                          key={index} disabled={dateExpiry <= today || product.productQuantity <= 0}
                         >
                           {`Lô ${product?.productBatchId} - Mã ${product?.productBatchProductId} - Còn ${product?.productQuantity} sản phẩm`}
                         </option>
                       );
+
                     })}
                 </select>
               </div>
@@ -197,6 +202,12 @@ const ModalProduct = (props) => {
                 />
               </div>
             </div>
+            <div style={{color: 'Green', fontSize: 12}}>
+              (*) Còn hàng / còn hạn
+            </div>
+            <div style={{color: 'LightCoral', fontSize: 12}}>
+              (*) Hết hàng / hết hạn
+            </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -206,10 +217,10 @@ const ModalProduct = (props) => {
               handleAddNewProduct();
             }}
           >
-            {action === "CREATE" ? "Create" : "Save"}
+            {action === "CREATE" ? "Thêm" : "Lưu"}
           </Button>
           <Button variant="secondary" onClick={() => handleCloseModal()}>
-            Close
+            Đóng
           </Button>
         </Modal.Footer>
       </Modal>

@@ -50,7 +50,7 @@ const ProductPage = () => {
       <div className="container manage-user-container">
         <div className="user-header d-flex justify-content-between mt-4 mb-5">
           <div className="title d-flex align-items-center ">
-            <h1>Trang quản lí sản phẩm</h1>
+            <h1>Trang quản lý sản phẩm</h1>
           </div>
           <div className="actions d-flex gap-3 p-2">
             {/* <button
@@ -78,7 +78,7 @@ const ProductPage = () => {
                 <th scope="col">Nhà cung cấp</th>
                 <th scope="col">Loại sản phẩm</th>
                 <th scope="col">Đơn vị</th>
-                <th scope="col">Chức năng</th>
+                <th scope="col">Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -99,20 +99,11 @@ const ProductPage = () => {
                                 +productTypeItem?.productTypeId ===
                                 item.productTypeId
                               ) {
-                                console.log("true");
                                 return (
-                                  <tr
-                                    key={`${item.productTypeId}`}
-                                    style={{
-                                      padding: "8px",
-                                      justifyContent: "center",
-                                      borderTop: "1px solid #dddddd",
-                                      display: "flex",
-                                      background: "transparent",
-                                    }}
+                                  <td key={`${item.productTypeId}`} 
                                   >
                                     {productTypeItem.productTypeName}
-                                  </tr>
+                                  </td>
                                 );
                               }
                             })

@@ -92,8 +92,8 @@ const ModalUser = (props) => {
         onHide={() => handleCloseModal()}
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            {action === "CREATE" ? "Create new user" : "Edit a user"}
+          <Modal.Title id="contained-modal-title-vcenter" className="text-center w-100">      
+            {action === "CREATE" ? "Thêm người dùng" : "Chỉnh sửa thông tin người dùng"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -216,11 +216,12 @@ const ModalUser = (props) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleCloseModal()}>
-            Close
-          </Button>
+          
           <Button variant="warning" onClick={() => handleConfirmUser()}>
-            {action === "CREATE" ? "Create user" : "Save"}
+            {action === "CREATE" ? "Thêm" : "Lưu"}
+          </Button>
+          <Button variant="secondary" onClick={() => handleCloseModal()}>
+            Hủy
           </Button>
         </Modal.Footer>
       </Modal>

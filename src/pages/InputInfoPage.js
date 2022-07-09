@@ -134,7 +134,7 @@ function ProductTable(props) {
     };
     if (
       window.confirm(
-        `Bạn có chắc chắn xóa lô hàng mã ${productBatch.productBatchName}`
+        `Bạn có chắc chắn xóa lô hàng mã số ${productBatch.productBatchId}`
       ) == false
     ) {
       return;
@@ -196,13 +196,15 @@ function ProductTable(props) {
             display: "inline-block",
             position: "absolute",
             marginLeft: 10,
-            width: 200,
+            width: 250,
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
             overflow: "hidden",
             bottom: 0,
           }}
         >
+          Mã lô:
+          {" " + productBatch.productBatchId} {" - "}
           Tên lô hàng:
           {" " + productBatch.productBatchName}
         </span>
@@ -386,7 +388,7 @@ function ProductTable(props) {
           getListProducts();
         }}
         dataModalProduct={productData.current}
-        productBatchId={productBatch?.productBatchId}
+        productBatchData={productBatch}
         action={"EDIT"}
       />
     </div>

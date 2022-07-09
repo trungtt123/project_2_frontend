@@ -117,7 +117,7 @@ const ModalProductBatch = (props) => {
                     }
                     value={newProduct.productId}
                   >
-                    <option defaultValue>Choose Product</option>
+                    <option defaultValue>Chọn sản phẩm</option>
                     {productList?.length > 0 &&
                       productList.map((product, index1) => {
                         console.log("productList", index1);
@@ -191,7 +191,7 @@ const ModalProductBatch = (props) => {
                         }
                         value={item.productId}
                       >
-                        <option defaultValue>Choose Product</option>
+                        <option defaultValue>Chọn sản phẩm</option>
                         {productList?.length > 0 &&
                           productList.map((product, index1) => {
                             console.log("productList", index1);
@@ -257,7 +257,7 @@ const ModalProductBatch = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => handleCloseModal()}>
-            Close
+            Đóng
           </Button>
           {/* <Button variant="warning" onClick={() => handleConfirmProduct()}>
             {action === "CREATE" ? "Create user" : "Save"}

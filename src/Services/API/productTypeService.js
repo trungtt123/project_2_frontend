@@ -22,6 +22,10 @@ const createProductType = async (productTypeName) => {
   return axios.post("/product-type", productTypeName);
 };
 
+const updateProductType = async (productTypeId, productTypeName) => {
+  return axios.put(`/product-type?productTypeId=${productTypeId}`, productTypeName);
+};
+
 const updateProductTypeProduct = (payload) => {
   const {
     productTypeId,
@@ -58,5 +62,6 @@ const productTypeService = {
   getProductTypeById,
   deleteProductTypeProduct,
   createProductType,
+  updateProductType
 };
 export default productTypeService;

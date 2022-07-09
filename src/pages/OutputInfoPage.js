@@ -111,7 +111,8 @@ function ProductInBatch(props) {
       <Table size="small" aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            <TableCell align="left">Lô</TableCell>
+            <TableCell align="left">Mã lô</TableCell>
+            <TableCell align="right">Tên lô</TableCell>
             <TableCell align="right">Mã trong lô</TableCell>
             <TableCell align="right">Số lượng</TableCell>
             <TableCell align="right">Hạn sử dụng</TableCell>
@@ -129,6 +130,9 @@ function ProductInBatch(props) {
                 style={{ background: `${index % 2 ? "#fdffe0" : "white"}` }}
               >
                 <TableCell align="left">
+                  {productBatchDetail?.productBatchId}
+                </TableCell>
+                <TableCell align="right">
                   {productBatchDetail?.productBatchName}
                 </TableCell>
                 <TableCell align="right">

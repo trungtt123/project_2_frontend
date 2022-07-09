@@ -169,11 +169,12 @@ const ModalOutputInfo = (props) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleCloseModal()}>
-            Close
-          </Button>
+          
           <Button variant="warning" onClick={() => handleConfirmUser()}>
-            {action === "CREATE" ? "Create" : "Save"}
+            {action === "CREATE" ? "Thêm" : "Lưu"}
+          </Button>
+          <Button variant="secondary" onClick={() => handleCloseModal()}>
+            Đóng
           </Button>
         </Modal.Footer>
       </Modal>
