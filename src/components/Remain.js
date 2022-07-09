@@ -1,214 +1,239 @@
-import React, { useEffect, useState } from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import React, { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import Collapse from "@material-ui/core/Collapse";
+import IconButton from "@material-ui/core/IconButton";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import Container from "@material-ui/core/Container";
+import _ from "lodash";
+
+import ListSubheader from "@mui/material/ListSubheader";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import DraftsIcon from "@mui/icons-material/Drafts";
+import SendIcon from "@mui/icons-material/Send";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import StarBorder from "@mui/icons-material/StarBorder";
+
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
+import axios from "axios";
+import ModalOutputInfo from "../components/outputinfo/ModalOutputInfo";
+import TextField from "@mui/material/TextField";
+import { Button, Modal, Dialog, ButtonGroup } from "@material-ui/core";
+import ModalProduct from "../components/outputinfo/ModalProduct";
+import ModalProductBatchProduct from "../components/inputinfo/ModalProductBatchProduct";
+
+import { fetchAllProducts, fetchAllProductType } from "../Redux/productSlice";
+
 import productBatchService from "../Services/API/productBatchService";
-import ModalHistory from "./ModalHistory.tsx";
-ChartJS.register(ArcElement, Tooltip, Legend);
-export const data = {
-  labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-  datasets: [
-    {
-      label: "# of Votes",
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)",
-      ],
-      borderColor: [
-        "rgba(255, 99, 132, 1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)",
-      ],
-      borderWidth: 0.5,
+const useRowStyles = makeStyles({
+  root: {
+    "& > *": {
+      borderBottom: "unset",
     },
-  ],
-};
-const style = {
-  canvas: {
-    transform: "scale(0.5)",
   },
+});
+const formatDateTime = (s, type) => {
+  if (type === 1) return moment(s).format("DD/MM/YYYY");
+  if (type === 2) return moment(s).format("DD/MM/YYYY - hh:mm:ss A");
 };
 
-const Remain = (props) => {
-  const [statisticData, setStatisticData] = useState([data, data, data]);
-  const [isShowModal, setIsShowModal] = useState(false);
-  const [historyData, setHistoryData] = useState([]);
-  const [dataRemain, setDataRemain] = useState([]);
-  useEffect(() => {
-    getData();
-  }, []);
-  const getData = async () => {
+
+function Product(props) {
+  const classes = useRowStyles();
+  const { productInventory } = props;
+  const [open, setOpen] = useState(false);
+  const { productList, productTypeList } = useSelector(
+    (state) => state.product
+  );
+  const { productBatchList } = useSelector((state) => state.productBatch);
+  const product = productList.find(o => o.productId == productInventory.productId);
+  const productType = productTypeList.find(o => o.productTypeId == product.productTypeId);
+  console.log(productInventory.listInventories);
+  return (
+    <>
+      <React.Fragment>
+        <TableRow className={classes.root}>
+          <TableCell width="1%">
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </TableCell>
+          <TableCell width="10%" scope="row">
+            {product?.productId}
+          </TableCell>
+          <TableCell width="20%" align="right">
+            {product?.productName}
+          </TableCell>
+          <TableCell width="20%" align="right">
+            {product?.productOrigin}
+          </TableCell>
+          <TableCell width="20%" align="right">
+            {product?.productSuplier}
+          </TableCell>
+          <TableCell width="20%" align="right">
+            {productType?.productTypeName}
+          </TableCell>
+          <TableCell width="15%" align="right">
+            {product?.productUnit}
+          </TableCell>
+
+        </TableRow>
+        <TableRow>
+          <TableCell style={{ padding: 0 }} colSpan={8}>
+            <Collapse
+              in={open}
+              timeout="auto"
+              unmountOnExit
+              style={{ backgroundColor: "white" }}
+            >
+              <div
+                className="mt-3 mb-3"
+                style={{
+                  boxShadow: "2px 2px 2px 2px #AAA",
+                  borderRadius: "25px",
+                  margin: "auto",
+                  width: "95%",
+                  padding: 10,
+                }}
+              >
+                <Table
+                  style={{ margin: "auto" }}
+                  size="small"
+                  aria-label="a dense table"
+                >
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align="left">Mã lô</TableCell>
+                      <TableCell align="right">Tên lô</TableCell>
+                      <TableCell align="right">Mã trong lô</TableCell>
+                      <TableCell align="right">Số lượng còn lại</TableCell>
+                      <TableCell align="right">Hạn sử dụng</TableCell>
+                      <TableCell align="right">Trạng thái</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {productInventory?.listInventories?.map((item, index) => {
+                      var today = new Date();
+                      var productBatchDetail = productBatchList.find(o => o.productBatchId == item.productBatchId);
+                      return <TableRow key={index} style={{
+                        background: `${index % 2 ? "#fdffe0" : "white"}`,
+                      }}>
+                        <TableCell align="left">{item?.productBatchId}</TableCell>
+                        <TableCell align="right">{productBatchDetail?.productBatchName}</TableCell>
+                        <TableCell align="right">{item?.productBatchProductId}</TableCell>
+                        <TableCell align="right">{item?.productQuantity}</TableCell>
+                        <TableCell align="right">{formatDateTime(item?.dateExpiry, 1)}</TableCell>
+                        <TableCell align="right">
+                          {
+                            item?.productQuantity <= 0 ? "Hết hàng, " : "Còn hàng, "
+                          }
+                          {
+                            item?.dateExpiry <= today ? "Hết hạn" : "Còn hạn"
+                          }
+                        </TableCell>
+                      </TableRow>
+                    })}
+
+
+                  </TableBody>
+                </Table>
+              </div>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+
+      </React.Fragment>
+
+    </>
+  );
+}
+
+export default function RemainPage() {
+  const [openModalOutputInfo, setOpenModalOutputInfo] = React.useState(false);
+  const [confirmOutputInfo, setComfirmOutputInfo] = React.useState(0);
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    //width: 1000,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+  const dispatch = useDispatch();
+
+  const [listInventories, setListInventories] = useState([]);
+  const getListInventories = async () => {
     const response = await productBatchService.getStatistic();
     const data = response?.data;
-    console.log("data check", data);
-    setDefault(data).then((res) => {
-      console.log("res", res);
-      setDataRemain(res);
-    });
+    setListInventories(data);
   };
-  const setDefault = async (data) => {
-    return new Promise((resolve, reject) => {
-      try {
-        const statistic = [];
-        for (let i = 0; i < data.length; i++) {
-          console.log("tmp", data[i]);
-          console.log("sold", data[i].total - data[i].exported);
-          console.log("export", data[i].exported);
-          let outdate = 0;
-          data[i].listOutdated = [];
-          for (let j = 0; j < data[i].listProductBatches.length; j++) {
-            console.log(
-              "find =batch",
-              data[i].listProductBatches[j].productBatchId
-            );
-            if (
-              new Date(data[i].listProductBatches[j].dateExpiry) < new Date()
-            ) {
-              outdate += data[i].listProductBatches[j].productQuantity;
-              let exportInBatch = 0;
-              for (let k = 0; k < data[i].listProductExported.length; k++) {
-                console.log(
-                  "find =export",
-                  data[i].listProductExported[k].productBatchId
-                );
-                if (
-                  data[i].listProductBatches[j].productBatchId ===
-                    data[i].listProductExported[k].productBatchId &&
-                  data[i].listProductBatches[j].productBatchProductId ===
-                    data[i].listProductExported[k].productBatchProductId
-                ) {
-                  console.log(
-                    "same",
-                    new Date().getTime(),
-                    "vd",
-                    new Date(data[i].listProductBatches[k].dateExpiry).getTime()
-                  );
-                  exportInBatch +=
-                    data[i].listProductExported[k].productQuantity;
-                  outdate -= data[i].listProductExported[k].productQuantity;
-                }
-              }
-              console.log("outdateinba", exportInBatch);
-              console.log("cid", data[i].listProductBatches[j].productQuantity);
-              data[i].listOutdated.push({
-                ...data[i].listProductBatches[j],
-                productQuantity:
-                  data[i].listProductBatches[j].productQuantity - exportInBatch,
-              });
-            }
-          }
-          data[i].outdate = outdate;
-          console.log(data[i]);
-          let nothing = 0;
-          if (data[i].total === 0) {
-            nothing = 0.0001;
-          }
-          const tmp = {
-            labels: ["Expired", "Exported", "Remain", "Nothing"],
-            datasets: [
-              {
-                label: data[i].productId,
-                data: [
-                  outdate,
-                  data[i].exported,
-                  data[i].total - data[i].exported - outdate,
-                  nothing,
-                ],
-                backgroundColor: [
-                  "rgba(255, 99, 132, 0.2)",
-                  "rgba(54, 162, 235, 0.2)",
-                  "rgba(255, 206, 86, 0.2)",
-                  "rgba(236, 236, 236, 1)",
-                ],
-                borderColor: [
-                  "rgba(255, 99, 132, 1)",
-                  "rgba(54, 162, 235, 1)",
-                  "rgba(255, 206, 86, 1)",
-                  "rgba(189, 195, 199, 1)",
-                ],
-                borderWidth: 0.5,
-              },
-            ],
-          };
-          statistic.push(tmp);
-        }
-        console.log("xong");
-        setStatisticData(statistic);
-        resolve(data);
-      } catch (e) {
-        reject(e);
-      }
-    });
-  };
-  const handleClose = () => {
-    setIsShowModal(false);
-  };
-  const setShowData = (productId, type) => {
-    let search = "";
-    switch (type) {
-      case "Expired":
-        search = "listOutdated";
-        break;
-      case "Exported":
-        search = "listProductExported";
-        break;
-      default:
-        search = "listProductBatches";
-        break;
-    }
 
-    for (let i = 0; i < dataRemain.length; i++) {
-      console.log(+productId, "data", dataRemain[i].productId);
-      if (dataRemain[i].productId === +productId) {
-        console.log("checko", search, dataRemain[i][search]);
-        setHistoryData(dataRemain[i][search]);
-      }
-    }
-    setIsShowModal(!isShowModal);
-  };
-  console.log("render remain");
+  useEffect(() => {
+    console.log("trung da toi day");
+    // dispatch(fetchAllProducts());
+    // dispatch(fetchAllProductType());
+    getListInventories();
+  }, []);
+
   return (
-    <div className="container row mx-auto">
-      {statisticData?.length > 0 &&
-        statisticData.map((item, index) => {
-          return (
-            <div key={index} className="items col-4">
-              <div>item {index + 1}</div>
-              <Pie
-                data={item}
-                options={{
-                  // This chart will not respond to mousemove, etc
-                  events: ["click", "mousemove", "mouseout"],
-                  onClick: (e, activeEls) => {
-                    let datasetIndex = activeEls[0].datasetIndex;
-                    let dataIndex = activeEls[0].index;
-                    let datasetLabel =
-                      e.chart.data.datasets[datasetIndex].label;
-                    let value =
-                      e.chart.data.datasets[datasetIndex].data[dataIndex];
-                    let label = e.chart.data.labels[dataIndex];
-                    console.log("In click", datasetLabel, label, value);
-                    setShowData(datasetLabel, label);
-                  },
-                }}
-              />
-            </div>
-          );
-        })}
-      <ModalHistory
-        show={isShowModal}
-        data={historyData}
-        handleClose={handleClose}
-      />
+    <div>
+      <div style={{ margin: "auto 2px" }}>
+        <div className="text-center mt-3 mb-3">
+          <h3>TRANG QUẢN LÝ TỒN KHO</h3>
+        </div>
+        <TableContainer component={Paper}>
+          <Table
+            sx={{ minWidth: 650 }}
+            size="small"
+            aria-label="collapsible table"
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell width={20} />
+                <TableCell width={200}>ID</TableCell>
+                <TableCell align="right">Tên sản phẩm</TableCell>
+                <TableCell align="right">Nơi xuất xứ</TableCell>
+                <TableCell align="right">Nhà cung cấp</TableCell>
+                <TableCell align="right">Loại sản phẩm</TableCell>
+                <TableCell align="right">Đơn vị</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {listInventories.map((inventory, index) => (
+                <Product
+                  key={index}
+                  productInventory={inventory}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+
     </div>
   );
-};
-
-export default Remain;
+}

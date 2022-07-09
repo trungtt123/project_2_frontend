@@ -14,12 +14,11 @@ import { useEffect, useState } from "react";
 import UnAuth from "./Routes/unAuthRoute";
 import { Switch } from "react-router-dom";
 import NotfoundPage from "./pages/NotfoundPage";
-import ProductBatchPage from "./pages/ProductBatch";
-import Remain from "./components/Remain";
+import RemainPage from "./components/Remain";
 import ProductTypePage from "./pages/ProductTypePage";
 import InputInfoPage from "./pages/InputInfoPage";
 import { fetchAllUsers } from "../src/Redux/userSlice";
-import { fetchAllProducts } from "../src/Redux/productSlice";
+import { fetchAllProducts, fetchAllProductType } from "../src/Redux/productSlice";
 import { getListProductBatches } from "../src/Redux/productBatchSlice";
 import OutputInfoPage from "./pages/OutputInfoPage";
 function App() {
@@ -47,7 +46,7 @@ function App() {
             <Route path="/product-type" exact component={ProductTypePage} />
             <Route path="/input-info-page" exact component={InputInfoPage} />
             <Route path="/output-info-page" exact component={OutputInfoPage} />
-            <Route path="/remain" exact component={Remain} />
+            <Route path="/remain" exact component={RemainPage} />
             <Route path="*" component={NotfoundPage} />
           </Switch>
         </>
@@ -58,6 +57,7 @@ function App() {
     dispatch(fetchAllUsers());
     dispatch(fetchAllProducts());
     dispatch(getListProductBatches());
+    dispatch(fetchAllProductType());
     setComponent(getCurrentView());
   }, []);
   useEffect(() => {
