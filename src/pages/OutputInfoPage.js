@@ -90,7 +90,7 @@ function ProductInBatch(props) {
     if (window.confirm(`Bạn có chắc chắn xóa sản phẩm này?`) == false) {
       return;
     }
-    var url = `https://localhost:7092/api/v1/output-info/products?id=${productModalData?.current?.outputProductId}`;
+    var url = process.env.REACT_APP_BASE_URL + `/output-info/products?id=${productModalData?.current?.outputProductId}`;
     await axios.delete(url, {
       headers: headers,
     });
@@ -250,7 +250,7 @@ function ProductTable(props) {
       "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     };
-    var url = `https://localhost:7092/api/v1/output-info?outputInfoId=${outputInfo?.outputInfoId}`;
+    var url = process.env.REACT_APP_BASE_URL + `/output-info?outputInfoId=${outputInfo?.outputInfoId}`;
     var res = await axios.get(url, {
       headers: headers,
     });
@@ -368,7 +368,7 @@ function OutputInfo(props) {
     if (window.confirm(`Bạn có chắc chắn xóa bản xuất hàng này?`) == false) {
       return;
     }
-    var url = `https://localhost:7092/api/v1/output-info?outputInfoId=${outputInfoId}`;
+    var url = process.env.REACT_APP_BASE_URL + `/output-info?outputInfoId=${outputInfoId}`;
     axios
       .delete(url, {
         headers: headers,
@@ -505,7 +505,7 @@ export default function OutputInfoPage() {
       "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     };
-    var url = "https://localhost:7092/api/v1/list-output-info";
+    var url = process.env.REACT_APP_BASE_URL + "/list-output-info";
     var res = await axios.get(url, {
       headers: headers,
     });

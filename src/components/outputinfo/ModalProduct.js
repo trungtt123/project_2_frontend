@@ -91,7 +91,7 @@ const ModalProduct = (props) => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
       };
-      var url = `https://localhost:7092/api/v1/output-info/products?outputInfoId=${outputInfo?.outputInfoId}`;
+      var url = process.env.REACT_APP_BASE_URL + `/output-info/products?outputInfoId=${outputInfo?.outputInfoId}`;
       await axios.post(url, newProduct, {
         headers: headers,
       });
@@ -100,7 +100,7 @@ const ModalProduct = (props) => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
       };
-      var url = `https://localhost:7092/api/v1/output-info/products?id=${dataModalProduct?.outputProductId}`;
+      var url = process.env.REACT_APP_BASE_URL + `/output-info/products?id=${dataModalProduct?.outputProductId}`;
       await axios.put(url, newProduct, {
         headers: headers,
       });

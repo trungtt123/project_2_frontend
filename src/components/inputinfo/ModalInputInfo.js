@@ -68,7 +68,7 @@ const ModalInputInfo = (props) => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
       };
-      var url = "https://localhost:7092/api/v1/input-info";
+      var url = process.env.REACT_APP_BASE_URL + "/input-info";
       await axios.post(url, inputInfoData, {
         headers: headers,
       });
@@ -79,7 +79,7 @@ const ModalInputInfo = (props) => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
       };
-      var url = `https://localhost:7092/api/v1/input-info?inputInfoId=${dataModalInputInfo.inputInfoId}`;
+      var url = process.env.REACT_APP_BASE_URL + `/input-info?inputInfoId=${dataModalInputInfo.inputInfoId}`;
       await axios.put(url, inputInfoData, {
         headers: headers,
       });

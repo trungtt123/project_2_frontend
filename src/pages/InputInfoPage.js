@@ -62,7 +62,7 @@ function ProductBatch(props) {
       Authorization: "Bearer " + accessToken,
     };
     var url =
-      "https://localhost:7092/api/v1/input-info?inputInfoId=" +
+    process.env.REACT_APP_BASE_URL + "/input-info?inputInfoId=" +
       inputInfo?.inputInfoId;
     axios
       .get(url, {
@@ -139,7 +139,7 @@ function ProductTable(props) {
     ) {
       return;
     }
-    var url = `https://localhost:7092/api/v1/product-batch?productBatchId=${productBatch.productBatchId}`;
+    var url = process.env.REACT_APP_BASE_URL + `/product-batch?productBatchId=${productBatch.productBatchId}`;
     axios
       .delete(url, {
         headers: headers,
@@ -159,7 +159,7 @@ function ProductTable(props) {
       "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     };
-    var url = `https://localhost:7092/api/v1/product-batch?productBatchId=${productBatch?.productBatchId}`;
+    var url = process.env.REACT_APP_BASE_URL + `/product-batch?productBatchId=${productBatch?.productBatchId}`;
     var res = await axios.get(url, {
       headers: headers,
     });
@@ -416,7 +416,7 @@ function InputInfo(props) {
     if (window.confirm(`Bạn có chắc chắn xóa bản nhập hàng này?`) == false) {
       return;
     }
-    var url = `https://localhost:7092/api/v1/input-info?inputInfoId=${inputInfoId}`;
+    var url = process.env.REACT_APP_BASE_URL + `/input-info?inputInfoId=${inputInfoId}`;
     axios
       .delete(url, {
         headers: headers,
@@ -548,7 +548,7 @@ export default function InputInfoPage() {
       "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     };
-    var url = "https://localhost:7092/api/v1/list-input-info";
+    var url = process.env.REACT_APP_BASE_URL + "/list-input-info";
     var res = await axios.get(url, {
       headers: headers,
     });

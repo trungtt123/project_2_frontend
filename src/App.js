@@ -21,6 +21,7 @@ import { fetchAllUsers } from "../src/Redux/userSlice";
 import { fetchAllProducts, fetchAllProductType } from "../src/Redux/productSlice";
 import { getListProductBatches } from "../src/Redux/productBatchSlice";
 import OutputInfoPage from "./pages/OutputInfoPage";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
 function App() {
   const dispatch = useDispatch();
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -46,6 +47,7 @@ function App() {
             <Route path="/product-type" exact component={ProductTypePage} />
             <Route path="/input-info-page" exact component={InputInfoPage} />
             <Route path="/output-info-page" exact component={OutputInfoPage} />
+            <Route path="/change-password" exact component={ChangePasswordPage} />
             <Route path="/remain" exact component={RemainPage} />
             <Route path="*" component={NotfoundPage} />
           </Switch>

@@ -68,7 +68,7 @@ const ModalOutputInfo = (props) => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
       };
-      var url = "https://localhost:7092/api/v1/output-info";
+      var url = "REACT_APP_BASE_URL/output-info";
       await axios.post(url, outputInfoData, {
         headers: headers,
       });
@@ -79,7 +79,7 @@ const ModalOutputInfo = (props) => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
       };
-      var url = `https://localhost:7092/api/v1/output-info?outputInfoId=${dataModalOutputInfo.outputInfoId}`;
+      var url = process.env.REACT_APP_BASE_URL + `/output-info?outputInfoId=${dataModalOutputInfo.outputInfoId}`;
       await axios.put(url, outputInfoData, {
         headers: headers,
       });

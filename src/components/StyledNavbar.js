@@ -74,8 +74,11 @@ const NavHeader = () => {
                     Xin chào, {user?.surName + " " + user?.givenName}
                   </Nav.Item>
                   <NavDropdown title="Cài đặt" id="basic-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">
-                      Đổi mật khẩu
+                    <NavDropdown.Item >
+                      <Link to="/change-password" style={{textDecoration: 'none'}}>
+                        Đổi mật khẩu
+                      </Link>
+
                     </NavDropdown.Item>
                     <NavDropdown.Item>
                       <span onClick={() => dispatch(logout())}>Đăng xuất</span>

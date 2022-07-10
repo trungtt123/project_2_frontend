@@ -67,7 +67,7 @@ const ModalProductBatch = (props) => {
         Authorization: "Bearer " + accessToken,
       };
       console.log(productBatchData);
-      var url = `https://localhost:7092/api/v1/product-batch`;
+      var url = process.env.REACT_APP_BASE_URL + `/product-batch`;
       await axios.post(url, productBatchData, {
         headers: headers,
       });
@@ -78,7 +78,7 @@ const ModalProductBatch = (props) => {
         Authorization: "Bearer " + accessToken,
       };
       console.log(productBatchData);
-      var url = `https://localhost:7092/api/v1/product-batch?productBatchId=${productBatchData.productBatchId}`;
+      var url = process.env.REACT_APP_BASE_URL + `/product-batch?productBatchId=${productBatchData.productBatchId}`;
       await axios.put(url, productBatchData, {
         headers: headers,
       });
