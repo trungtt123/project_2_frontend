@@ -15,15 +15,21 @@ const NavHeader = () => {
     <div className="nav-header">
       <Navbar bg="header" expand="lg">
         <Container>
-          <Navbar.Brand href="/" className="nav-branch">
-            Nhóm 1
-          </Navbar.Brand>
+          {user?.roleId === 1 ?
+            <Navbar.Brand href="/" className="nav-branch">
+              Nhóm 1
+            </Navbar.Brand> :
+            <Navbar.Brand href="/products" className="nav-branch">
+              Nhóm 1
+            </Navbar.Brand>
+          }
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               {/* Mấy cái thư viện thì chỉ cần import className của nó là đủ */}
+
               <NavLink to="/" exact className="nav-link">
-                Trang chủ
+                Người dùng
               </NavLink>
               <NavLink to="/products" className="nav-link">
                 Sản phẩm

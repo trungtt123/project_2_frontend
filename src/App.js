@@ -23,12 +23,12 @@ import { getListProductBatches } from "../src/Redux/productBatchSlice";
 import OutputInfoPage from "./pages/OutputInfoPage";
 function App() {
   const dispatch = useDispatch();
-  const history = useHistory();
   const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
   );
 
   const [component, setComponent] = useState();
+  
   const getCurrentView = () => {
     if (isAuthenticated === false) {
       return <UnAuth />;

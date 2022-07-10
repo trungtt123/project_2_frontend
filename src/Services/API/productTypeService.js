@@ -1,7 +1,7 @@
 import axios from "../../setups/custom_axios";
 
 const getListProductTypes = () => {
-  return axios.get("/list-product-Types");
+  return axios.get("/list-product-types");
 };
 
 const getProductTypeById = (productTypeId) => {

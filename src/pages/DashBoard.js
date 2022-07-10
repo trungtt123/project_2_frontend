@@ -7,8 +7,12 @@ import _ from "lodash";
 import ModalDeleteUser from "../components/ModalDeleteUser";
 import ModalUser from "../components/ModalUser";
 import userService from "../Services/API/userService";
+import { loadUser } from "../Redux/authSlice";
 const DashBoard = () => {
   const dispatch = useDispatch();
+  const { user, isAuthenticated } = useSelector(
+    (state) => state.auth
+  );
   const { userList, isLoading } = useSelector((state) => state.user);
   const { roleList } = useSelector((state) => state.privilege);
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
@@ -52,7 +56,6 @@ const DashBoard = () => {
     setIsShowModalDelete(false);
   };
   const handleChecked = async (isChecked, userId) => {};
-  console.log("update", userList, isLoading);
   return (
     <>
       <div className="container manage-user-container">
@@ -121,14 +124,14 @@ const DashBoard = () => {
                         </td>
                         <td className="">
                           <button
-                            className="btn btn-warning mx-2" disabled={item?.userName === 'crackertvn'}
+                            className="btn btn-warning mx-2" disabled={item?.userName === 'crackertvn' || user?.roleId !== 1}
                             onClick={() => handleEditUser(item)}
                           >
                             <i className="fa fa-pencil pe-2 fs-6" />
                             Chỉnh sửa
                           </button>
                           <button
-                            className="btn btn-danger" disabled={item?.userName === 'crackertvn'}
+                            className="btn btn-danger" disabled={item?.userName === 'crackertvn' || user?.roleId !== 1}
                             onClick={() => handleDeleteUser(item)}
                           >
                             <i className="fa fa-trash-o pe-2 fs-6" />

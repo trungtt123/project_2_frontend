@@ -107,7 +107,7 @@ function Product(props) {
               style={{ backgroundColor: "white" }}
             >
               <div
-                className="mt-3 mb-3"
+                className="mt-3 mb-5"
                 style={{
                   boxShadow: "2px 2px 2px 2px #AAA",
                   borderRadius: "25px",
