@@ -44,7 +44,7 @@ const ModalproductType = (props) => {
         let _validInput = _.cloneDeep(defaultValidInput);
         _validInput[arr[i]] = false;
         setValidInput(_validInput);
-        toast.error(`Empty input ${arr[i]}`);
+        toast.error(`Còn trống trường thông tin`);
         return false;
       }
     }

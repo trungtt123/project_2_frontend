@@ -48,7 +48,7 @@ const ModalProductBatch = (props) => {
         _validInput[arr[i]] = false;
         setValidInput(_validInput);
         console.log(_validInput);
-        toast.error(`Empty input ${arr[i]}`);
+        toast.error(`Còn trống trường thông tin`);
         return false;
       }
     }

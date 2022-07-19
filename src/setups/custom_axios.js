@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import message from "../Services/COMMON/message";
 const instance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
   headers: {
@@ -34,8 +34,15 @@ instance.interceptors.response.use(
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-    if (!(response?.data?.message?.includes('GET_LIST')))
-    toast.success(response?.data?.message);
+    
+    if (!(response?.data?.message?.includes('GET_LIST'))){
+
+      console.log(response?.data?.message);
+    toast.success(message[response?.data?.message], {
+      //position: toast.POSITION.TOP_LEFT,
+    });
+  }
+    
     return response.data;
   },
   function (error) {

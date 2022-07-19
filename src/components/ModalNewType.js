@@ -7,10 +7,10 @@ import productTypeService from "../Services/API/productTypeService";
 const ModalNewType = (props) => {
   const { handleClose, show } = props;
 
-  const [typeDataName, setTypeDataName] = useState();
+  const [typeDataName, setTypeDataName] = useState('');
   const handleConfirmType = async () => {
     await productTypeService.createProductType(typeDataName);
-    handleClose();
+    handleClose(typeDataName);
     return;
   };
   return (

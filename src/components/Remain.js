@@ -32,11 +32,11 @@ import StarBorder from "@mui/icons-material/StarBorder";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import axios from "axios";
-import ModalOutputInfo from "../components/outputinfo/ModalOutputInfo";
+import ModalOutputInfo from "./outputinfo/ModalOutputInfo";
 import TextField from "@mui/material/TextField";
 import { Button, Modal, Dialog, ButtonGroup } from "@material-ui/core";
-import ModalProduct from "../components/outputinfo/ModalProduct";
-import ModalProductBatchProduct from "../components/inputinfo/ModalProductBatchProduct";
+import ModalProduct from "./outputinfo/ModalProduct";
+import ModalProductBatchProduct from "./inputinfo/ModalProductBatchProduct";
 
 import { fetchAllProducts, fetchAllProductType } from "../Redux/productSlice";
 
@@ -78,7 +78,7 @@ function Product(props) {
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell width="10%" scope="row">
+          <TableCell width="5%" scope="row">
             {product?.productId}
           </TableCell>
           <TableCell width="20%" align="right">
@@ -93,10 +93,9 @@ function Product(props) {
           <TableCell width="20%" align="right">
             {productType?.productTypeName}
           </TableCell>
-          <TableCell width="15%" align="right">
-            {product?.productUnit}
+          <TableCell width="10%" align="right">
+            {product?.productUnit}  
           </TableCell>
-
         </TableRow>
         <TableRow>
           <TableCell style={{ padding: 0 }} colSpan={8}>
@@ -134,6 +133,8 @@ function Product(props) {
                   <TableBody>
                     {productInventory?.listInventories?.map((item, index) => {
                       var today = new Date();
+                      var dateE = new Date(item?.dateExpiry);
+                      console.log(item);
                       var productBatchDetail = productBatchList.find(o => o.productBatchId == item.productBatchId);
                       return <TableRow key={index} style={{
                         background: `${index % 2 ? "#fdffe0" : "white"}`,
@@ -148,7 +149,7 @@ function Product(props) {
                             item?.productQuantity <= 0 ? "Hết hàng, " : "Còn hàng, "
                           }
                           {
-                            item?.dateExpiry <= today ? "Hết hạn" : "Còn hạn"
+                            dateE <= today ? "Hết hạn" : "Còn hạn"
                           }
                         </TableCell>
                       </TableRow>
@@ -214,7 +215,7 @@ export default function RemainPage() {
             <TableHead>
               <TableRow>
                 <TableCell width={20} />
-                <TableCell width={200}>ID</TableCell>
+                <TableCell width={20}>ID</TableCell>
                 <TableCell align="right">Tên sản phẩm</TableCell>
                 <TableCell align="right">Nơi xuất xứ</TableCell>
                 <TableCell align="right">Nhà cung cấp</TableCell>
